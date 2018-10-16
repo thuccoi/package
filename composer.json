@@ -1,0 +1,17 @@
+{
+    "name": "tami/system",
+    "description": "system of tami",
+    "authors": [
+        {
+            "name": "Nguyen The Thuc",
+            "email": "thucfami@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "system": "src/"
+        }  
+    },
+    "require": {}
+}
