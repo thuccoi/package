@@ -196,10 +196,7 @@ class System {
                         echo 'Controller Not found';
                         exit;
                     }
-                } else {
-                    echo 'Module not found';
-                    exit;
-                }
+                } 
             } else {
                 echo "Module not config router";
                 exit;
