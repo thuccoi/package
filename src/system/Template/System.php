@@ -106,7 +106,7 @@ class System {
                 for ($i = 0; $i < strlen($action); $i++) {
                     if ($action[$i] == "-") {
                         $naction = $naction . strtoupper($action[$i + 1]);
-                        $i = $i + 2;
+                        $i = $i + 1;
                     } else {
                         $naction = $naction . $action[$i];
                     }
