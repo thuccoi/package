@@ -32,13 +32,13 @@ class System {
 
                 //check no layout
                 if ($init['layout'] != 'TAMI_NOLAYOUT') {
-                    
+
                     //check file layout exists
                     if (!file_exists($init["layout"])) {
                         echo "Layout: {$init["layout"]} not exists";
                         exit;
                     }
-                    
+
                     $layout->showLayout();
                 } else {
                     $layout->showViewFile();
@@ -102,14 +102,24 @@ class System {
                 //init controller
                 $obj = $objfactory($config['controller'], $router, $code, $sysconfig, []);
 
+                $naction = "";
+                for ($i = 0; $i < strlen($action); $i++) {
+                    if ($action[$i] == "-") {
+                        $naction = $naction . strtoupper($action[$i + 1]);
+                        $i = $i + 2;
+                    } else {
+                        $naction = $naction . $action[$i];
+                    }
+                }
+                
                 //echo method exists
-                if (!method_exists($obj, $action . "Action")) {
-                    echo "Method " . $action . "Action(){...} not exists in {$config['controller']}";
+                if (!method_exists($obj, $naction . "Action")) {
+                    echo "Method " . $naction . "Action(){...} not exists in {$config['controller']}";
                     exit;
                 }
 
                 //get parameters 
-                $parameters = $obj->{$action . "Action"}();
+                $parameters = $obj->{$naction . "Action"}();
 
                 //set layout
                 $layout = $config["layout"];
@@ -196,7 +206,7 @@ class System {
                         echo 'Controller Not found';
                         exit;
                     }
-                } 
+                }
             } else {
                 echo "Module not config router";
                 exit;
