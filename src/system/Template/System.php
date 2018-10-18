@@ -9,7 +9,9 @@ class System {
             if (isset($init["view_file"]) && isset($init['layout'])) {
 
                 $layout = new \system\Template\Layout();
-
+                
+                $layout->setConfig($init['sysconfig']);
+                
                 $layout->setLayout($init['layout']);
                 $layout->setViewFile($init['view_file']);
 
@@ -111,7 +113,7 @@ class System {
                         $naction = $naction . $action[$i];
                     }
                 }
-                
+
                 //echo method exists
                 if (!method_exists($obj, $naction . "Action")) {
                     echo "Method " . $naction . "Action(){...} not exists in {$config['controller']}";
@@ -135,7 +137,8 @@ class System {
                     "parameters" => $parameters,
                     "view_file" => $config['view_dir'] . $controller . '/' . $action . '.tami',
                     "layout" => $layout,
-                    "view_dir" => $config['view_dir']
+                    "view_dir" => $config['view_dir'],
+                    "sysconfig" => $sysconfig
                 ];
             } else {
                 echo "Not found controller config";

@@ -10,6 +10,7 @@ class Layout {
     private $url;
     private $view_dir;
     private $params = [];
+    private $config;
 
     //function set and get
     public function setTitle($title) {
@@ -55,6 +56,15 @@ class Layout {
 
     public function getUrl() {
         return $this->url;
+    }
+
+    public function setConfig($config) {
+        $this->config = $config;
+        return $this;
+    }
+
+    public function getConfig() {
+        return $this->config;
     }
 
     public function setParams($params) {
