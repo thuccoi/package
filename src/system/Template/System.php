@@ -9,9 +9,9 @@ class System {
             if (isset($init["view_file"]) && isset($init['layout'])) {
 
                 $layout = new \system\Template\Layout();
-
+                
                 $layout->setConfig($init['sysconfig']);
-
+                
                 $layout->setLayout($init['layout']);
                 $layout->setViewFile($init['view_file']);
 
@@ -133,19 +133,9 @@ class System {
                     }
                 }
 
-                //check config view 
-                if (!isset($sysconfig['view'])) {
-                    $sysconfig['view'] = [];
-                }
-
-                //set config extension view default
-                if (!isset($sysconfig['view']['extension'])) {
-                    $sysconfig['view']['extension'] = 'tami';
-                }
-
                 return [
                     "parameters" => $parameters,
-                    "view_file" => $config['view_dir'] . $controller . '/' . $action . '.' . $sysconfig['view']['extension'],
+                    "view_file" => $config['view_dir'] . $controller . '/' . $action . '.tami',
                     "layout" => $layout,
                     "view_dir" => $config['view_dir'],
                     "sysconfig" => $sysconfig
