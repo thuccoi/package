@@ -9,9 +9,9 @@ class System {
             if (isset($init["view_file"]) && isset($init['layout'])) {
 
                 $layout = new \system\Template\Layout();
-                
+
                 $layout->setConfig($init['sysconfig']);
-                
+
                 $layout->setLayout($init['layout']);
                 $layout->setViewFile($init['view_file']);
 
@@ -55,7 +55,7 @@ class System {
         }
     }
 
-    public static function init() {
+    public static function init($loader) {
 
         //get config of system
         $sysconfig = \system\Template\Container::getSysConfig();
@@ -102,7 +102,7 @@ class System {
                 $objfactory = new $factory;
 
                 //init controller
-                $obj = $objfactory($config['controller'], $router, $code, $sysconfig, []);
+                $obj = $objfactory($loader, $config['controller'], $router, $code, $sysconfig, []);
 
                 $naction = "";
                 for ($i = 0; $i < strlen($action); $i++) {
