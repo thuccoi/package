@@ -133,11 +133,16 @@ class System {
                     }
                 }
 
-                if (!isset($sysconfig['view']) || !isset($sysconfig['view']['extension'])) {
-                    echo 'View extension not config in system';
-                    exit;
+                //check config view 
+                if (!isset($sysconfig['view'])) {
+                    $sysconfig['view'] = [];
                 }
-                
+
+                //set config extension view default
+                if (!isset($sysconfig['view']['extension'])) {
+                    $sysconfig['view']['extension'] = 'tami';
+                }
+
                 return [
                     "parameters" => $parameters,
                     "view_file" => $config['view_dir'] . $controller . '/' . $action . '.' . $sysconfig['view']['extension'],
