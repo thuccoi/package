@@ -13,5 +13,13 @@
             "system": "src/"
         }  
     },
-    "require": {}
+    "require": {
+        "doctrine/mongodb-odm": "^2.0@dev",
+        "alcaeus/mongo-php-adapter": "^1.1@dev"
+    },
+    "config": {
+        "platform": {
+            "ext-mongo": "1.6.16"
+        }
+    }
 }
