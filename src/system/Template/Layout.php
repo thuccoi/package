@@ -106,26 +106,31 @@ class Layout {
 
     public function title($title) {
         $this->setTitle($title);
-        echo "<title>{$this->getTitle()}</title>";
+        echo "<title>{$this->getTitle()}</title>
+             ";
     }
 
     public function css($href) {
         if (is_array($href)) {
             foreach ($href as $val) {
-                echo '<link rel="stylesheet"  type="text/css" href="' . $val . '" />';
+                echo '<link rel="stylesheet"  type="text/css" href="' . $val . '" />
+                     ';
             }
         } else {
-            echo '<link rel="stylesheet"  type="text/css" href="' . $href . '" />';
+            echo '<link rel="stylesheet"  type="text/css" href="' . $href . '" />
+                 ';
         }
     }
 
     public function js($src) {
         if (is_array($src)) {
             foreach ($src as $val) {
-                echo '<script type="text/javascript" src="' . $val . '"></script>';
+                echo '<script type="text/javascript" src="' . $val . '"></script>
+                     ';
             }
         } else {
-            echo '<script type="text/javascript" src="' . $src . '"></script>';
+            echo '<script type="text/javascript" src="' . $src . '"></script>
+                 ';
         }
     }
 
@@ -150,7 +155,7 @@ class Layout {
     /**
      * 
      * @param type $module
-     * @param array $options include controller, action, id, param, fragment
+     * @param array $options include controller, action, id, param
      * @return url
      */
     public function url($module, array $options = null) {
@@ -175,12 +180,6 @@ class Layout {
             $id = $options['id'];
         }
 
-        //fragment
-        $fragment = '';
-        if (isset($options['fragment'])) {
-            $fragment = $options['fragment'];
-        }
-
         //param
         $param = [];
         if (isset($options['param'])) {
@@ -189,8 +188,7 @@ class Layout {
 
         //make router
         $router = new \system\Router($module, $controller, $action, $id, $param);
-        $router->setFragment($fragment);
-
+      
         return $router->url();
     }
 

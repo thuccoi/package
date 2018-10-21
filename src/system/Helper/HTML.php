@@ -7,29 +7,21 @@ class HTML {
     public static $TAMI_GET = "GET";
     public static $TAMI_POST = "POST";
 
-    public static function addQuery($code, $stringparam, &$fragment = "") {
+    public static function addQuery($code, $stringparam) {
         //url decode
         $stringurl = urldecode($stringparam);
 
         if ($stringurl) {
-            //detach fragment
-            $arrfragment = explode('#', $stringurl);
-            if ($arrfragment) {
 
-                //get document
-                $documents = explode('&', $arrfragment[0]);
+            //get document
+            $documents = explode('&', $stringurl);
 
-                if ($documents) {
-                    foreach ($documents as $val) {
-                        $document = explode('=', $val);
-                        if (count($document) == 2) {
-                            $_GET[$code->purify($document[0])] = $code->purify($document[1]);
-                        }
+            if ($documents) {
+                foreach ($documents as $val) {
+                    $document = explode('=', $val);
+                    if (count($document) == 2) {
+                        $_GET[$code->purify($document[0])] = $code->purify($document[1]);
                     }
-                }
-                
-                if(isset($arrfragment[1])){
-                    $fragment = $code->purify($arrfragment[1]);
                 }
             }
         }
