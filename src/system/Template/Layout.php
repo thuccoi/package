@@ -108,6 +108,8 @@ class Layout {
         $this->setTitle($title);
         echo "<title>{$this->getTitle()}</title>
              ";
+
+        return $this;
     }
 
     public function css($href) {
@@ -120,6 +122,7 @@ class Layout {
             echo '<link rel="stylesheet"  type="text/css" href="' . $href . '" />
                  ';
         }
+        return $this;
     }
 
     public function js($src) {
@@ -132,6 +135,7 @@ class Layout {
             echo '<script type="text/javascript" src="' . $src . '"></script>
                  ';
         }
+        return $this;
     }
 
     public function partial($file, array $param = null) {
@@ -188,7 +192,7 @@ class Layout {
 
         //make router
         $router = new \system\Router($module, $controller, $action, $id, $param);
-      
+
         return $router->url();
     }
 
