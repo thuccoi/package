@@ -106,8 +106,7 @@ class Layout {
 
     public function title($title) {
         $this->setTitle($title);
-        echo "<title>{$this->getTitle()}</title>
-             ";
+        echo "<title>{$this->getTitle()}</title>\n";
 
         return $this;
     }
@@ -115,12 +114,10 @@ class Layout {
     public function css($href) {
         if (is_array($href)) {
             foreach ($href as $val) {
-                echo '<link rel="stylesheet"  type="text/css" href="' . $val . '" />
-                     ';
+                echo '<link rel="stylesheet"  type="text/css" href="' . $val . '" />\n';
             }
         } else {
-            echo '<link rel="stylesheet"  type="text/css" href="' . $href . '" />
-                 ';
+            echo '<link rel="stylesheet"  type="text/css" href="' . $href . '" />\n';
         }
         return $this;
     }
@@ -128,12 +125,10 @@ class Layout {
     public function js($src) {
         if (is_array($src)) {
             foreach ($src as $val) {
-                echo '<script type="text/javascript" src="' . $val . '"></script>
-                     ';
+                echo '<script type="text/javascript" src="' . $val . '"></script>\n';
             }
         } else {
-            echo '<script type="text/javascript" src="' . $src . '"></script>
-                 ';
+            echo '<script type="text/javascript" src="' . $src . '"></script>\n';
         }
         return $this;
     }
