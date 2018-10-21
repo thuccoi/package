@@ -4,7 +4,7 @@ namespace system\Template;
 
 abstract class AbstractController {
 
-    private $dm;
+    private $connect;
     private $router;
     private $code;
     private $config;
@@ -12,9 +12,9 @@ abstract class AbstractController {
     private $layout;
 
     //init from factory
-    public function __construct($dm, \system\Router $router, \system\Helper\Code $code, array $config = null, array $options = null) {
+    public function __construct($connect, \system\Router $router, \system\Helper\Code $code, array $config = null, array $options = null) {
 
-        $this->dm = $dm;
+        $this->connect = $connect;
 
         $this->router = $router;
         //set router default
@@ -26,8 +26,8 @@ abstract class AbstractController {
     }
 
     //function get
-    public function getDm() {
-        return $this->dm;
+    public function getConnect() {
+        return $this->connect;
     }
 
     public function getRouter() {
