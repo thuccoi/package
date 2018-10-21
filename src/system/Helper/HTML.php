@@ -11,14 +11,19 @@ class HTML {
         //url decode
         $stringurl = urldecode($stringparam);
 
-        //get document
-        $documents = explode('&', $stringurl);
+        //detach fragment
+        $arrfragment = implode('#', $stringurl);
+        if ($arrfragment) {
+            
+            //get document
+            $documents = explode('&', $arrfragment[0]);
 
-        if ($documents) {
-            foreach ($documents as $val) {
-                $document = explode('=', $val);
-                if (count($document) == 2) {
-                    $_GET[$code->purify($document[0])] = $code->purify($document[1]);
+            if ($documents) {
+                foreach ($documents as $val) {
+                    $document = explode('=', $val);
+                    if (count($document) == 2) {
+                        $_GET[$code->purify($document[0])] = $code->purify($document[1]);
+                    }
                 }
             }
         }
@@ -66,9 +71,15 @@ class HTML {
         $module = "";
         $controller = "";
         $action = "";
+        $id = "";
 
         //analytis arr
-        if (count($arr) == 3) {
+        if (count($arr) == 4) {
+            $module = $arr[0];
+            $controller = $arr[1];
+            $action = $arr[2];
+            $id = $arr[3];
+        } else if (count($arr) == 3) {
             $module = $arr[0];
             $controller = $arr[1];
             $action = $arr[2];
@@ -91,7 +102,7 @@ class HTML {
 
 
         //init router
-        $router = new \system\Router($module, $controller, $action);
+        $router = new \system\Router($module, $controller, $action, $id);
 
         return $router;
     }

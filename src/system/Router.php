@@ -113,8 +113,20 @@ class Router {
             $action = $options['action'];
         }
 
+        //set id
+        if (isset($options['id'])) {
+            $id = $options['id'];
+        }
+
         //make location
         $location = "Location: /{$module}/{$controller}/{$action}";
+        
+        //make id
+        if ($id) {
+            $location = $location . "/{$id}";
+        }
+        
+        //make param
         if ($parameters) {
             $location = $location . "?" . $parameters;
         }
@@ -140,6 +152,12 @@ class Router {
 
         //return url
         $url = "/{$this->module}/{$this->controller}/{$this->action}";
+        
+        //make id
+        if ($this->id) {
+            $url = $url . "/{$this->id}";
+        }
+
         if ($parameters) {
             $url = $url . "?" . $parameters;
         }
