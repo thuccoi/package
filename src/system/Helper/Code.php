@@ -121,4 +121,34 @@ class Code {
         return $result;
     }
 
+    //release ajax
+    public function release($status = 405, $message = "Error!", $data = []) {
+        echo json_encode([
+            "status" => $status,
+            "message" => $message,
+            "data" => $data
+        ]);
+        exit;
+    }
+
+    //release error
+    public function error($message = "Error!", $data = []) {
+        $this->release(405, $message, $data);
+    }
+
+    //release success
+    public function success($message = "Success!", $data = []) {
+        $this->release(200, $message, $data);
+    }
+
+    //release notfound
+    public function notfound($message = "Not Found!", $data = []) {
+        $this->release(404, $message, $data);
+    }
+
+    //release forbidden
+    public function forbidden($message = "Forbidden!", $data = []) {
+        $this->release(403, $message, $data);
+    }
+
 }
