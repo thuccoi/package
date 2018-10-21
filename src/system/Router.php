@@ -159,7 +159,7 @@ class Router {
     }
 
     //make url
-    public function makeURL() {
+    public function url() {
         //make parameters
         $parameters = [];
         if ($this->options) {

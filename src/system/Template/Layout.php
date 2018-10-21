@@ -9,7 +9,7 @@ class Layout {
     private $layout;
     private $url;
     private $view_dir;
-    private $params = [];
+    private $param = [];
     private $config;
 
     //function set and get
@@ -67,20 +67,20 @@ class Layout {
         return $this->config;
     }
 
-    public function setParams($params) {
-        $this->params = $params;
+    public function setParam($param) {
+        $this->param = $param;
         return $this;
     }
 
-    public function getParams() {
-        return $this->params;
+    public function getParam() {
+        return $this->param;
     }
 
     //function show
-    public function showLayout(array $params = null) {
+    public function showLayout(array $param = null) {
         //make parameters
-        if ($params) {
-            foreach ($params as $key => $val) {
+        if ($param) {
+            foreach ($param as $key => $val) {
                 $$key = $val;
             }
         }
@@ -88,16 +88,16 @@ class Layout {
         require_once $this->getLayout();
     }
 
-    public function showViewFile(array $params = null) {
+    public function showViewFile(array $param = null) {
         //make parameters
-        if ($params) {
-            foreach ($params as $key => $val) {
+        if ($param) {
+            foreach ($param as $key => $val) {
                 $$key = $val;
             }
         }
 
-        //set view params in action
-        foreach ($this->params as $key => $val) {
+        //set view param in action
+        foreach ($this->param as $key => $val) {
             $$key = $val;
         }
 
@@ -109,7 +109,27 @@ class Layout {
         echo "<title>{$this->getTitle()}</title>";
     }
 
-    public function partial($file, array $params = null) {
+    public function css($href) {
+        if (is_array($href)) {
+            foreach ($href as $val) {
+                echo '<link rel="stylesheet"  type="text/css" href="' . $val . '" />';
+            }
+        } else {
+            echo '<link rel="stylesheet"  type="text/css" href="' . $href . '" />';
+        }
+    }
+
+    public function js($src) {
+        if (is_array($src)) {
+            foreach ($src as $val) {
+                echo '<script type="text/javascript" src="' . $val . '"></script>';
+            }
+        } else {
+            echo '<script type="text/javascript" src="' . $src . '"></script>';
+        }
+    }
+
+    public function partial($file, array $param = null) {
         $dir = $this->getViewDir() . $file;
 
 
@@ -119,16 +139,22 @@ class Layout {
         }
 
         //make parameters
-        if ($params) {
-            foreach ($params as $key => $val) {
+        if ($param) {
+            foreach ($param as $key => $val) {
                 $$key = $val;
             }
         }
         require_once $dir;
     }
 
+    /**
+     * 
+     * @param type $module
+     * @param array $options include controller, action, id, param, fragment
+     * @return url
+     */
     public function url($module, array $options = null) {
-        
+
         //default router
         $controller = $this->config['routerDefault']['controller'];
         $action = $this->config['routerDefault']['action'];
@@ -149,6 +175,12 @@ class Layout {
             $id = $options['id'];
         }
 
+        //fragment
+        $fragment = '';
+        if (isset($options['fragment'])) {
+            $fragment = $options['fragment'];
+        }
+
         //param
         $param = [];
         if (isset($options['param'])) {
@@ -157,8 +189,9 @@ class Layout {
 
         //make router
         $router = new \system\Router($module, $controller, $action, $id, $param);
+        $router->setFragment($fragment);
 
-        return $router->makeURL();
+        return $router->url();
     }
 
 }

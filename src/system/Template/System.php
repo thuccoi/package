@@ -18,7 +18,7 @@ class System {
 
                 //init parameters
                 if (isset($init['parameters']) && $init['parameters']) {
-                    $layout->setParams($init['parameters']);
+                    $layout->setParam($init['parameters']);
                 }
 
 
@@ -65,7 +65,7 @@ class System {
         $request_uri = $_SERVER['REQUEST_URI'];
 
 
-        //get path and params ..
+        //get path and param ..
         $path = "/";
         $arrrequest = explode('?', $request_uri);
 
