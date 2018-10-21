@@ -73,13 +73,20 @@ class System {
             $path = $arrrequest[0];
         }
 
+        //set fragment
+        $fragment = "";
+        
         //add data to $_GET from url
         if (isset($arrrequest[1])) {
-            \system\Helper\HTML::addQuery($code, $arrrequest[1]);
+            \system\Helper\HTML::addQuery($code, $arrrequest[1], $fragment);
+            
         }
 
         $router = \system\Helper\HTML::getPathUri($code, $path, $sysconfig);
-
+        
+        //add fragment
+        $router->setFragment($fragment);
+        
         $module = $router->getModule();
 
         $controller = $router->getController();

@@ -9,6 +9,7 @@ class Router {
     private $action;
     private $id;
     private $options;
+    private $fragment;
     //load config default
     private $config_defaut;
     //static
@@ -71,6 +72,15 @@ class Router {
         return $this->id;
     }
 
+    public function setFragment($fragment) {
+        $this->fragment = $fragment;
+        return $this;
+    }
+
+    public function getFragment() {
+        return $this->fragment;
+    }
+
     public function setOptions($options) {
         $this->options = $options;
         return $this;
@@ -90,6 +100,8 @@ class Router {
 
         $controller = $this->config_defaut['controller'];
         $action = $this->config_defaut['action'];
+        $id = "";
+        $fragment = "";
 
         //make parameters
         $parameters = '';
@@ -118,17 +130,27 @@ class Router {
             $id = $options['id'];
         }
 
+        //set fragment
+        if (isset($options['fragment'])) {
+            $fragment = $options['fragment'];
+        }
+
         //make location
         $location = "Location: /{$module}/{$controller}/{$action}";
-        
+
         //make id
         if ($id) {
             $location = $location . "/{$id}";
         }
-        
+
         //make param
         if ($parameters) {
             $location = $location . "?" . $parameters;
+        }
+
+        //make fragment
+        if ($fragment) {
+            $location = $location . "#" . $fragment;
         }
 
         //rediect to router
@@ -152,7 +174,7 @@ class Router {
 
         //return url
         $url = "/{$this->module}/{$this->controller}/{$this->action}";
-        
+
         //make id
         if ($this->id) {
             $url = $url . "/{$this->id}";
@@ -161,6 +183,12 @@ class Router {
         if ($parameters) {
             $url = $url . "?" . $parameters;
         }
+
+        //make id
+        if ($this->fragment) {
+            $url = $url . "#{$this->fragment}";
+        }
+
         return $url;
     }
 
