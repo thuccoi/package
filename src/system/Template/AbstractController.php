@@ -10,9 +10,10 @@ abstract class AbstractController {
     private $config;
     private $options;
     private $layout;
+    private $session;
 
     //init from factory
-    public function __construct($connect, \system\Router $router, \system\Helper\Code $code, array $config = null, array $options = null) {
+    public function __construct($connect, \system\Router $router, \system\Helper\Code $code, \system\Session $session, array $config = null, array $options = null) {
 
         $this->connect = $connect;
 
@@ -21,7 +22,11 @@ abstract class AbstractController {
         $this->router->setConfigDefault($config['routerDefault']);
 
         $this->code = $code;
+
+        $this->session = $session;
+
         $this->config = $config;
+        
         $this->options = $options;
     }
 
@@ -36,6 +41,10 @@ abstract class AbstractController {
 
     public function getCode() {
         return $this->code;
+    }
+
+    public function getSession() {
+        return $this->session;
     }
 
     public function getConfig() {
