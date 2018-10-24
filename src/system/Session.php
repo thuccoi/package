@@ -110,4 +110,24 @@ class Session {
         return null;
     }
 
+    //remove session
+    public function remove($name) {
+        //check time expired
+        if ($this->working()) {
+            //check exists session name
+            if (isset($_SESSION[$name])) {
+                //unset session name
+                unset($_SESSION[$name]);
+            }
+        }
+
+        return $this;
+    }
+
+    //destroy session
+    public function destroy() {
+        session_destroy();
+        return $this;
+    }
+
 }
