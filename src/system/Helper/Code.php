@@ -161,9 +161,13 @@ class Code {
     }
 
     //pretty varial
-    public function debug($obj) {
+    public function debug($obj, $dump = false) {
         echo "<pre>";
-        print_r($obj);
+        if (!$dump) {
+            print_r($obj);
+        } else {
+            var_dump($obj);
+        }
         exit;
     }
 
