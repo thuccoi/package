@@ -1,6 +1,6 @@
 <?php
 
-namespace module\Form;
+namespace module\Share\Model\Entity;
 
 class User {
 
@@ -79,7 +79,7 @@ class User {
 
         try {
             //new user
-            $user = new \module\Model\User();
+            $user = new \module\Share\Model\Collection\User();
 
             //set information
             $user->setUsername($data->username)
@@ -90,7 +90,7 @@ class User {
 
             //isset phone
             if (!\system\Helper\Validate::isEmpty($data->phone)) {
-                
+
                 //check phone is string
                 if (!\system\Helper\Validate::isString($data->phone)) {
                     $this->code->notfound("phone was not string");
@@ -113,17 +113,17 @@ class User {
 
     public function find($id) {
         //find by id
-        $find = $this->dm->getRepository(\module\Model\User::class)->find($id);
+        $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->find($id);
 
         //find by username
         if (!$find) {
 
-            $find = $this->dm->getRepository(\module\Model\User::class)->findOneBy(['username' => $id]);
+            $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['username' => $id]);
         }
 
         //find by email
         if (!$find) {
-            $find = $this->dm->getRepository(\module\Model\User::class)->findOneBy(['email' => $id]);
+            $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['email' => $id]);
         }
 
         return $find;

@@ -1,6 +1,6 @@
 <?php
 
-namespace module\Controller;
+namespace module\Register\Controller;
 
 class RegisterController extends \system\Template\AbstractController {
 
@@ -16,9 +16,9 @@ class RegisterController extends \system\Template\AbstractController {
         ];
 
         //input form
-        $form = new \module\Form\User($this->getConnect(), $this->getCode());
+        $entity = new \module\Share\Model\Entity\User($this->getConnect(), $this->getCode());
         //register new an user
-        $form->create($data);
+        $entity->create($data);
     }
 
 }

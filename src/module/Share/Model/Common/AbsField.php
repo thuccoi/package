@@ -1,6 +1,6 @@
 <?php
 
-namespace module\Model;
+namespace module\Share\Model\Common;
 
 abstract class AbsField {
 

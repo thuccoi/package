@@ -1,6 +1,6 @@
 <?php
 
-namespace module\Model;
+namespace module\Share\Model\Collection;
 
 use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
@@ -16,7 +16,7 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class User extends AbsField {
 
     //load field default
-    use FieldDefault;
+    use \ module\Share\Model\Common\FieldDefault;
 
     /**
      *
