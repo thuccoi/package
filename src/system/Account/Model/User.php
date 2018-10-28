@@ -75,7 +75,7 @@ class User extends AbsField {
     }
 
     /**
-     * @PostUpdate 
+     * @ODM\PostUpdate 
      */
     public function postUpdate() {
         // ...
