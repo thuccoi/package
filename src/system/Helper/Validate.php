@@ -25,7 +25,7 @@ class Validate {
 
     public static function isInt(&$num) {
         //isset
-        if (isset($num)) {
+        if (!isset($num)) {
             return false;
         }
 
@@ -34,7 +34,7 @@ class Validate {
 
     public static function isFloat(&$num) {
         //isset
-        if (isset($num)) {
+        if (!isset($num)) {
             return false;
         }
 
@@ -43,7 +43,7 @@ class Validate {
 
     public static function isBool(&$boolen) {
         //isset
-        if (isset($boolen)) {
+        if (!isset($boolen)) {
             return false;
         }
 
@@ -52,7 +52,7 @@ class Validate {
 
     public static function isArray(&$arr) {
         //isset
-        if (isset($arr)) {
+        if (!isset($arr)) {
             return false;
         }
 
@@ -61,7 +61,7 @@ class Validate {
 
     public static function isObject(&$obj) {
         //isset
-        if (isset($obj)) {
+        if (!isset($obj)) {
             return false;
         }
 
@@ -71,7 +71,7 @@ class Validate {
     //check is string
     public static function isString(&$str) {
         //isset
-        if (isset($str)) {
+        if (!isset($str)) {
             return false;
         }
 
