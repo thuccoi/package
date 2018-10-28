@@ -151,4 +151,11 @@ class Code {
         $this->release(403, $message, $data);
     }
 
+    //pretty varial
+    public function debug($obj) {
+        echo "<pre>";
+        print_r($obj);
+        exit;
+    }
+
 }

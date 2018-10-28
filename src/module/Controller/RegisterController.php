@@ -5,25 +5,20 @@ namespace module\Controller;
 class RegisterController extends \system\Template\AbstractController {
 
     public function createAction() {
-        //get connect
-        $dm = $this->getConnect();
-        //new user
-        $user = new \module\Model\User();
+        //get data
+        $data = (object) [
+                    "first_name" => $this->getCode()->post("first_name"),
+                    "last_name" => $this->getCode()->post("last_name"),
+                    "username" => $this->getCode()->post("username"),
+                    "password" => $this->getCode()->post("password"),
+                    "email" => $this->getCode()->post("email"),
+                    "phone" => $this->getCode()->post("phone")
+        ];
 
-        //set information
-        $user->setUsername("thuccoi")
-                ->setPassword("lr3fgkRh5")
-                ->setFirstName("thuc")
-                ->setLastName("nguyen the")
-                ->setEmail("thucfami@gmail.com")
-                ->setPhone("0979 846 286");
-
-        //save and send email
-        $dm->persist($user);
-        $dm->flush();
-
-        //release ajax
-        $this->getCode()->success("Register is successfuly");
+        //input form
+        $form = new \module\Form\User($this->getConnect(), $this->getCode());
+        //register new an user
+        $form->create($data);
     }
 
 }
