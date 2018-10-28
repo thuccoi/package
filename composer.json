@@ -10,7 +10,8 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
-            "system": "src/"
+            "system": "src/system/",
+            "Account": "src/Account/"
         }  
     },
     "require": {

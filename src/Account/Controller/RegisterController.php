@@ -8,8 +8,8 @@ class RegisterController extends \system\Template\AbstractController {
         //get connect
         $dm = $this->getConnect();
         //new user
-        $user = new Account\Model\User();
-        
+        $user = new \Account\Model\User();
+
         //set information
         $user->setUsername("thuccoi")
                 ->setPassword("lr3fgkRh5")

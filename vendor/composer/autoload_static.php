@@ -103,7 +103,7 @@ class ComposerStaticInit11e818b9be3b7ac38df5f430ee429a00
         array (
             'system' => 
             array (
-                0 => __DIR__ . '/../..' . '/src',
+                0 => __DIR__ . '/../..' . '/src/system',
             ),
         ),
         'M' => 
@@ -111,6 +111,13 @@ class ComposerStaticInit11e818b9be3b7ac38df5f430ee429a00
             'Mongo' => 
             array (
                 0 => __DIR__ . '/..' . '/alcaeus/mongo-php-adapter/lib/Mongo',
+            ),
+        ),
+        'A' => 
+        array (
+            'Account' => 
+            array (
+                0 => __DIR__ . '/../..' . '/src/Account',
             ),
         ),
     );
