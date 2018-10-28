@@ -13,10 +13,10 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  * 
  * @ODM\HasLifecycleCallbacks
  */
-class User extends AbsField {
+class User extends \module\Share\Model\Common\AbsField {
 
     //load field default
-    use \ module\Share\Model\Common\FieldDefault;
+    use \module\Share\Model\Common\FieldDefault;
 
     /**
      *
