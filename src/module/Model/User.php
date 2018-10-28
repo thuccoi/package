@@ -20,7 +20,7 @@ class User extends AbsField {
 
     /**
      *
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="string")  @ODM\UniqueIndex 
      */
     private $username;
 
@@ -50,7 +50,7 @@ class User extends AbsField {
 
     /**
      *
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="string")  @ODM\UniqueIndex 
      */
     private $phone;
 
