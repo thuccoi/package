@@ -1,6 +1,6 @@
 <?php
 
-namespace Account\Controller;
+namespace module\Controller;
 
 class RegisterController extends \system\Template\AbstractController {
 
@@ -8,7 +8,7 @@ class RegisterController extends \system\Template\AbstractController {
         //get connect
         $dm = $this->getConnect();
         //new user
-        $user = new \Account\Model\User();
+        $user = new \module\Model\User();
 
         //set information
         $user->setUsername("thuccoi")

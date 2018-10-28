@@ -11,7 +11,7 @@
     "autoload": {
         "psr-4": {
             "system\\": "src/system/",
-            "Account\\": "src/Account/"
+            "module\\": "src/module/"
         }
     },
     "require": {
