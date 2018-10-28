@@ -98,6 +98,14 @@ class Code {
         $value = "";
         if (isset($_POST[$name])) {
             $value = $_POST[$name];
+        } else {
+            
+            //'contentType': 'application/json'
+            $POSTdata = json_decode(file_get_contents("php://input"), true);
+
+            if (isset($POSTdata[$name])) {
+                $value = $POSTdata[$name];
+            }
         }
 
         return $this->purify($value);
