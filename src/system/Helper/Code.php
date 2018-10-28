@@ -63,7 +63,7 @@ class Code {
         'z',
         'w',
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '+', '-', '=', '&', '?', '/', ' '
+        '+', '-', '=', '&', '?', '/', ' ', '.', '@'
     ];
 
     public function inputInline($name, $method = "GET") {
@@ -99,7 +99,7 @@ class Code {
         if (isset($_POST[$name])) {
             $value = $_POST[$name];
         } else {
-            
+
             //'contentType': 'application/json'
             $POSTdata = json_decode(file_get_contents("php://input"), true);
 
