@@ -96,11 +96,6 @@ class User {
                     $this->code->notfound("phone was not string");
                 }
 
-                //check exists email
-                if ($this->find($data->phone)) {
-                    $this->code->forbidden("phone was existed in system");
-                }
-
                 $user->setPhone($data->phone);
             }
 
