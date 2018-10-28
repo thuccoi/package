@@ -9,10 +9,10 @@
     ],
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": {
-            "system": "src/system/",
-            "Account": "src/Account/"
-        }  
+        "psr-4": {
+            "system\\": "src/system/",
+            "Account\\": "src/Account/"
+        }
     },
     "require": {
         "doctrine/mongodb": "dev-master",
