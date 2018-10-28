@@ -73,23 +73,29 @@ class System {
             $path = $arrrequest[0];
         }
 
-        
+
         //add data to $_GET from url
         if (isset($arrrequest[1])) {
             \system\Helper\HTML::addQuery($code, $arrrequest[1]);
-            
         }
 
+        //get router
         $router = \system\Helper\HTML::getPathUri($code, $path, $sysconfig);
-      
+
         $module = $router->getModule();
 
         $controller = $router->getController();
 
         $action = $router->getAction();
 
+        //new session
+        $session = new \system\Session($sysconfig);
 
-        $config = self::getModuleConfig($module, $controller);
+        //session working
+        $session->working();
+
+        //config of module
+        $config = self::getModuleConfig($module, $controller, $session, $sysconfig);
 
         if ($config) {
             if (isset($config['controller'])) {
@@ -104,7 +110,7 @@ class System {
                 $objfactory = new $factory;
 
                 //init controller
-                $obj = $objfactory($loader, $config['controller'], $router, $code, $sysconfig, []);
+                $obj = $objfactory($loader, $config['controller'], $router, $code, $session, $sysconfig, []);
 
                 $naction = "";
                 for ($i = 0; $i < strlen($action); $i++) {
@@ -152,7 +158,7 @@ class System {
         }
     }
 
-    public static function getModuleConfig($module, $controller) {
+    public static function getModuleConfig($module, $controller, $session, $sysconfig) {
         //load config of module
         foreach (TAMI_MODULE as $val) {
             $classname = $val . '\\Module';
@@ -161,6 +167,13 @@ class System {
 
             //get module config
             $config = $obj->getConfig();
+
+            //check oauth
+            if (method_exists($obj, "oauth")) {
+                if (!$obj->oauth($session)) {
+                    //redirect to login
+                }
+            }
 
             if (isset($config['router'])) {
 
