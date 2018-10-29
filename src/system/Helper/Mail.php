@@ -175,8 +175,25 @@ class Mail {
         // create instance
         $cssToInlineStyles = new CssToInlineStyles();
 
-        $html = file_get_contents($dirhtml);
-        $css = file_get_contents($dircss);
+        //merge html
+        $html = "";
+        if (\system\Helper\Validate::isArray($dirhtml)) {
+            foreach ($dirhtml as $val) {
+                $html = $html . file_get_contents($val);
+            }
+        } else {
+            $html = file_get_contents($dirhtml);
+        }
+
+        //merge css
+        $css = "";
+        if (\system\Helper\Validate::isArray($dircss)) {
+            foreach ($dircss as $val) {
+                $css = $css . file_get_contents($val);
+            }
+        } else {
+            $css = file_get_contents($dircss);
+        }
 
         // output
         return $cssToInlineStyles->convert(
