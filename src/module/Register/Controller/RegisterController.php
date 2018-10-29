@@ -16,7 +16,7 @@ class RegisterController extends \system\Template\AbstractController {
         ];
 
         //input form
-        $entity = new \module\Share\Model\Entity\User($this->getConnect(), $this->getCode());
+        $entity = new \module\Share\Model\Entity\User($this->getConnect(), $this->getCode(), $this->getConfig());
         //register new an user
         $entity->create($data);
     }

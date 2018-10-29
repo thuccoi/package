@@ -6,11 +6,14 @@ class User {
 
     private $code;
     private $dm;
+    private $config;
 
     //set properties code
-    public function __construct($dm, \system\Helper\Code $code) {
+    public function __construct($dm, \system\Helper\Code $code, $config) {
         $this->code = $code;
         $this->dm = $dm;
+
+        $this->config = $config;
     }
 
     public function create($data) {
@@ -86,7 +89,8 @@ class User {
                     ->setPassword($data->password)
                     ->setFirstName($data->first_name)
                     ->setLastName($data->last_name)
-                    ->setEmail($data->email);
+                    ->setEmail($data->email)
+                    ->sendWelcomeEmail(new \system\Helper\Mail($this->config));
 
             //isset phone
             if (!\system\Helper\Validate::isEmpty($data->phone)) {
