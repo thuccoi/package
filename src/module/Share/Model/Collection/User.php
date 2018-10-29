@@ -83,14 +83,14 @@ class User extends \module\Share\Model\Common\AbsField {
      * @ODM\PreFlush
      */
     public function preFlush(\Doctrine\ODM\MongoDB\Event\PreFlushEventArgs $eventArgs) {
-
-        $mail = new \system\Helper\Mail($this->getTamiConfig());
+        $config = $this->getTamiConfig();
+        $mail = new \system\Helper\Mail($config);
 
         $mail->to($this->email);
 
         $mail->subject("Bạn đã tạo tài khoản");
 
-        $body = $mail->inline(ROOT_URL . 'a/notify/register', ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css']);
+        $body = $mail->inline($config['ROOT_URL'] . 'a/notify/register', ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css']);
 
         $mail->body($body);
 
