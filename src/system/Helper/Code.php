@@ -131,9 +131,9 @@ class Code {
 
     //release ajax
     public function release($status = 405, $message = "Error!", $data = []) {
-        if (!headers_list()) {
-            header('Content-Type: application/json');
-        }
+//        if (!headers_list()) {
+//            header('Content-Type: application/json');
+//        }
 
         echo json_encode([
             "status" => $status,
