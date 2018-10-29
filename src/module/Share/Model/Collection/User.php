@@ -90,8 +90,8 @@ class User extends \module\Share\Model\Common\AbsField {
 
         $mail->subject("Bạn đã tạo tài khoản");
 
-        $body = file_get_contents($this->getTamiConfig()['DOMAIN'] . "/a/email/activate?id={$this->email}&token={$this->token}");
-        
+        $body = file_get_contents($this->getTamiConfig()['ROOT_URL'] . "/a/email/register?id={$this->email}&token={$this->token}");
+
         $mail->body($body);
 
         $mail->send();
