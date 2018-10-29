@@ -6,14 +6,14 @@ class User {
 
     private $code;
     private $dm;
-    private $config;
+    private $tami_config;
 
     //set properties code
     public function __construct($dm, \system\Helper\Code $code, $config) {
         $this->code = $code;
         $this->dm = $dm;
 
-        $this->config = $config;
+        $this->tami_config = $config;
     }
 
     public function create($data) {
@@ -82,15 +82,14 @@ class User {
 
         try {
             //new user
-            $user = new \module\Share\Model\Collection\User();
+            $user = new \module\Share\Model\Collection\User($this->tami_config);
 
             //set information
             $user->setUsername($data->username)
                     ->setPassword($data->password)
                     ->setFirstName($data->first_name)
                     ->setLastName($data->last_name)
-                    ->setEmail($data->email)
-                    ->sendWelcomeEmail(new \system\Helper\Mail($this->config));
+                    ->setEmail($data->email);
 
             //isset phone
             if (!\system\Helper\Validate::isEmpty($data->phone)) {
