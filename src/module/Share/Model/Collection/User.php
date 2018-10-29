@@ -90,7 +90,7 @@ class User extends \module\Share\Model\Common\AbsField {
 
         $mail->subject("Bạn đã tạo tài khoản");
 
-        $body = file_get_contents($this->getTamiConfig()['ROOT_URL'] . "/a/email/register?id={$this->email}&token={$this->token}");
+        $body = file_get_contents($this->getTamiConfig()['ROOT_URL'] . "/a/notify/register?id={$this->id}&token={$this->token}");
 
         $mail->body($body);
 
@@ -122,6 +122,7 @@ class User extends \module\Share\Model\Common\AbsField {
         $obj->image = $this->getImage();
         $obj->email = $this->getEmail();
         $obj->phone = $this->getPhone();
+        $obj->token = $this->getToken();
         $obj->status = $this->getStatus();
 
         return $obj;
