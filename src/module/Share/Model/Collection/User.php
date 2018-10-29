@@ -55,6 +55,31 @@ class User extends \module\Share\Model\Common\AbsField {
     private $email;
 
     /**
+     *
+     * @ODM\Field(type="string")
+     */
+    private $token;
+
+    /**
+     *
+     * @ODM\Field(type="int")
+     */
+    private $status;
+
+    const STATUS_ACTIVATE = 1;
+    const STATUS_DEACTIVE = -1;
+    const STATUS_PENDING = 0;
+
+    public function __construct($config) {
+        parent::__construct($config);
+        //pending status
+        $this->status = self::STATUS_PENDING;
+
+        //generate token
+        $this->token = \system\Helper\String::rand();
+    }
+
+    /**
      * @ODM\PreFlush
      */
     public function preFlush(\Doctrine\ODM\MongoDB\Event\PreFlushEventArgs $eventArgs) {
@@ -65,7 +90,7 @@ class User extends \module\Share\Model\Common\AbsField {
 
         $mail->subject("Bạn đã tạo tài khoản");
 
-        $mail->body("Bạn hãy click vào link xác nhận");
+        $mail->body("Bạn hãy click vào link xác nhận: {$this->token}");
 
         $mail->send();
     }
@@ -95,8 +120,26 @@ class User extends \module\Share\Model\Common\AbsField {
         $obj->image = $this->getImage();
         $obj->email = $this->getEmail();
         $obj->phone = $this->getPhone();
+        $obj->status = $this->getStatus();
 
         return $obj;
+    }
+
+    //status
+    public function getStatus() {
+        return $this->status;
+    }
+
+    //active account
+    public function activate() {
+        $this->status = self::STATUS_ACTIVATE;
+        return $this;
+    }
+
+    //deactive account
+    public function deactivate() {
+        $this->status = self::STATUS_DEACTIVE;
+        return $this;
     }
 
     //authentic
@@ -204,6 +247,11 @@ class User extends \module\Share\Model\Common\AbsField {
     public function setEmail($email) {
         $this->email = $email;
         return $this;
+    }
+
+    //get token
+    public function getToken() {
+        return $this->token;
     }
 
 }
