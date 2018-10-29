@@ -76,7 +76,7 @@ class User extends \module\Share\Model\Common\AbsField {
         $this->status = self::STATUS_PENDING;
 
         //generate token
-        $this->token = \system\Helper\String::rand();
+        $this->token = \system\Helper\Str::rand();
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace system\Helper;
 
-class String {
+class Str {
 
     //random string
     public static function rand(int $length = 32) {
