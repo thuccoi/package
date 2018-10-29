@@ -2,6 +2,7 @@
 
 namespace system\Helper;
 
+
 class HTML {
 
     public static $TAMI_GET = "GET";
@@ -136,5 +137,6 @@ class HTML {
             return '<script src="' . $destination_dir . $dest_file_name . '"></script>'; //output combine file
         }
     }
+
 
 }

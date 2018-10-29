@@ -90,11 +90,9 @@ class User extends \module\Share\Model\Common\AbsField {
 
         $mail->subject("Bạn đã tạo tài khoản");
 
-//        $body = file_get_contents($this->getTamiConfig()['ROOT_URL'] . "/a/notify/register?id={$this->id}&token={$this->token}");
-        
-        $html = include DIR_ROOT . 'module/Account/view/notify/register.tami';
+        $body = $mail->inline(DIR_ROOT . 'module/Account/view/notify/register.tami', DIR_ROOT . 'public/tami/css/tami.css');
 
-        $mail->body( $html[0]);
+        $mail->body($body);
 
         $mail->send();
     }

@@ -3,6 +3,7 @@
 namespace system\Helper;
 
 use PHPMailer\PHPMailer\PHPMailer;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class Mail {
 
@@ -166,6 +167,21 @@ class Mail {
     //send
     public function send() {
         $this->mail->send();
+    }
+
+    //convert to html inline style
+    public function inline($dirhtml, $dircss) {
+        //https://github.com/tijsverkoyen/CssToInlineStyles
+        // create instance
+        $cssToInlineStyles = new CssToInlineStyles();
+
+        $html = file_get_contents($dirhtml);
+        $css = file_get_contents($dircss);
+
+        // output
+        return $cssToInlineStyles->convert(
+                        $html, $css
+        );
     }
 
 }

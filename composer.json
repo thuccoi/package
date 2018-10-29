@@ -18,7 +18,8 @@
         "doctrine/mongodb": "dev-master",
         "alcaeus/mongo-php-adapter": "dev-master",
         "doctrine/mongodb-odm": "^2.0@dev",
-        "phpmailer/phpmailer": "dev-master"
+        "phpmailer/phpmailer": "dev-master",
+        "tijsverkoyen/css-to-inline-styles": "^2.2@dev"
     },
     "config": {
         "platform": {
