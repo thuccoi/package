@@ -57,7 +57,7 @@ class User extends \module\Share\Model\Common\AbsField {
     /**
      * @ODM\PrePersist
      */
-    public function sendWelcomeEmail() {
+    public function prePersist() {
         $mail = new \system\Helper\Mail($this->getTamiConfig());
         $mail->to($this->email);
         $mail->subject("Bạn đã tạo tài khoản");
