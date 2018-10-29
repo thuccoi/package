@@ -55,22 +55,18 @@ class User extends \module\Share\Model\Common\AbsField {
     private $email;
 
     /**
-     * @ODM\Field(type="string")
-     */
-    private $test;
-
-    /**
      * @ODM\PreFlush
      */
     public function preFlush(\Doctrine\ODM\MongoDB\Event\PreFlushEventArgs $eventArgs) {
 
-        $this->test = "before flush";
-
         $mail = new \system\Helper\Mail($this->getTamiConfig());
 
         $mail->to($this->email);
+
         $mail->subject("Bạn đã tạo tài khoản");
+
         $mail->body("Bạn hãy click vào link xác nhận");
+
         $mail->send();
     }
 
@@ -129,12 +125,36 @@ class User extends \module\Share\Model\Common\AbsField {
 
     public function setPassword($password) {
 
-        //http://php.net/manual/en/function.password-hash.php
-        $options = [
+        //default options password
+        $conpasswd = [
             'cost' => 12,
-            'salt' => 'tami_875DSDEW23232@fdfd43iyyrtr'
+            'salt' => 'tami_dsjhaiu4229429472r24rr34'
         ];
 
+        //set from config
+        if (isset($this->getTamiConfig()['password'])) {
+
+            $conpasswd = $this->getTamiConfig()['password'];
+
+            if (!isset($conpasswd['cost'])) {
+                echo "password cost is required";
+                exit;
+            }
+
+            if (!isset($conpasswd['salt'])) {
+                echo "password salt is required";
+                exit;
+            }
+        }
+
+
+        //http://php.net/manual/en/function.password-hash.php
+        $options = [
+            'cost' => $conpasswd['cost'],
+            'salt' => $conpasswd['salt']
+        ];
+
+        //hash password
         $this->password = password_hash($password, PASSWORD_BCRYPT, $options);
 
         return $this;
