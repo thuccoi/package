@@ -2,7 +2,7 @@
 
 namespace module\Register\Controller;
 
-class EmailController extends \system\Template\AbstractController {
+class NotifyController extends \system\Template\AbstractController {
 
 //entity user
     protected $entity;
