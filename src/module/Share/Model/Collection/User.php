@@ -83,6 +83,7 @@ class User extends \module\Share\Model\Common\AbsField {
      * @ODM\PreFlush
      */
     public function preFlush(\Doctrine\ODM\MongoDB\Event\PreFlushEventArgs $eventArgs) {
+        //config system
         $config = $this->getTamiConfig();
         $mail = new \system\Helper\Mail($config);
 
