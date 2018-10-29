@@ -103,7 +103,7 @@ class User {
             }
 
             //send email welcome
-            $user->sendWelcomeEmail();
+//            $user->sendWelcomeEmail();
             
             //save and send email
             $this->dm->persist($user);
