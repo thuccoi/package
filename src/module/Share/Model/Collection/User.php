@@ -63,8 +63,11 @@ class User extends \module\Share\Model\Common\AbsField {
     /**
      * @ODM\PostPersist
      */
-    public function sendWelcomeEmail() {
-        
+    public function sendWelcomeEmail(\system\Helper\Mail $mail) {
+        $mail->to($this->email);
+        $mail->subject("Bạn đã tạo tài khoản");
+        $mail->body("Bạn hãy click vào link xác nhận");
+        $mail->send();
     }
 
     /**
