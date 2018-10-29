@@ -55,7 +55,7 @@ class User extends \module\Share\Model\Common\AbsField {
     private $email;
 
     /**
-     * @ODM\PostPersist
+     * @ODM\PrePersist
      */
     public function sendWelcomeEmail() {
         $mail = new \system\Helper\Mail($this->getTamiConfig());
