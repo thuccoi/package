@@ -49,13 +49,20 @@ class RegisterController extends \system\Template\AbstractController {
 
             //activate account
             $obj->activate();
-            
+
             //save record
             $this->getConnect()->persist($obj);
             $this->flush();
         }
 
         $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.");
+    }
+
+    
+    public function bodyAction() {
+        $this->getLayout('TAMI_NOLAYOUT');
+
+        return [];
     }
 
 }
