@@ -2,7 +2,7 @@
 
 namespace module\Register\Controller;
 
-class NotifyController extends \system\Template\AbstractController {
+class EmailController extends \system\Template\AbstractController {
 
 //entity user
     protected $entity;
@@ -17,15 +17,9 @@ class NotifyController extends \system\Template\AbstractController {
     public function registerAction() {
         $this->setLayout('TAMI_NOLAYOUT');
 
-        $user = $this->entity->find($this->getCode()->get("id"));
-
-        //check user
-        if (!$user) {
-            $this->getCode()->notfound("Not found User");
-        }
-
         return[
-            "user" => $user->release()
+            "id" => $this->getCode()->get("id"),
+            "token" => $this->getCode()->get("token")
         ];
     }
 
