@@ -4,6 +4,9 @@ namespace module\Share\Model\Common;
 
 abstract class AbsField {
 
+    //config system not save, load insystem
+    private $tami_config;
+
     use FieldDefault;
 
     public function __construct($config) {
@@ -16,4 +19,15 @@ abstract class AbsField {
 
     //release function
     abstract public function release();
+
+    //tami config
+    public function setTamiConfig($config) {
+        $this->tami_config = $config;
+        return $this;
+    }
+
+    public function getTamiConfig() {
+        return $this->tami_config;
+    }
+
 }

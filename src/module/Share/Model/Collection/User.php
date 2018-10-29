@@ -55,10 +55,19 @@ class User extends \module\Share\Model\Common\AbsField {
     private $email;
 
     /**
-     * @ODM\PrePersist
+     * @ODM\Field(type="string")
      */
-    public function prePersist() {
+    private $test;
+
+    /**
+     * @ODM\PreFlush
+     */
+    public function preFlush(\Doctrine\ODM\MongoDB\Event\PreFlushEventArgs $eventArgs) {
+
+        $this->test = "before flush";
+
         $mail = new \system\Helper\Mail($this->getTamiConfig());
+
         $mail->to($this->email);
         $mail->subject("Bạn đã tạo tài khoản");
         $mail->body("Bạn hãy click vào link xác nhận");

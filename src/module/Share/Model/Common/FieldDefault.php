@@ -30,8 +30,6 @@ trait FieldDefault {
      * @ODM\Field(type="hash")
      */
     private $options;
-    //config system not save, load insystem
-    private $tami_config;
 
     //function set and get
     public function getId() {
@@ -88,14 +86,5 @@ trait FieldDefault {
         ];
     }
 
-    //tami config
-    public function setTamiConfig($config) {
-        $this->tami_config = $config;
-        return $this;
-    }
-
-    public function getTamiConfig() {
-        return $this->tami_config;
-    }
 
 }
