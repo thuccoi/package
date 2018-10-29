@@ -5,13 +5,7 @@ namespace module\Share\Model\Collection;
 use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\Document(db="tami_account", collection="Users")
- * 
- * @ODM\Indexes({
- *      @ODM\Index(keys={"username"="desc"}, options={"unique"=true})
- * })
- * 
- * @ODM\HasLifecycleCallbacks
+ * @ODM\Document(db="tami_account", collection="Users")  @ODM\HasLifecycleCallbacks
  */
 class User extends \module\Share\Model\Common\AbsField {
 
