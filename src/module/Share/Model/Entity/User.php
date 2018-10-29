@@ -102,6 +102,9 @@ class User {
                 $user->setPhone($data->phone);
             }
 
+            //send email welcome
+            $user->sendWelcomeEmail();
+            
             //save and send email
             $this->dm->persist($user);
             $this->dm->flush();
