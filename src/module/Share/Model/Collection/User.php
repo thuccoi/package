@@ -7,7 +7,7 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /**
  * @ODM\Document(db="tami_account", collection="Users")  @ODM\HasLifecycleCallbacks
  */
-class User extends \module\Share\Model\Common\AbsField {
+class User extends \module\Share\Model\Common\FieldInterface {
 
     //load field default
     use \module\Share\Model\Common\FieldDefault;
@@ -81,7 +81,10 @@ class User extends \module\Share\Model\Common\AbsField {
     const EMAIL_PENDING = 0;
 
     public function __construct() {
-        parent::__construct();
+        
+        //init
+        $this->init();
+        
         //pending status
         $this->status = self::STATUS_PENDING;
 

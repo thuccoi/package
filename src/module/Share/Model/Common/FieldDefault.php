@@ -31,6 +31,18 @@ trait FieldDefault {
      */
     private $options;
 
+    public function __construct() {
+        $this->init();
+    }
+    
+    //function construct
+    public function init() {
+        $this->id = new \MongoId();
+        $this->create_at = new \DateTime();
+        $this->update_at = new \DateTime();
+        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     //function set and get
     public function getId() {
         return $this->id;
@@ -85,6 +97,5 @@ trait FieldDefault {
                     "options" => $this->getOptions()
         ];
     }
-
 
 }
