@@ -82,7 +82,7 @@ class User {
 
         try {
             //new user
-            $user = new \module\Share\Model\Collection\User($this->tami_config);
+            $user = new \module\Share\Model\Collection\User();
 
             //set information
             $user->setUsername($data->username)
@@ -101,6 +101,9 @@ class User {
 
                 $user->setPhone($data->phone);
             }
+            
+            //send email welcome
+            $user->sendWelcomeEmail($this->tami_config);
             
             //save and send email
             $this->dm->persist($user);

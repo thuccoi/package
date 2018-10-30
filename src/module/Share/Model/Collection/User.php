@@ -80,8 +80,8 @@ class User extends \module\Share\Model\Common\AbsField {
     const EMAIL_CONFIRMED = 1;
     const EMAIL_PENDING = 0;
 
-    public function __construct($config) {
-        parent::__construct($config);
+    public function __construct() {
+        parent::__construct();
         //pending status
         $this->status = self::STATUS_PENDING;
 
@@ -92,13 +92,9 @@ class User extends \module\Share\Model\Common\AbsField {
         $this->token = \system\Helper\Str::rand();
     }
 
-    /**
-     * @ODM\PreFlush
-     */
-    public function preFlush(\Doctrine\ODM\MongoDB\Event\PreFlushEventArgs $eventArgs) {
-        
-        //config system
-        $config = $this->getTamiConfig();
+    //send welcome email
+    public function sendWelcomeEmail($config) {
+
         $mail = new \system\Helper\Mail($config);
 
         $mail->to($this->email);
@@ -112,22 +108,29 @@ class User extends \module\Share\Model\Common\AbsField {
 
         $mail->send();
         
+        return $this;
     }
 
-    /**
-     *  @ODM\PostRemove
-     */
-    public function postRemove() {
-        // ...
-    }
+    //send confirm email
+    public function sendConfirmEmail($config) {
+        $this->email_confirm = self::EMAIL_CONFIRMED;
 
-    /**
-     * @ODM\PostUpdate 
-     */
-    public function postUpdate() {
-        // ...
-    }
+        $mail = new \system\Helper\Mail($config);
 
+        $mail->to($this->email);
+
+        $mail->subject("Thông tin tài khoản của bạn đã được xác nhận");
+
+        //get html inline to body
+        $body = $mail->inline($config['ROOT_URL'] . '/a/notify/register', ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css']);
+
+        $mail->body($body);
+
+        $mail->send();
+        
+        return $this;
+    }
+    
     //function release
     public function release() {
         //object release
@@ -146,11 +149,6 @@ class User extends \module\Share\Model\Common\AbsField {
         return $obj;
     }
 
-    //email confirm
-    public function emailConfirm() {
-        $this->email_confirm = self::EMAIL_CONFIRMED;
-        return $this;
-    }
 
     //status
     public function getStatus() {

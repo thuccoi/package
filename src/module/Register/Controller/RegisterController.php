@@ -48,11 +48,11 @@ class RegisterController extends \system\Template\AbstractController {
             }
 
             //activate account
-            $obj->emailConfirm();
+            $obj->sendConfirmEmail($this->getConfig());
 
             //save record
             $this->getConnect()->persist($obj);
-            $this->flush();
+            $this->getConnect()->flush();
         }
 
         $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.");
