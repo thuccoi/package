@@ -81,10 +81,10 @@ class User extends \module\Share\Model\Common\FieldInterface {
     const EMAIL_PENDING = 0;
 
     public function __construct() {
-        
+
         //init
         $this->init();
-        
+
         //pending status
         $this->status = self::STATUS_PENDING;
 
@@ -105,7 +105,7 @@ class User extends \module\Share\Model\Common\FieldInterface {
         $mail->subject("Bạn đã tạo tài khoản");
 
         //get html inline to body
-        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/verify?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', "/css/account/notify/register.css"]);
+        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/verify?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', DIR_ROOT . "/css/account/notify/register.css"]);
 
         $mail->body($body);
 
@@ -125,7 +125,7 @@ class User extends \module\Share\Model\Common\FieldInterface {
         $mail->subject("Thông tin tài khoản của bạn đã được xác nhận");
 
         //get html inline to body
-        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/confirm?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', "/css/account/notify/confirm.css"]);
+        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/confirm?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', DIR_ROOT . "/css/account/notify/confirm.css"]);
 
         $mail->body($body);
 
