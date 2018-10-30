@@ -7,12 +7,13 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /**
  * @ODM\Document(
  *   db="tami_account", 
- *   collection="Applications",
- *   indexes={
- *     @ODM\Index(keys={"domain"="desc"}, options={"unique"=true}),
- *     @ODM\Index(keys={"metatype"="desc"}, options={"unique"=true})
- *   }
- * )  @ODM\HasLifecycleCallbacks
+ *   collection="Applications"
+ * )  
+ * @ODM\Indexes({
+ *     @ODM\Index(keys={"metatype"="asc"}),
+ *     @ODM\Index(keys={"domain"="asc"}) 
+ * }) 
+ * @ODM\HasLifecycleCallbacks
  */
 class Application implements \module\Share\Model\Common\FieldInterface {
 
