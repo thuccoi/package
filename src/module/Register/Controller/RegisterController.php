@@ -47,12 +47,13 @@ class RegisterController extends \system\Template\AbstractController {
                 $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.");
             }
 
+            //activate account
+            $obj->sendConfirmEmail($this->getConfig());
+            
             //save record
             $this->getConnect()->persist($obj);
             $this->getConnect()->flush();
-            
-            //activate account
-            $obj->sendConfirmEmail($this->getConfig());
+
 
             $this->getCode()->success("Xác nhận thông tin thành công.");
         }

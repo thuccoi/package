@@ -144,7 +144,6 @@ class User implements \module\Share\Model\Common\FieldInterface {
         $obj->name = $this->getName();
         $obj->image = $this->getImage();
         $obj->email = $this->getEmail();
-        $obj->email_confirm = $this->getEmailConfirm();
         $obj->phone = $this->getPhone();
         $obj->status = $this->getStatus();
 
