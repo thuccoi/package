@@ -2,7 +2,6 @@
 
 namespace system\Helper;
 
-
 class HTML {
 
     public static $TAMI_GET = "GET";
@@ -101,7 +100,7 @@ class HTML {
 
 
         //init router
-        $router = new \system\Router($module, $controller, $action, $id);
+        $router = new \system\Router($module, $controller, $action, $id, [], $sysconfig);
 
         return $router;
     }
@@ -137,6 +136,5 @@ class HTML {
             return '<script src="' . $destination_dir . $dest_file_name . '"></script>'; //output combine file
         }
     }
-
 
 }

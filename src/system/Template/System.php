@@ -60,7 +60,7 @@ class System {
         //get config of system
         $sysconfig = \system\Template\Container::getSysConfig();
 
-        $code = new \system\Helper\Code();
+        $code = new \system\Helper\Code($sysconfig);
 
         $request_uri = $_SERVER['REQUEST_URI'];
 

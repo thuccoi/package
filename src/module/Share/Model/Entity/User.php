@@ -6,14 +6,14 @@ class User {
 
     private $code;
     private $dm;
-    private $tami_config;
+    private $config;
 
     //set properties code
     public function __construct($dm, \system\Helper\Code $code, $config) {
         $this->code = $code;
         $this->dm = $dm;
 
-        $this->tami_config = $config;
+        $this->config = $config;
     }
 
     public function create($data) {
@@ -86,7 +86,7 @@ class User {
 
             //set information
             $user->setUsername($data->username)
-                    ->setPassword($data->password, $this->tami_config)
+                    ->setPassword($data->password, $this->config)
                     ->setFirstName($data->first_name)
                     ->setLastName($data->last_name)
                     ->setEmail($data->email);
@@ -107,7 +107,7 @@ class User {
             $this->dm->flush();
             
             //send verify email
-            $user->sendVerifyEmail($this->tami_config);
+            $user->sendVerifyEmail($this->config);
 
             $this->code->success("Register is successfuly");
         } catch (\MongoException $ex) {

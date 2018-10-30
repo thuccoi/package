@@ -65,7 +65,14 @@ class Code {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
         '+', '-', '=', '&', '?', '/', ' ', '.', '@', '_'
     ];
+    private $config;
 
+    //init config
+    public function __construct($config) {
+        $this->config = $config;
+    }
+
+    //data input inline
     public function inputInline($name, $method = "GET") {
 
         $result = "";
@@ -132,7 +139,7 @@ class Code {
     //release ajax
     public function release($status = 405, $message = "Error!", $data = []) {
         if (!headers_sent()) {
-            header('Content-Type: application/json');
+            header('Content-Type: application/json; charset=utf-8');
         }
 
         echo json_encode([

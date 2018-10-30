@@ -18,9 +18,7 @@ abstract class AbstractController {
         $this->connect = $connect;
 
         $this->router = $router;
-        //set router default
-        $this->router->setConfigDefault($config['routerDefault']);
-
+        
         $this->code = $code;
 
         $this->session = $session;

@@ -186,7 +186,7 @@ class Layout {
         }
 
         //make router
-        $router = new \system\Router($module, $controller, $action, $id, $param);
+        $router = new \system\Router($module, $controller, $action, $id, $param, $this->config);
 
         return $router->url();
     }

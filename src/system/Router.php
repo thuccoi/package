@@ -9,9 +9,8 @@ class Router {
     private $action;
     private $id;
     private $options;
-    
     //load config default
-    private $config_defaut;
+    private $config;
     //static
     public static $TAMI_MODULE = "module";
     public static $TAMI_CONTROLLER = "controller";
@@ -21,7 +20,7 @@ class Router {
      * function init a new router
      */
 
-    public function __construct($module, $controller, $action, $id = "", $options = []) {
+    public function __construct($module, $controller, $action, $id = "", $options = [], array $config = null) {
 
         $this->module = $module;
         $this->controller = $controller;
@@ -30,6 +29,8 @@ class Router {
 
         //handle after own options
         $this->setOptions($options);
+        //set config
+        $this->setConfig($config);
     }
 
     /*
@@ -82,17 +83,17 @@ class Router {
     }
 
     //setconfig default
-    public function setConfigDefault($config) {
-        $this->config_defaut = $config;
+    public function setConfig($config) {
+        $this->config = $config;
     }
 
     //direct url
     public function redirect($module, array $options = null) {
 
-        $controller = $this->config_defaut['controller'];
-        $action = $this->config_defaut['action'];
+        $controller = $this->config['routerDefault']['controller'];
+        $action = $this->config['routerDefault']['action'];
         $id = "";
-        
+
 
         //make parameters
         $parameters = '';
