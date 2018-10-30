@@ -102,8 +102,8 @@ class User {
                 $user->setPhone($data->phone);
             }
             
-            //send email welcome
-            $user->sendWelcomeEmail($this->tami_config);
+            //send verify email
+            $user->sendVerifyEmail($this->tami_config);
             
             //save and send email
             $this->dm->persist($user);

@@ -92,8 +92,8 @@ class User extends \module\Share\Model\Common\AbsField {
         $this->token = \system\Helper\Str::rand();
     }
 
-    //send welcome email
-    public function sendWelcomeEmail($config) {
+    //send Verify email
+    public function sendVerifyEmail($config) {
 
         $mail = new \system\Helper\Mail($config);
 
