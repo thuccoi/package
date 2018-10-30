@@ -7,7 +7,7 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /**
  * @ODM\Document(db="tami_account", collection="Users")  @ODM\HasLifecycleCallbacks
  */
-class User extends \module\Share\Model\Common\FieldInterface {
+class User implements \module\Share\Model\Common\FieldInterface {
 
     //load field default
     use \module\Share\Model\Common\FieldDefault;
