@@ -9,8 +9,8 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *   db="tami_account", 
  *   collection="Applications",
  *   indexes={
- *     @Index(keys={"domain"="desc"}, options={"unique"=true}),
- *     @Index(keys={"metatype"="desc"}, options={"unique"=true})
+ *     @ODM\Index(keys={"domain"="desc"}, options={"unique"=true}),
+ *     @ODM\Index(keys={"metatype"="desc"}, options={"unique"=true})
  *   }
  * )  @ODM\HasLifecycleCallbacks
  */

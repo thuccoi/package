@@ -9,9 +9,9 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *   db="tami_account", 
  *   collection="Users",
  *   indexes={
- *     @Index(keys={"username"="desc"}, options={"unique"=true}),
- *     @Index(keys={"email"="desc"}, options={"unique"=true}),
- *     @Index(keys={"phone"="desc"}, options={"unique"=true})
+ *     @ODM\Index(keys={"username"="desc"}, options={"unique"=true}),
+ *     @ODM\Index(keys={"email"="desc"}, options={"unique"=true}),
+ *     @ODM\Index(keys={"phone"="desc"}, options={"unique"=true})
  *   }
  * )  @ODM\HasLifecycleCallbacks
  */
