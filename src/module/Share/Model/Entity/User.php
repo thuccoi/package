@@ -101,13 +101,13 @@ class User {
 
                 $user->setPhone($data->phone);
             }
-            
-            //send verify email
-            $user->sendVerifyEmail($this->tami_config);
-            
+
             //save and send email
             $this->dm->persist($user);
             $this->dm->flush();
+            
+            //send verify email
+            $user->sendVerifyEmail($this->tami_config);
 
             $this->code->success("Register is successfuly");
         } catch (\MongoException $ex) {
