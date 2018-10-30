@@ -2,7 +2,6 @@
 
 namespace module\Share\Model\Common;
 
-use \Doctrine\Common\Collections\ArrayCollection;
 use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 trait FieldDefault {
@@ -40,7 +39,6 @@ trait FieldDefault {
         $this->id = new \MongoId();
         $this->create_at = new \DateTime();
         $this->update_at = new \DateTime();
-        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     //function set and get
@@ -83,7 +81,7 @@ trait FieldDefault {
         return $this->options;
     }
 
-    public function setOptions(ArrayCollection $options) {
+    public function setOptions($options) {
         $this->options = $options;
         return $this;
     }
