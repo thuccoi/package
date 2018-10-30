@@ -6,8 +6,9 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(db="tami_account",collection="Users")  
- * @ODM\indexes({
- *     @ODM\Index(keys={"username"="desc"}, options={"unique"=true})
+ * @ODM\Indexes({
+ *     @ODM\Index(keys={"username"="asc"}),
+ *     @ODM\Index(keys={"email"="asc"}) 
  * }) 
  * @ODM\HasLifecycleCallbacks
  */
