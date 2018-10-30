@@ -136,39 +136,71 @@ class Code {
         return $result;
     }
 
-    
     //release ajax
-    public function release($status = 405, $message = "Error!", $data = []) {
-        if (!headers_sent()) {
-            header('Content-Type: application/json; charset=utf-8');
+    public function release($status = 405, $message = "Error!", $data = [], \system\Router $router = null) {
+        //page router
+        if (!$router) {
+            if (!headers_sent()) {
+                header('Content-Type: application/json; charset=utf-8');
+            }
+
+            echo json_encode([
+                "status" => $status,
+                "message" => $message,
+                "data" => $data
+            ]);
+            exit;
         }
 
-        echo json_encode([
-            "status" => $status,
-            "message" => $message,
-            "data" => $data
+        if (!isset($this->config['routerError'])) {
+            echo 'Code Not found config routerError';
+            exit;
+        }
+
+        if (!isset($this->config['routerError']['module'])) {
+            echo 'Code Not found config module routerError';
+            exit;
+        }
+
+        if (!isset($this->config['routerError']['controller'])) {
+            echo 'Code Not found config controller routerError';
+            exit;
+        }
+
+        if (!isset($this->config['routerError']['action'])) {
+            echo 'Code Not found config action routerError';
+            exit;
+        }
+
+        //redirect to page error
+        $router->redirect($this->config['routerError']['module'], [
+            'controller' => $this->config['routerError']['controller'],
+            'action' => $this->config['routerError']['action'],
+            'param' => [
+                'status' => $status,
+                'message' => $message
+            ]
         ]);
-        exit;
     }
 
     //release error
-    public function error($message = "Error!", $data = []) {
-        $this->release(405, $message, $data);
+    public function error($message = "Error!", $data = [], \system\Router $router = null) {
+        $this->release(405, $message, $data, $router);
     }
 
     //release success
-    public function success($message = "Success!", $data = []) {
-        $this->release(200, $message, $data);
+    public function success($message = "Success!", $data = [], \system\Router $router = null) {
+        $this->release(200, $message, $data, $router);
     }
 
     //release notfound
-    public function notfound($message = "Not Found!", $data = []) {
-        $this->release(404, $message, $data);
+    public function notfound($message = "Not Found!", $data = [], \system\Router $router = null) {
+        $this->release(404, $message, $data, $router);
     }
 
     //release forbidden
-    public function forbidden($message = "Forbidden!", $data = []) {
-        $this->release(403, $message, $data);
+    public function forbidden($message = "Forbidden!", $data = [], \system\Router $router = null) {
+        $this->release(403, $message, $data, $router);
     }
 
     //pretty varial

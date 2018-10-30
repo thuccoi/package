@@ -39,26 +39,26 @@ class RegisterController extends \system\Template\AbstractController {
         if ($obj) {
             //check token
             if ($obj->getToken() != $token) {
-                $this->getCode()->error("URL đã hết hạn, hoặc sai thông tin.");
+                $this->getCode()->error("URL đã hết hạn, hoặc sai thông tin.", [], $this->getRouter());
             }
 
             //check email confirm
             if ($obj->getEmailConfirm() == $obj::EMAIL_CONFIRMED) {
-                $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.");
+                $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.", [], $this->getRouter());
             }
 
             //activate account
             $obj->sendConfirmEmail($this->getConfig());
-            
+
             //save record
             $this->getConnect()->persist($obj);
             $this->getConnect()->flush();
 
 
-            $this->getCode()->success("Xác nhận thông tin thành công.");
+            $this->getCode()->success("Xác nhận thông tin thành công.", [], $this->getRouter());
         }
 
-        $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.");
+        $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.", [], $this->getRouter());
     }
 
 }

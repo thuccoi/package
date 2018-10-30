@@ -29,7 +29,7 @@ class NotifyController extends \system\Template\AbstractController {
         $user = $this->entity->find($this->getCode()->get("id"));
 
         if (!$user || $user->getToken() != $this->getCode()->get("token")) {
-            $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực");
+            $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 
         return[
