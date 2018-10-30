@@ -42,8 +42,8 @@ class RegisterController extends \system\Template\AbstractController {
                 $this->getCode()->error("URL đã hết hạn, hoặc sai thông tin.");
             }
 
-            //check status
-            if ($obj->getStatus() == $obj::STATUS_ACTIVATE) {
+            //check email confirm
+            if ($obj->getEmailConfirm() == $obj::EMAIL_CONFIRMED) {
                 $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.");
             }
 
@@ -53,6 +53,8 @@ class RegisterController extends \system\Template\AbstractController {
             //save record
             $this->getConnect()->persist($obj);
             $this->getConnect()->flush();
+            
+             $this->getCode()->success("Xác nhận thông tin thành công.");
         }
 
         $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.");
