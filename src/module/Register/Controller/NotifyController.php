@@ -23,4 +23,18 @@ class NotifyController extends \system\Template\AbstractController {
         ];
     }
 
+    public function confirmAction() {
+        $this->setLayout('TAMI_NOLAYOUT');
+
+        $user = $this->entity->find($this->getCode()->get("id"));
+
+        if (!$user || $user->getToken() != $this->getCode()->get("token")) {
+            $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực");
+        }
+
+        return[
+            "user" => $user->release()
+        ];
+    }
+
 }
