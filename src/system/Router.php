@@ -123,7 +123,7 @@ class Router {
         }
 
         //make location
-        $location = "Location: /{$module}/{$controller}/{$action}";
+        $location = "Location: {$this->config["URL_ROOT"]}/{$module}/{$controller}/{$action}";
 
         //make id
         if ($id) {
@@ -155,7 +155,7 @@ class Router {
         }
 
         //return url
-        $url = "/{$this->module}/{$this->controller}/{$this->action}";
+        $url = $this->config["URL_ROOT"] . "/{$this->module}/{$this->controller}/{$this->action}";
 
         //make id
         if ($this->id) {

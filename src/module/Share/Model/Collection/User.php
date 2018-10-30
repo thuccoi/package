@@ -105,7 +105,7 @@ class User implements \module\Share\Model\Common\FieldInterface {
         $mail->subject("Bạn đã tạo tài khoản");
 
         //get html inline to body
-        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/verify?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', DIR_ROOT . "/css/account/notify/register.css"]);
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/verify?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/register.css"]);
 
         $mail->body($body);
 
@@ -125,7 +125,7 @@ class User implements \module\Share\Model\Common\FieldInterface {
         $mail->subject("Thông tin tài khoản của bạn đã được xác nhận");
 
         //get html inline to body
-        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/confirm?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', DIR_ROOT . "/css/account/notify/confirm.css"]);
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/confirm?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/confirm.css"]);
 
         $mail->body($body);
 
