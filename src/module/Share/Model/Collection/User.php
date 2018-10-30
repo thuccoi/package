@@ -191,7 +191,7 @@ class User extends \module\Share\Model\Common\AbsField {
         return $this->password;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password, $config) {
 
         //default options password
         $conpasswd = [
@@ -200,9 +200,9 @@ class User extends \module\Share\Model\Common\AbsField {
         ];
 
         //set from config
-        if (isset($this->getTamiConfig()['password'])) {
+        if (isset($config['password'])) {
 
-            $conpasswd = $this->getTamiConfig()['password'];
+            $conpasswd = $config['password'];
 
             if (!isset($conpasswd['cost'])) {
                 echo "password cost is required";

@@ -86,7 +86,7 @@ class User {
 
             //set information
             $user->setUsername($data->username)
-                    ->setPassword($data->password)
+                    ->setPassword($data->password, $this->tami_config)
                     ->setFirstName($data->first_name)
                     ->setLastName($data->last_name)
                     ->setEmail($data->email);
