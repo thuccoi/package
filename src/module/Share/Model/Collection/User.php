@@ -5,15 +5,11 @@ namespace module\Share\Model\Collection;
 use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\Document(
- *   db="tami_account", 
- *   collection="Users",
- *   indexes={
- *     @ODM\Index(keys={"username"="desc"}, options={"unique"=true}),
- *     @ODM\Index(keys={"email"="desc"}, options={"unique"=true}),
- *     @ODM\Index(keys={"phone"="desc"}, options={"unique"=true})
- *   }
- * )  @ODM\HasLifecycleCallbacks
+ * @ODM\Document(db="tami_account",collection="Users")  
+ * @ODM\indexes({
+ *     @ODM\Index(keys={"username"="desc"}, options={"unique"=true})
+ * }) 
+ * @ODM\HasLifecycleCallbacks
  */
 class User implements \module\Share\Model\Common\FieldInterface {
 
@@ -22,7 +18,7 @@ class User implements \module\Share\Model\Common\FieldInterface {
 
     /**
      *
-     * @ODM\Field(type="string")  @ODM\UniqueIndex 
+     * @ODM\Field(type="string")
      */
     private $username;
 
@@ -52,13 +48,13 @@ class User implements \module\Share\Model\Common\FieldInterface {
 
     /**
      *
-     * @ODM\Field(type="string")  @ODM\UniqueIndex 
+     * @ODM\Field(type="string")
      */
     private $phone;
 
     /**
      *
-     * @ODM\Field(type="string")  @ODM\UniqueIndex 
+     * @ODM\Field(type="string")
      */
     private $email;
 
