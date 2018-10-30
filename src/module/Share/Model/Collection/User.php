@@ -143,7 +143,6 @@ class User extends \module\Share\Model\Common\AbsField {
         $obj->email = $this->getEmail();
         $obj->email_confirm = $this->getEmailConfirm();
         $obj->phone = $this->getPhone();
-        $obj->token = $this->getToken();
         $obj->status = $this->getStatus();
 
         return $obj;

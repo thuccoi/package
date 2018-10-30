@@ -47,19 +47,17 @@ class RegisterController extends \system\Template\AbstractController {
                 $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.");
             }
 
-            //activate account
-            $obj->sendConfirmEmail($this->getConfig());
-
             //save record
             $this->getConnect()->persist($obj);
             $this->getConnect()->flush();
             
-             $this->getCode()->success("Xác nhận thông tin thành công.");
+            //activate account
+            $obj->sendConfirmEmail($this->getConfig());
+
+            $this->getCode()->success("Xác nhận thông tin thành công.");
         }
 
         $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.");
     }
-
-
 
 }
