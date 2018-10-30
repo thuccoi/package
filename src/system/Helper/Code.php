@@ -136,6 +136,7 @@ class Code {
         return $result;
     }
 
+    
     //release ajax
     public function release($status = 405, $message = "Error!", $data = []) {
         if (!headers_sent()) {
