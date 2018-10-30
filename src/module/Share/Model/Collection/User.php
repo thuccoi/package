@@ -102,7 +102,7 @@ class User extends \module\Share\Model\Common\AbsField {
         $mail->subject("Bạn đã tạo tài khoản");
 
         //get html inline to body
-        $body = $mail->inline($config['ROOT_URL'] . '/a/notify/register', ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', "/css/account/notify/register.css"]);
+        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/register?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', "/css/account/notify/register.css"]);
 
         $mail->body($body);
 
@@ -122,7 +122,7 @@ class User extends \module\Share\Model\Common\AbsField {
         $mail->subject("Thông tin tài khoản của bạn đã được xác nhận");
 
         //get html inline to body
-        $body = $mail->inline($config['ROOT_URL'] . '/a/notify/confirm', ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', "/css/account/notify/confirm.css"]);
+        $body = $mail->inline($config['ROOT_URL'] . "/a/notify/confirm?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css', "/css/account/notify/confirm.css"]);
 
         $mail->body($body);
 
