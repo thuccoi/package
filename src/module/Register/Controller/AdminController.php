@@ -14,5 +14,10 @@ class AmindController extends \system\Template\AbstractController {
         $this->entity = new \module\Share\Model\Entity\User($connect, $code, $config);
     }
     
+    //activate user
+    public function activateAction(){
+        
+    }
+    
    
 }

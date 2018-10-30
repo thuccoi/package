@@ -5,7 +5,15 @@ namespace module\Share\Model\Collection;
 use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\Document(db="tami_account", collection="Users")  @ODM\HasLifecycleCallbacks
+ * @ODM\Document(
+ *   db="tami_account", 
+ *   collection="Users",
+ *   indexes={
+ *     @Index(keys={"username"="desc"}, options={"unique"=true}),
+ *     @Index(keys={"email"="desc"}, options={"unique"=true}),
+ *     @Index(keys={"phone"="desc"}, options={"unique"=true})
+ *   }
+ * )  @ODM\HasLifecycleCallbacks
  */
 class User implements \module\Share\Model\Common\FieldInterface {
 
