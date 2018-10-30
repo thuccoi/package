@@ -1,8 +1,8 @@
 <?php
 
-namespace module\Register\Controller;
+namespace module\Register;
 
-class NotifyController extends \system\Template\AbstractController {
+class AmindController extends \system\Template\AbstractController {
 
     //entity user
     protected $entity;
@@ -13,14 +13,6 @@ class NotifyController extends \system\Template\AbstractController {
         //init entity
         $this->entity = new \module\Share\Model\Entity\User($connect, $code, $config);
     }
-
-    public function registerAction() {
-        $this->setLayout('TAMI_NOLAYOUT');
-
-        return[
-            "id" => $this->getCode()->get("id"),
-            "token" => $this->getCode()->get("token")
-        ];
-    }
-
+    
+   
 }

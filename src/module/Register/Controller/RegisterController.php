@@ -29,8 +29,8 @@ class RegisterController extends \system\Template\AbstractController {
         $this->entity->create($data);
     }
 
-    //active user
-    public function activateAction() {
+    //confirm user
+    public function confirmAction() {
         //token
         $id = $this->getCode()->get("id");
         $token = $this->getCode()->get("token");
@@ -44,11 +44,11 @@ class RegisterController extends \system\Template\AbstractController {
 
             //check status
             if ($obj->getStatus() == $obj::STATUS_ACTIVATE) {
-                $this->getCode()->error("Hành động lỗi do tài khoản này đã được kích hoạt.");
+                $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.");
             }
 
             //activate account
-            $obj->activate();
+            $obj->emailConfirm();
 
             //save record
             $this->getConnect()->persist($obj);
@@ -58,11 +58,6 @@ class RegisterController extends \system\Template\AbstractController {
         $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.");
     }
 
-    
-    public function bodyAction() {
-        $this->getLayout('TAMI_NOLAYOUT');
 
-        return [];
-    }
 
 }

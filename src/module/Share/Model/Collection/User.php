@@ -56,6 +56,12 @@ class User extends \module\Share\Model\Common\AbsField {
 
     /**
      *
+     * @ODM\Field(type="int")
+     */
+    private $email_confirm;
+
+    /**
+     *
      * @ODM\Field(type="string")
      */
     private $token;
@@ -66,14 +72,21 @@ class User extends \module\Share\Model\Common\AbsField {
      */
     private $status;
 
+    //status
     const STATUS_ACTIVATE = 1;
     const STATUS_DEACTIVE = -1;
     const STATUS_PENDING = 0;
+    //email
+    const EMAIL_CONFIRMED = 1;
+    const EMAIL_PENDING = 0;
 
     public function __construct($config) {
         parent::__construct($config);
         //pending status
         $this->status = self::STATUS_PENDING;
+
+        //pending email
+        $this->email_confirm = self::EMAIL_PENDING;
 
         //generate token
         $this->token = \system\Helper\Str::rand();
@@ -83,6 +96,7 @@ class User extends \module\Share\Model\Common\AbsField {
      * @ODM\PreFlush
      */
     public function preFlush(\Doctrine\ODM\MongoDB\Event\PreFlushEventArgs $eventArgs) {
+        
         //config system
         $config = $this->getTamiConfig();
         $mail = new \system\Helper\Mail($config);
@@ -91,11 +105,13 @@ class User extends \module\Share\Model\Common\AbsField {
 
         $mail->subject("Bạn đã tạo tài khoản");
 
+        //get html inline to body
         $body = $mail->inline($config['ROOT_URL'] . '/a/notify/register', ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', DIR_ROOT . 'public/tami/css/tami.css']);
 
         $mail->body($body);
 
         $mail->send();
+        
     }
 
     /**
@@ -122,11 +138,18 @@ class User extends \module\Share\Model\Common\AbsField {
         $obj->name = $this->getName();
         $obj->image = $this->getImage();
         $obj->email = $this->getEmail();
+        $obj->email_confirm = $this->getEmailConfirm();
         $obj->phone = $this->getPhone();
         $obj->token = $this->getToken();
         $obj->status = $this->getStatus();
 
         return $obj;
+    }
+
+    //email confirm
+    public function emailConfirm() {
+        $this->email_confirm = self::EMAIL_CONFIRMED;
+        return $this;
     }
 
     //status
@@ -251,6 +274,10 @@ class User extends \module\Share\Model\Common\AbsField {
     public function setEmail($email) {
         $this->email = $email;
         return $this;
+    }
+
+    public function getEmailConfirm() {
+        return $this->email_confirm;
     }
 
     //get token
