@@ -14,7 +14,7 @@ class NotifyController extends \system\Template\AbstractController {
         $this->entity = new \module\Share\Model\Entity\User($connect, $code, $config);
     }
 
-    public function registerAction() {
+    public function verifyAction() {
         $this->setLayout('TAMI_NOLAYOUT');
 
         return[
