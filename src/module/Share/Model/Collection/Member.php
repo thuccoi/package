@@ -14,13 +14,13 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\ReferenceOne(targetDocument=module\Share\Model\Collection\Application, inversedBy="members")
+     * @ODM\ReferenceOne(targetDocument=module\Share\Model\Collection\Application::class, inversedBy="members")
      */
     private $application;
 
     /**
      *
-     * @ODM\ReferenceOne(targetDocument=module\Shate\Model\Collection\User, inveredBy="members")
+     * @ODM\ReferenceOne(targetDocument=module\Shate\Model\Collection\User::class, inveredBy="members")
      */
     private $user;
 
