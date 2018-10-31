@@ -1,3 +1,4 @@
+
 <?php
 
 namespace module\Share\Model\Collection;
@@ -123,7 +124,7 @@ class User extends \module\Share\Model\Common\AbsField {
 
         //new token
         $this->token = \system\Helper\Str::rand();
-        
+
         $mail = new \system\Helper\Mail($config);
 
         $mail->to($this->email);
@@ -203,7 +204,7 @@ class User extends \module\Share\Model\Common\AbsField {
         //default options password
         $conpasswd = [
             'cost' => 12,
-            'salt' => 'tami_dsjhaiu4229429472r24rr34'
+            'salt' => \system\Helper\Str::rand(16)
         ];
 
         //set from config
