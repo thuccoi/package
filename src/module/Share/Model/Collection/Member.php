@@ -20,7 +20,7 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\ReferenceOne(targetDocument=module\Shate\Model\Collection\User::class, inveredBy="members")
+     * @ODM\ReferenceOne(targetDocument=module\Shate\Model\Collection\User::class, inversedBy="members")
      */
     private $user;
 
