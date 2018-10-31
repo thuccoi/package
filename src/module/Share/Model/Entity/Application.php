@@ -36,6 +36,10 @@ class Application {
         if (!\system\Helper\Validate::isString($data->metatype)) {
             $this->code->forbidden("metatype was not string");
         }
+        //check existed
+        if ($this->find($data->metatype, 'metatype')) {
+            $this->code->forbidden("metatype is existed in system");
+        }
 
         //domain
         if (\system\Helper\Validate::isEmpty($data->domain)) {
@@ -45,6 +49,12 @@ class Application {
         if (!\system\Helper\Validate::isString($data->domain)) {
             $this->code->forbidden("domain was not string");
         }
+        
+        //check existed
+        if ($this->find($data->domain, 'domain')) {
+            $this->code->forbidden("domain is existed in system");
+        }
+
 
 
         try {
@@ -68,22 +78,32 @@ class Application {
         $this->code->error("Error database");
     }
 
-    public function find($id) {
-        //find by id
-        $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->find($id);
+    public function find($id, $type = '') {
+        switch ($type) {
+            case 'metatype':
+                return $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['metatype' => $id]);
+                break;
+            case 'domain':
+                return $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['domain' => $id]);
+                break;
+            default :
+                //find by id
+                $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->find($id);
 
-        //find by metatype
-        if (!$find) {
+                //find by metatype
+                if (!$find) {
 
-            $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['metatype' => $id]);
+                    $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['metatype' => $id]);
+                }
+
+                //find by domain
+                if (!$find) {
+                    $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['domain' => $id]);
+                }
+
+                return $find;
+                break;
         }
-
-        //find by domain
-        if (!$find) {
-            $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['domain' => $id]);
-        }
-
-        return $find;
     }
 
 }

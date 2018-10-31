@@ -7,6 +7,7 @@ class User {
     private $code;
     private $dm;
     private $config;
+    private $entity_application;
 
     //set properties code
     public function __construct($connect, \system\Helper\Code $code, $config) {
@@ -14,11 +15,29 @@ class User {
         $this->dm = $connect;
 
         $this->config = $config;
+
+        //entity application
+        $this->entity_application = new Application($connect, $code, $config);
     }
 
     public function create($data) {
 
         //field required
+        //application
+        if (\system\Helper\Validate::isEmpty($data->application)) {
+            $this->code->forbidden("application is require");
+        }
+
+        if (!\system\Helper\Validate::isString($data->application)) {
+            $this->code->forbidden("application was not string");
+        }
+        //find application
+        $app = $this->entity_application->find($data->application);
+
+        if (!$app) {
+            $this->code->forbidden("application was not found");
+        }
+
         //first name
         if (\system\Helper\Validate::isEmpty($data->first_name)) {
             $this->code->forbidden("first_name is require");
@@ -71,12 +90,12 @@ class User {
         }
 
         //check exists username
-        if ($this->find($data->username)) {
+        if ($this->find($data->username, 'username')) {
             $this->code->forbidden("username was existed in system");
         }
 
         //check exists email
-        if ($this->find($data->email)) {
+        if ($this->find($data->email, 'email')) {
             $this->code->forbidden("email was existed in system");
         }
 
@@ -85,7 +104,8 @@ class User {
             $user = new \module\Share\Model\Collection\User();
 
             //set information
-            $user->setUsername($data->username)
+            $user->setApplication($app)
+                    ->setUsername($data->username)
                     ->setPassword($data->password, $this->config)
                     ->setFirstName($data->first_name)
                     ->setLastName($data->last_name)
@@ -105,7 +125,7 @@ class User {
             //save and send email
             $this->dm->persist($user);
             $this->dm->flush();
-            
+
             //send verify email
             $user->sendVerifyEmail($this->config);
 
@@ -117,22 +137,32 @@ class User {
         $this->code->error("Error database");
     }
 
-    public function find($id) {
-        //find by id
-        $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->find($id);
+    public function find($id, $type = '') {
+        switch ($type) {
+            case 'username':
+                return $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['username' => $id]);
+                break;
+            case 'email':
+                return $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['email' => $id]);
+                break;
+            default :
+                //find by id
+                $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->find($id);
 
-        //find by username
-        if (!$find) {
+                //find by username
+                if (!$find) {
 
-            $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['username' => $id]);
+                    $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['username' => $id]);
+                }
+
+                //find by email
+                if (!$find) {
+                    $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['email' => $id]);
+                }
+
+                return $find;
+                break;
         }
-
-        //find by email
-        if (!$find) {
-            $find = $this->dm->getRepository(\module\Share\Model\Collection\User::class)->findOneBy(['email' => $id]);
-        }
-
-        return $find;
     }
 
 }
