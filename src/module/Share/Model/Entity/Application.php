@@ -2,19 +2,10 @@
 
 namespace module\Share\Model\Entity;
 
-class Application {
+class Application implements \module\Share\Model\Common\EntityInterface {
 
-    private $code;
-    private $dm;
-    private $config;
-
-    //set properties code
-    public function __construct($connect, \system\Helper\Code $code, $config) {
-        $this->code = $code;
-        $this->dm = $connect;
-
-        $this->config = $config;
-    }
+    //entity default
+    use \module\Share\Model\Common\EntityDefault;
 
     public function create($data) {
 
@@ -49,7 +40,7 @@ class Application {
         if (!\system\Helper\Validate::isString($data->domain)) {
             $this->code->forbidden("domain was not string");
         }
-        
+
         //check existed
         if ($this->find($data->domain, 'domain')) {
             $this->code->forbidden("domain is existed in system");

@@ -9,10 +9,6 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *   db="tami_account", 
  *   collection="Applications"
  * )  
- * @ODM\Indexes({
- *     @ODM\Index(keys={"metatype"="asc"}),
- *     @ODM\Index(keys={"domain"="asc"}) 
- * }) 
  * @ODM\HasLifecycleCallbacks
  */
 class Application implements \module\Share\Model\Common\FieldInterface {
@@ -39,20 +35,20 @@ class Application implements \module\Share\Model\Common\FieldInterface {
 
     /**
      *
-     * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\User::class, mappedBy="application")
+     * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="application")
      */
-    private $users;
+    private $members;
 
-    //users
-    public function getUsers() {
-        return $this->users;
+    //members
+    public function getMembers() {
+        return $this->members;
     }
 
     //get list owners of application
     public function getOwners() {
         $owners = [];
-        if ($this->users) {
-            foreach ($this->users as $val) {
+        if ($this->members) {
+            foreach ($this->members as $val) {
                 //check role is owner
                 if ($val->isOwner()) {
                     $owners = $val;
@@ -66,8 +62,8 @@ class Application implements \module\Share\Model\Common\FieldInterface {
     //get list admins of application
     public function getAdmins() {
         $admins = [];
-        if ($this->users) {
-            foreach ($this->users as $val) {
+        if ($this->members) {
+            foreach ($this->members as $val) {
                 //check role is admin
                 if ($val->isAdmin()) {
                     $admins = $val;

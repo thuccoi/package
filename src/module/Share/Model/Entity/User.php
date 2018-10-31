@@ -2,43 +2,14 @@
 
 namespace module\Share\Model\Entity;
 
-class User {
+class User implements \module\Share\Model\Common\EntityInterface {
 
-    private $code;
-    private $dm;
-    private $config;
-    private $entity_application;
-
-    //set properties code
-    public function __construct($connect, \system\Helper\Code $code, $config) {
-        $this->code = $code;
-        $this->dm = $connect;
-
-        $this->config = $config;
-
-        //entity application
-        $this->entity_application = new Application($connect, $code, $config);
-    }
+    //entity default
+    use \module\Share\Model\Common\EntityDefault;
 
     public function create($data) {
 
         //field required
-        //application
-        if (\system\Helper\Validate::isEmpty($data->application)) {
-            $this->code->forbidden("application is require");
-        }
-
-        if (!\system\Helper\Validate::isString($data->application)) {
-            $this->code->forbidden("application was not string");
-        }
-        
-        //find application
-        $application = $this->entity_application->find($data->application);
-
-        if (!$application) {
-            $this->code->forbidden("application was not found");
-        }
-
         //first name
         if (\system\Helper\Validate::isEmpty($data->first_name)) {
             $this->code->forbidden("first_name is require");
@@ -105,8 +76,7 @@ class User {
             $user = new \module\Share\Model\Collection\User();
 
             //set information
-            $user->setApplication($application)
-                    ->setUsername($data->username)
+            $user->setUsername($data->username)
                     ->setPassword($data->password, $this->config)
                     ->setFirstName($data->first_name)
                     ->setLastName($data->last_name)
