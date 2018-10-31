@@ -53,9 +53,10 @@ class Member extends \module\Share\Model\Common\AbsEntity {
                 ->field('application.id')->equals($application->getId())
                 ->field('user.id')->equals($user->getId())
                 ->getQuery()
-                ->execute();
+                ->execute()
+                ->count();
 
-        if ($check) {
+        if ($check > 0) {
             $this->code->forbidden("Member has existed in this Application");
         }
 
