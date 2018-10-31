@@ -54,11 +54,11 @@ class Member extends \module\Share\Model\Common\AbsEntity {
                 ->field('user.id')->equals($user->getId())
                 ->getQuery()
                 ->execute();
-        
+
         if ($check) {
             $this->code->forbidden("Member has existed in this Application");
         }
-        
+
         try {
             //add new memeber
             $member = new \module\Share\Model\Collection\Member($application, $user);
@@ -74,7 +74,7 @@ class Member extends \module\Share\Model\Common\AbsEntity {
         $this->code->error("Error database");
     }
 
-    public function find($id) {
+    public function find($id, $type = '') {
         //find by id
         return $this->dm->getRepository(\module\Share\Model\Collection\Member::class)->find($id);
     }
