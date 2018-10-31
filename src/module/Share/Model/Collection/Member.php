@@ -8,7 +8,7 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  * @ODM\Document(collection="Members", db="tami_account")
  * @ODM\HasLifecycleCallbacks
  */
-class Member implements \module\Share\Model\Common\FieldInterface {
+class Member extends \module\Share\Model\Common\AbsField {
 
     use \module\Share\Model\Common\FieldDefault;
 

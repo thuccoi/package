@@ -2,8 +2,8 @@
 
 namespace module\Share\Model\Common;
 
-interface FieldInterface {
+abstract class AbsField {
 
     //release function
-    public function release();
+    abstract public function release();
 }

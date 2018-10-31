@@ -11,7 +11,7 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  * )  
  * @ODM\HasLifecycleCallbacks
  */
-class Application implements \module\Share\Model\Common\FieldInterface {
+class Application extends \module\Share\Model\Common\AbsField {
 
     use \module\Share\Model\Common\FieldDefault;
 

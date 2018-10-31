@@ -2,7 +2,7 @@
 
 namespace module\Share\Model\Entity;
 
-class Application implements \module\Share\Model\Common\EntityInterface {
+class Application extends \module\Share\Model\Common\AbsEntity {
 
     //entity default
     use \module\Share\Model\Common\EntityDefault;
