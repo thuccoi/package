@@ -22,7 +22,8 @@ class RegisterController extends \system\Template\AbstractController {
                     "username" => $this->getCode()->post("username"),
                     "password" => $this->getCode()->post("password"),
                     "email" => $this->getCode()->post("email"),
-                    "phone" => $this->getCode()->post("phone")
+                    "phone" => $this->getCode()->post("phone"),
+                    "application" => $this->getCode()->post("application"),
         ];
 
         //register new an user

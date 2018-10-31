@@ -31,6 +31,7 @@ class User {
         if (!\system\Helper\Validate::isString($data->application)) {
             $this->code->forbidden("application was not string");
         }
+        
         //find application
         $app = $this->entity_application->find($data->application);
 
