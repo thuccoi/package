@@ -9,9 +9,9 @@ class User {
     private $config;
 
     //set properties code
-    public function __construct($dm, \system\Helper\Code $code, $config) {
+    public function __construct($connect, \system\Helper\Code $code, $config) {
         $this->code = $code;
-        $this->dm = $dm;
+        $this->dm = $connect;
 
         $this->config = $config;
     }

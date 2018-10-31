@@ -55,7 +55,7 @@ class User implements \module\Share\Model\Common\FieldInterface {
 
     /**
      *
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="string") 
      */
     private $email;
 
@@ -77,6 +77,22 @@ class User implements \module\Share\Model\Common\FieldInterface {
      */
     private $status;
 
+    /**
+     *
+     * @ODM\ReferenceOne(targetDocument=module\Share\Model\Collection\Application::class, inversedBy="users")
+     */
+    private $application;
+
+    /**
+     *
+     * @ODM\Field(type="string")
+     */
+    private $role;
+
+    //role
+    const ROLE_OWNER = "owner";
+    const ROLE_ADMIN = "admin";
+    const ROLE_DEFAULT = "default";
     //status
     const STATUS_ACTIVATE = 1;
     const STATUS_DEACTIVE = -1;
@@ -90,6 +106,9 @@ class User implements \module\Share\Model\Common\FieldInterface {
         //init
         $this->init();
 
+        //role default default
+        $this->role = self::ROLE_DEFAULT;
+
         //pending status
         $this->status = self::STATUS_PENDING;
 
@@ -98,6 +117,53 @@ class User implements \module\Share\Model\Common\FieldInterface {
 
         //generate token
         $this->token = \system\Helper\Str::rand();
+    }
+
+    //role
+    public function getRole() {
+        return $this->role;
+    }
+
+    //assign role
+    public function assignOwner() {
+        $this->role = self::ROLE_OWNER;
+        return $this;
+    }
+
+    public function assignAdmin() {
+        $this->role = self::ROLE_ADMIN;
+        return $this;
+    }
+
+    public function assignDefault() {
+        $this->role = self::ROLE_DEFAULT;
+        return $this;
+    }
+
+    //check role
+    public function isOwner() {
+        //role is owner
+        return ($this->role == self::ROLE_OWNER);
+    }
+
+    public function isAdmin() {
+        //role is admin or owner
+        return ($this->isOwner() || $this->role == self::ROLE_ADMIN);
+    }
+
+    public function isDefault() {
+        //role is default
+        return ($this->role == self::ROLE_DEFAULT);
+    }
+
+    //application
+    public function getApplication() {
+        return $this->application;
+    }
+
+    public function setApplication(\module\Share\Model\Application $application) {
+        $this->application = $application;
+        return $this;
     }
 
     //send Verify email
@@ -151,6 +217,10 @@ class User implements \module\Share\Model\Common\FieldInterface {
         $obj->email = $this->getEmail();
         $obj->phone = $this->getPhone();
         $obj->status = $this->getStatus();
+        $obj->role = $this->getRole();
+
+        //application name
+        $obj->application_name = $this->application ? $this->application->getName() : '';
 
         return $obj;
     }
