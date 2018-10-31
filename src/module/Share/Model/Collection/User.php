@@ -161,7 +161,7 @@ class User implements \module\Share\Model\Common\FieldInterface {
         return $this->application;
     }
 
-    public function setApplication(\module\Share\Model\Application $application) {
+    public function setApplication(\module\Share\Model\Collection\Application $application) {
         $this->application = $application;
         return $this;
     }

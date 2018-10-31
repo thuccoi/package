@@ -33,9 +33,9 @@ class User {
         }
         
         //find application
-        $app = $this->entity_application->find($data->application);
+        $application = $this->entity_application->find($data->application);
 
-        if (!$app) {
+        if (!$application) {
             $this->code->forbidden("application was not found");
         }
 
@@ -105,7 +105,7 @@ class User {
             $user = new \module\Share\Model\Collection\User();
 
             //set information
-            $user->setApplication($app)
+            $user->setApplication($application)
                     ->setUsername($data->username)
                     ->setPassword($data->password, $this->config)
                     ->setFirstName($data->first_name)
