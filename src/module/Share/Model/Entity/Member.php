@@ -49,14 +49,10 @@ class Member extends \module\Share\Model\Common\AbsEntity {
         }
 
         //check member existed in system
-        $check = $this->dm->createQueryBuilder(\module\Share\Model\Collection\Member::class)
-                ->field('application.id')->equals($application->getId())
-                ->field('user.id')->equals($user->getId())
-                ->getQuery()
-                ->execute()
-                ->count();
+        $check = $this->dm->getRepository(\module\Share\Model\Collection\Member::class)
+                ->findOneBy(['application.id' => $application->getId(), 'user.id' => $user->getId()]);
 
-        if ($check > 0) {
+        if ($check) {
             $this->code->forbidden("Member has existed in this Application");
         }
 
