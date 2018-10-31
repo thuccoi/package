@@ -63,12 +63,6 @@ class User extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\Field(type="string")
-     */
-    private $token;
-
-    /**
-     *
      * @ODM\Field(type="int")
      */
     private $status;
@@ -79,7 +73,6 @@ class User extends \module\Share\Model\Common\AbsField {
      */
     private $members;
 
-   
     //status
     const STATUS_ACTIVATE = 1;
     const STATUS_DEACTIVE = -1;
@@ -98,12 +91,8 @@ class User extends \module\Share\Model\Common\AbsField {
 
         //pending email
         $this->email_confirm = self::EMAIL_PENDING;
-
-        //generate token
-        $this->token = \system\Helper\Str::rand();
     }
 
-   
     //members
     public function getMembers() {
         return $this->members;
@@ -132,6 +121,9 @@ class User extends \module\Share\Model\Common\AbsField {
     public function sendConfirmEmail($config) {
         $this->email_confirm = self::EMAIL_CONFIRMED;
 
+        //new token
+        $this->token = \system\Helper\Str::rand();
+        
         $mail = new \system\Helper\Mail($config);
 
         $mail->to($this->email);
@@ -291,11 +283,6 @@ class User extends \module\Share\Model\Common\AbsField {
 
     public function getEmailConfirm() {
         return $this->email_confirm;
-    }
-
-    //get token
-    public function getToken() {
-        return $this->token;
     }
 
 }

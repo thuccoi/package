@@ -14,6 +14,12 @@ trait FieldDefault {
 
     /**
      *
+     * @ODM\Field(type="string")
+     */
+    private $token;
+
+    /**
+     *
      * @ODM\Field(type="date")
      */
     private $create_at;
@@ -33,10 +39,14 @@ trait FieldDefault {
     public function __construct() {
         $this->init();
     }
-    
+
     //function construct
     public function init() {
         $this->id = new \MongoId();
+
+        //generate token
+        $this->token = \system\Helper\Str::rand();
+
         $this->create_at = new \DateTime();
         $this->update_at = new \DateTime();
     }
@@ -49,6 +59,11 @@ trait FieldDefault {
     public function setId(\MongoId $id) {
         $this->id = $id;
         return $this;
+    }
+
+    //get token
+    public function getToken() {
+        return $this->token;
     }
 
     public function getCreateAt() {

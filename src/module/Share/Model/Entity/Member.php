@@ -7,31 +7,31 @@ class Member extends \module\Share\Model\Common\AbsEntity {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
-    private $application_entity;
+    private $app_entity;
     private $user_entity;
 
     public function __construct($connect, \system\Helper\Code $code, $config) {
         $this->init($connect, $code, $config);
-        //init entity application
-        $this->application_entity = new Application($connect, $code, $config);
+        //init entity app
+        $this->app_entity = new App($connect, $code, $config);
         //init entity user
         $this->user_entity = new User($connect, $code, $config);
     }
 
     public function create($data) {
 
-        //input application
-        if (\system\Helper\Validate::isEmpty($data->application)) {
-            $this->code->forbidden("application is require");
+        //input app
+        if (\system\Helper\Validate::isEmpty($data->app)) {
+            $this->code->forbidden("app is require");
         }
 
-        if (!\system\Helper\Validate::isString($data->application)) {
-            $this->code->forbidden("type input application is not string");
+        if (!\system\Helper\Validate::isString($data->app)) {
+            $this->code->forbidden("type input app is not string");
         }
 
-        $application = $this->application_entity->find($data->application);
-        if (!$application) {
-            $this->code->notfound("application notfound in system");
+        $app = $this->app_entity->find($data->app);
+        if (!$app) {
+            $this->code->notfound("app notfound in system");
         }
 
         //input user
@@ -50,15 +50,15 @@ class Member extends \module\Share\Model\Common\AbsEntity {
 
         //check member existed in system
         $check = $this->dm->getRepository(\module\Share\Model\Collection\Member::class)
-                ->findOneBy(['application.id' => $application->getId(), 'user.id' => $user->getId()]);
+                ->findOneBy(['app.id' => $app->getId(), 'user.id' => $user->getId()]);
 
         if ($check) {
-            $this->code->forbidden("Member has existed in this Application");
+            $this->code->forbidden("Member has existed in this App");
         }
 
         try {
             //add new memeber
-            $member = new \module\Share\Model\Collection\Member($application, $user);
+            $member = new \module\Share\Model\Collection\Member($app, $user);
 
             $this->dm->persist($member);
             $this->dm->flush();
@@ -74,6 +74,51 @@ class Member extends \module\Share\Model\Common\AbsEntity {
     public function find($id, $type = '') {
         //find by id
         return $this->dm->getRepository(\module\Share\Model\Collection\Member::class)->find($id);
+    }
+
+    //assign member
+    public function assign($id, $role) {
+        //get member
+        $member = $this->find($id);
+        if (!$member) {
+            $this->getCode()->notfound("Not found member in apps");
+        }
+
+        //assign
+        switch ($role) {
+            case \module\Share\Model\Collection\Member::ROLE_OWNER:
+                //check owner
+                if ($member->isOwner()) {
+                    $this->code->error("User was Owner");
+                }
+
+                //assign owner
+                $member->assignOwner($this->config);
+                break;
+            case \module\Share\Model\Collection\Member::ROLE_ADMIN:
+                //check admin
+                if ($member->isAdmin()) {
+                    $this->code->error("User was Admin");
+                }
+
+                //assign admin
+                $member->assignAdmin($this->config);
+                break;
+            case \module\Share\Model\Collection\Member::ROLE_DEFAULT:
+                //check default
+                if ($member->isDefault()) {
+                    $this->code->error("User was Default");
+                }
+
+                //assign default
+                $member->assignDefault($this->config);
+                break;
+        }
+
+        $this->dm->persist($member);
+        $this->dm->flush();
+
+        $this->code->success("Assign member success");
     }
 
 }

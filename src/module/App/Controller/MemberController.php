@@ -1,6 +1,6 @@
 <?php
 
-namespace module\Application\Controller;
+namespace module\App\Controller;
 
 class MemberController extends \system\Template\AbstractController {
 
@@ -16,24 +16,28 @@ class MemberController extends \system\Template\AbstractController {
 
     public function createAction() {
         $data = (object) [
-                    "application" => $this->getCode()->post("application"),
+                    "app" => $this->getCode()->post("app"),
                     "user" => $this->getCode()->post("user")
         ];
-        
+
         //create new a member
         $this->entity->create($data);
     }
 
     public function ownerAction() {
-        
+        //assign owner
+        $this->entity->assign($this->getCode()->post("id"), \module\Share\Model\Collection\Member::ROLE_OWNER);
     }
 
     public function adminAction() {
-        
+
+        //assign admin
+        $this->entity->assign($this->getCode()->post("id"), \module\Share\Model\Collection\Member::ROLE_ADMIN);
     }
 
     public function defaultAction() {
-        
+        //assign default
+        $this->entity->assign($this->getCode()->post("id"), \module\Share\Model\Collection\Member::ROLE_DEFAULT);
     }
 
 }

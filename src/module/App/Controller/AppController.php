@@ -1,8 +1,8 @@
 <?php
 
-namespace module\Application\Controller;
+namespace module\App\Controller;
 
-class ApplicationController extends \system\Template\AbstractController {
+class AppController extends \system\Template\AbstractController {
 
     //entity user
     protected $entity;
@@ -11,7 +11,7 @@ class ApplicationController extends \system\Template\AbstractController {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity
-        $this->entity = new \module\Share\Model\Entity\Application($connect, $code, $config);
+        $this->entity = new \module\Share\Model\Entity\App($connect, $code, $config);
     }
 
     public function indexAction() {

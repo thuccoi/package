@@ -7,11 +7,11 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /**
  * @ODM\Document(
  *   db="tami_account", 
- *   collection="Applications"
+ *   collection="Apps"
  * )  
  * @ODM\HasLifecycleCallbacks
  */
-class Application extends \module\Share\Model\Common\AbsField {
+class App extends \module\Share\Model\Common\AbsField {
 
     use \module\Share\Model\Common\FieldDefault;
 
@@ -35,7 +35,7 @@ class Application extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="application")
+     * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="app")
      */
     private $members;
 
@@ -44,7 +44,7 @@ class Application extends \module\Share\Model\Common\AbsField {
         return $this->members;
     }
 
-    //get list owners of application
+    //get list owners of app
     public function getOwners() {
         $owners = [];
         if ($this->members) {
@@ -59,7 +59,7 @@ class Application extends \module\Share\Model\Common\AbsField {
         return $owners;
     }
 
-    //get list admins of application
+    //get list admins of app
     public function getAdmins() {
         $admins = [];
         if ($this->members) {

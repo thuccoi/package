@@ -14,9 +14,9 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\ReferenceOne(targetDocument=module\Share\Model\Collection\Application::class, inversedBy="members")
+     * @ODM\ReferenceOne(targetDocument=module\Share\Model\Collection\App::class, inversedBy="members")
      */
-    private $application;
+    private $app;
 
     /**
      *
@@ -35,9 +35,9 @@ class Member extends \module\Share\Model\Common\AbsField {
     const ROLE_ADMIN = "admin";
     const ROLE_DEFAULT = "default";
 
-    public function __construct(\module\Share\Model\Collection\Application $application, \module\Share\Model\Collection\User $user) {
+    public function __construct(\module\Share\Model\Collection\App $app, \module\Share\Model\Collection\User $user) {
         $this->init();
-        $this->application = $application;
+        $this->app = $app;
         $this->user = $user;
 
 
@@ -45,9 +45,9 @@ class Member extends \module\Share\Model\Common\AbsField {
         $this->role = self::ROLE_DEFAULT;
     }
 
-    //add application
-    public function setApplication(\module\Share\Model\Collection\Application $application) {
-        $this->application = $application;
+    //add app
+    public function setApp(\module\Share\Model\Collection\App $app) {
+        $this->app = $app;
         return $this;
     }
 
@@ -63,18 +63,69 @@ class Member extends \module\Share\Model\Common\AbsField {
     }
 
     //assign role
-    public function assignOwner() {
+    public function assignOwner($config) {
         $this->role = self::ROLE_OWNER;
+
+        //new token
+        $this->token = \system\Helper\Str::rand();
+
+        $mail = new \system\Helper\Mail($config);
+
+        $mail->to($this->email);
+
+        $mail->subject("Bạn được giao vai trò quản trị cho ứng dụng: {$this->app->getName()}");
+
+        //get html inline to body
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-owner?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/owner.css"]);
+
+        $mail->body($body);
+
+        $mail->send();
+
         return $this;
     }
 
-    public function assignAdmin() {
+    public function assignAdmin($config) {
         $this->role = self::ROLE_ADMIN;
+
+        //new token
+        $this->token = \system\Helper\Str::rand();
+
+        $mail = new \system\Helper\Mail($config);
+
+        $mail->to($this->email);
+
+        $mail->subject("Bạn được giao vai trò quản lý cho ứng dụng: {$this->app->getName()}");
+
+        //get html inline to body
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-admin?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/admin.css"]);
+
+        $mail->body($body);
+
+        $mail->send();
+
         return $this;
     }
 
-    public function assignDefault() {
+    public function assignDefault($config) {
         $this->role = self::ROLE_DEFAULT;
+        
+        //new token
+        $this->token = \system\Helper\Str::rand();
+
+        $mail = new \system\Helper\Mail($config);
+
+        $mail->to($this->email);
+
+        $mail->subject("Bạn được giao vai trò thành viên cho ứng dụng: {$this->app->getName()}");
+
+        //get html inline to body
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-default?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/default.css"]);
+
+        $mail->body($body);
+
+        $mail->send();
+        
         return $this;
     }
 
@@ -86,7 +137,7 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     public function isAdmin() {
         //role is admin or owner
-        return ($this->isOwner() || $this->role == self::ROLE_ADMIN);
+        return ($this->role == self::ROLE_ADMIN);
     }
 
     public function isDefault() {

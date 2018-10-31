@@ -2,7 +2,7 @@
 
 namespace module\Share\Model\Entity;
 
-class Application extends \module\Share\Model\Common\AbsEntity {
+class App extends \module\Share\Model\Common\AbsEntity {
 
     //entity default
     use \module\Share\Model\Common\EntityDefault;
@@ -49,8 +49,8 @@ class Application extends \module\Share\Model\Common\AbsEntity {
 
 
         try {
-            //new application
-            $app = new \module\Share\Model\Collection\Application();
+            //new app
+            $app = new \module\Share\Model\Collection\App();
 
             //set information
             $app->setName($data->name)
@@ -61,7 +61,7 @@ class Application extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($app);
             $this->dm->flush();
 
-            $this->code->success("Create new an application is successfuly");
+            $this->code->success("Create new an app is successfuly");
         } catch (\MongoException $ex) {
             throw $ex;
         }
@@ -72,24 +72,24 @@ class Application extends \module\Share\Model\Common\AbsEntity {
     public function find($id, $type = '') {
         switch ($type) {
             case 'metatype':
-                return $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['metatype' => $id]);
+                return $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['metatype' => $id]);
                 break;
             case 'domain':
-                return $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['domain' => $id]);
+                return $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['domain' => $id]);
                 break;
             default :
                 //find by id
-                $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->find($id);
+                $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->find($id);
 
                 //find by metatype
                 if (!$find) {
 
-                    $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['metatype' => $id]);
+                    $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['metatype' => $id]);
                 }
 
                 //find by domain
                 if (!$find) {
-                    $find = $this->dm->getRepository(\module\Share\Model\Collection\Application::class)->findOneBy(['domain' => $id]);
+                    $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['domain' => $id]);
                 }
 
                 return $find;
