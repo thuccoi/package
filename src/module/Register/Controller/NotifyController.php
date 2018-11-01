@@ -6,7 +6,6 @@ class NotifyController extends \system\Template\AbstractController {
 
     //entity user
     protected $entity_user;
-    
     //entity member
     protected $entity_member;
 
@@ -98,7 +97,41 @@ class NotifyController extends \system\Template\AbstractController {
 
         return[
             "member" => $member->release(),
-            "user"=>$member->getUser()->release()
+            "user" => $member->getUser()->release(),
+            "app" => $member->getApp()->release()
+        ];
+    }
+
+    public function memberDeactivateAction() {
+        $this->setLayout('TAMI_NOLAYOUT');
+
+        $member = $this->entity_member->find($this->getCode()->get("id"));
+
+        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+            $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
+        }
+
+        return[
+            "member" => $member->release(),
+            "user" => $member->getUser()->release(),
+            "app" => $member->getApp()->release()
+        ];
+    }
+
+    //for admin
+    public function adminActivateAction() {
+        $this->setLayout('TAMI_NOLAYOUT');
+
+        $member = $this->entity_member->find($this->getCode()->get("id"));
+
+        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+            $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
+        }
+
+        return[
+            "member" => $member->release(),
+            "user" => $member->getUser()->release(),
+            "app" => $member->getApp()->release()
         ];
     }
 

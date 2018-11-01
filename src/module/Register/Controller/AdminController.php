@@ -13,17 +13,39 @@ class AmindController extends \system\Template\AbstractController {
         //init entity
         $this->entity = new \module\Share\Model\Entity\User($connect, $code, $config);
     }
-    
+
     //activate member
-    public function activateAction(){
-        
+    public function activateAction() {
+        //check query param
+        $member = $this->entity->find($this->getCode()->get("id"));
+        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+            $this->getCode()->notfound("Link hết hạn, hoặc sai", [], $this->getRouter());
+        }
+
+        //activate member
+        $member->activate($this->getConfig());
+
+        $this->getConnect()->persist($member);
+        $this->getConnect()->flush();
+
+        $this->getCode()->success("Kích hoạt tài khoản thành viên thành công", [], $this->getRouter());
     }
-    
-    //activate member
-    public function deactivateAction(){
-        
+
+    //deactivate member
+    public function deactivateAction() {
+        //check query param
+        $member = $this->entity->find($this->getCode()->get("id"));
+        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+            $this->getCode()->notfound("Link hết hạn, hoặc sai", [], $this->getRouter());
+        }
+
+        //activate member
+        $member->deactivate($this->getConfig());
+
+        $this->getConnect()->persist($member);
+        $this->getConnect()->flush();
+
+        $this->getCode()->success("Từ chối hoạt động tài khoản thành viên thành công", [], $this->getRouter());
     }
-    
-    
-   
+
 }

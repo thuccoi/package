@@ -95,7 +95,7 @@ class Member extends \module\Share\Model\Common\AbsField {
         $mail->subject("Kích hoạt thành viên mới trong ứng dụng của bạn");
 
         //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-activate?id={$member->getId()}&token={$member->getToken()}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/activate.css"]);
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/admin-activate?id={$member->getId()}&token={$member->getToken()}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/admin/activate.css"]);
 
         $mail->body($body);
 
@@ -201,14 +201,42 @@ class Member extends \module\Share\Model\Common\AbsField {
     }
 
     //active account
-    public function activate() {
+    public function activate($config) {
         $this->status = self::STATUS_ACTIVATE;
+
+        $mail = new \system\Helper\Mail($config);
+
+        $mail->to($this->user->getEmail());
+
+        $mail->subject("Tài khoản thành viên của bạn đã được kích hoạt trong ứng dụng: {$this->app->getName()}");
+
+        //get html inline to body
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-activate?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/activate.css"]);
+
+        $mail->body($body);
+
+        $mail->send();
+
         return $this;
     }
 
     //deactive account
-    public function deactivate() {
+    public function deactivate($config) {
         $this->status = self::STATUS_DEACTIVE;
+
+        $mail = new \system\Helper\Mail($config);
+
+        $mail->to($this->user->getEmail());
+
+        $mail->subject("Tài khoản thành viên của bạn đã bị từ chối hoạt động trong ứng dụng: {$this->app->getName()}");
+
+        //get html inline to body
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-deactivate?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/deactivate.css"]);
+
+        $mail->body($body);
+
+        $mail->send();
+
         return $this;
     }
 
