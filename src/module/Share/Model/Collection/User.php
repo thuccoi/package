@@ -162,6 +162,15 @@ class User extends \module\Share\Model\Common\AbsField {
         return $this->status;
     }
 
+    //check status
+    public function isActivate() {
+        return ($this->status == self::STATUS_ACTIVATE);
+    }
+
+    public function isDeactivate() {
+        return ($this->status == self::STATUS_DEACTIVE);
+    }
+
     //active account
     public function activate() {
         $this->status = self::STATUS_ACTIVATE;
