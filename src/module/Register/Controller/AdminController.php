@@ -2,7 +2,7 @@
 
 namespace module\Register\Controller;
 
-class AmindController extends \system\Template\AbstractController {
+class AdminController extends \system\Template\AbstractController {
 
     //entity user
     protected $entity;
