@@ -100,7 +100,7 @@ class User extends \module\Share\Model\Common\AbsEntity {
             //send verify email
             $user->sendVerifyEmail($this->config);
 
-            $this->code->success("Đăng ký tài khoản thành công");
+            $this->code->success("Đăng ký tài khoản thành công, mời bạn hãy vào địa chỉ email của mình để xác nhận thông tin tài khoản của mình vừa cung cấp cho chúng tôi là chính xác.");
         } catch (\MongoException $ex) {
             throw $ex;
         }
