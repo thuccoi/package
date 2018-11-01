@@ -44,4 +44,8 @@ class LoginController extends \system\Template\AbstractController {
         $this->getCode()->notfound("Tên tài khoản này không tồn tại trong hệ thống.");
     }
 
+    
+    public function forgotPasswordAction(){
+        
+    }
 }
