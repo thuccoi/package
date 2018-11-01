@@ -35,23 +35,28 @@ class RegisterController extends \system\Template\AbstractController {
         $id = $this->getCode()->get("id");
         $token = $this->getCode()->get("token");
 
-        $obj = $this->entity->find($id);
-        if ($obj) {
+        $user = $this->entity->find($id);
+        if ($user) {
             //check token
-            if ($obj->getToken() != $token) {
+            if ($user->getToken() != $token) {
                 $this->getCode()->error("URL đã hết hạn, hoặc sai thông tin.", [], $this->getRouter());
             }
 
+            //check status deactivate
+            if ($user->isDeactivate()) {
+                $this->getCode()->forbidden("Tài khoản này đang bị cấm hoạt động trong hệ thống");
+            }
+            
             //check email confirm
-            if ($obj->getEmailConfirm() == $obj::EMAIL_CONFIRMED) {
+            if ($user->getEmailConfirm() == $user::EMAIL_CONFIRMED) {
                 $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.", [], $this->getRouter());
             }
 
             //activate account
-            $obj->sendConfirmEmail($this->getConfig());
+            $user->sendConfirmEmail($this->getConfig());
 
             //save record
-            $this->getConnect()->persist($obj);
+            $this->getConnect()->persist($user);
             $this->getConnect()->flush();
 
 

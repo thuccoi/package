@@ -23,6 +23,11 @@ class LoginController extends \system\Template\AbstractController {
         $user = $this->entity->find($this->getCode()->post("email"));
         if ($user) {
 
+            //check email confirm
+            if (!$user->isEmailConfirm()) {
+                $this->getCode()->forbidden("Tài khoản này chưa được xác nhận qua Email, bạn hãy vào hòm thư của mình để thực hiện xác nhận tài khoản");
+            }
+
             //check password
             if (!$user->authLogin($this->getCode()->post("password"))) {
                 $this->getCode()->forbidden("Sai mật khẩu đăng nhập");
@@ -51,7 +56,12 @@ class LoginController extends \system\Template\AbstractController {
     public function newPasswordAction() {
         $user = $this->entity->find($this->getCode()->post("email"), 'email');
         if ($user) {
-            
+
+            //check email confirm
+            if (!$user->isEmailConfirm()) {
+                $this->getCode()->forbidden("Tài khoản này chưa được xác nhận qua Email, bạn hãy vào hòm thư của mình để thực hiện xác nhận tài khoản");
+            }
+
             //check status deactivate
             if ($user->isDeactivate()) {
                 $this->getCode()->forbidden("Tài khoản này đang bị cấm hoạt động trong hệ thống");

@@ -294,4 +294,9 @@ class User extends \module\Share\Model\Common\AbsField {
         return $this->email_confirm;
     }
 
+    //check  email confirm
+    public function isEmailConfirm() {
+        return ($this->email_confirm == self::EMAIL_CONFIRMED);
+    }
+
 }
