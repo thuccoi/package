@@ -7,16 +7,6 @@ class User extends \module\Share\Model\Common\AbsEntity {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
-    private $entity_app;
-    private $entity_member;
-
-    public function __construct($connect, \system\Helper\Code $code, $config) {
-        $this->init($connect, $code, $config);
-        //new entity
-        $this->entity_app = new App($connect, $code, $config);
-        $this->entity_member = new Member($connect, $code, $config);
-    }
-
     public function create($data) {
 
         //field required
@@ -108,10 +98,11 @@ class User extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($user);
             $this->dm->flush();
 
-
+            //check app
+            $entity_app = new App($this->dm, $this->code, $this->config);
             //check domain exists in application
             $domain = $this->config['DOMAIN'];
-            $app = $this->entity_app->find($domain, 'domain');
+            $app = $entity_app->find($domain, 'domain');
             if (!$app) {
                 $data = (object) [
                             "name" => $this->config['app']['name'],
@@ -120,7 +111,7 @@ class User extends \module\Share\Model\Common\AbsEntity {
                 ];
 
                 //create new an application
-                $app = $this->entity_app->create($data);
+                $app = $entity_app->create($data);
             }
 
             $data = (object) [
@@ -129,7 +120,8 @@ class User extends \module\Share\Model\Common\AbsEntity {
             ];
 
             //create new member
-            $member = $this->entity_member->create($data);
+            $entity_member = new Member($this->dm, $this->code, $this->config);
+            $member = $entity_member->create($data);
 
             //send verify email
             $user->sendVerifyEmail($this->config);
