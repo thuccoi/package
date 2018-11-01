@@ -12,63 +12,63 @@ class User extends \module\Share\Model\Common\AbsEntity {
         //field required
         //first name
         if (\system\Helper\Validate::isEmpty($data->first_name)) {
-            $this->code->forbidden("first_name is require");
+            $this->code->forbidden("Nhập vào tên");
         }
 
         if (!\system\Helper\Validate::isString($data->first_name)) {
-            $this->code->forbidden("first_name was not string");
+            $this->code->forbidden("Tên phải là một chuỗi");
         }
 
         //last name
         if (\system\Helper\Validate::isEmpty($data->last_name)) {
-            $this->code->forbidden("last_name is require");
+            $this->code->forbidden("Nhập vào họ");
         }
 
         if (!\system\Helper\Validate::isString($data->last_name)) {
-            $this->code->forbidden("last_name was not string");
+            $this->code->forbidden("Họ phải là một chuỗi");
         }
 
         //username
         if (\system\Helper\Validate::isEmpty($data->username)) {
-            $this->code->forbidden("username is require");
+            $this->code->forbidden("Nhập vào tên tài khoản");
         }
 
         if (!\system\Helper\Validate::isString($data->username)) {
-            $this->code->forbidden("username was not string");
+            $this->code->forbidden("Tên tài khoản phải là một chuỗi");
         }
 
         //check username is email
         if (\system\Helper\Validate::isEmail($data->username)) {
-            $this->code->forbidden("username can not be email");
+            $this->code->forbidden("Tên tài khoản không được là địa chỉ Email");
         }
 
 
         //password
         if (\system\Helper\Validate::isEmpty($data->password)) {
-            $this->code->forbidden("password is require");
+            $this->code->forbidden("Mật khẩu được yêu cầu");
         }
 
         if (!\system\Helper\Validate::isString($data->password)) {
-            $this->code->forbidden("password was not string");
+            $this->code->forbidden("Mật khẩu phải một chuỗi");
         }
 
         //email
         if (\system\Helper\Validate::isEmpty($data->email)) {
-            $this->code->forbidden("email is require");
+            $this->code->forbidden("Địa chỉ Email được yêu cầu");
         }
 
         if (!\system\Helper\Validate::isEmail($data->email)) {
-            $this->code->notfound("email was not valid email");
+            $this->code->notfound("Địa chỉ Email không đúng định dạng");
         }
 
         //check exists username
         if ($this->find($data->username, 'username')) {
-            $this->code->forbidden("username was existed in system");
+            $this->code->forbidden("Tên tài khoản đã tồn tại trong hệ thống");
         }
 
         //check exists email
         if ($this->find($data->email, 'email')) {
-            $this->code->forbidden("email was existed in system");
+            $this->code->forbidden("Địa chỉ Email đã tồn tại trong một tài khoản khác của hệ thống");
         }
 
         try {
@@ -87,7 +87,7 @@ class User extends \module\Share\Model\Common\AbsEntity {
 
                 //check phone is string
                 if (!\system\Helper\Validate::isString($data->phone)) {
-                    $this->code->notfound("phone was not string");
+                    $this->code->notfound("Số điện thoại phải là một chuỗi");
                 }
 
                 $user->setPhone($data->phone);
@@ -100,12 +100,12 @@ class User extends \module\Share\Model\Common\AbsEntity {
             //send verify email
             $user->sendVerifyEmail($this->config);
 
-            $this->code->success("Register is successfuly");
+            $this->code->success("Đăng ký tài khoản thành công");
         } catch (\MongoException $ex) {
             throw $ex;
         }
 
-        $this->code->error("Error database");
+        $this->code->error("Lỗi cơ sở dữ liệu");
     }
 
     public function find($id, $type = '') {
