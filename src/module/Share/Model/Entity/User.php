@@ -114,13 +114,13 @@ class User extends \module\Share\Model\Common\AbsEntity {
                 $app = $entity_app->create($data);
             }
 
-            $data = (object) [
-                        "app" => $app->getId(),
-                        "user" => $user->getId()
-            ];
 
             //create new member
             $entity_member = new Member($this->dm, $this->code, $this->config);
+            $data = (object) [
+                        "app" => $app->getMetatype(),
+                        "user" => $user->getUsername()
+            ];
             $member = $entity_member->create($data);
 
             //send verify email
