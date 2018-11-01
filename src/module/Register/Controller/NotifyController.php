@@ -87,4 +87,18 @@ class NotifyController extends \system\Template\AbstractController {
         ];
     }
 
+    public function memberActivateAction() {
+        $this->setLayout('TAMI_NOLAYOUT');
+
+        $member = $this->entity_member->find($this->getCode()->get("id"));
+
+        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+            $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
+        }
+
+        return[
+            "member" => $member->release()
+        ];
+    }
+
 }

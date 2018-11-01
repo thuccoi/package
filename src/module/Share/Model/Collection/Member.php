@@ -30,10 +30,20 @@ class Member extends \module\Share\Model\Common\AbsField {
      */
     private $role;
 
+    /**
+     *
+     * @ODM\Field(type="int")
+     */
+    private $status;
+
     //role
     const ROLE_OWNER = "owner";
     const ROLE_ADMIN = "admin";
     const ROLE_DEFAULT = "default";
+    //status
+    const STATUS_ACTIVATE = 1;
+    const STATUS_DEACTIVE = -1;
+    const STATUS_PENDING = 0;
 
     public function __construct(\module\Share\Model\Collection\App $app, \module\Share\Model\Collection\User $user) {
         $this->init();
@@ -43,6 +53,10 @@ class Member extends \module\Share\Model\Common\AbsField {
 
         //role default default
         $this->role = self::ROLE_DEFAULT;
+
+
+        //pending status
+        $this->status = self::STATUS_PENDING;
     }
 
     //add app
@@ -60,6 +74,26 @@ class Member extends \module\Share\Model\Common\AbsField {
     //role
     public function getRole() {
         return $this->role;
+    }
+
+    //activate member
+    //send activate email
+    public function sendActivateEmail($member, $config) {
+
+        $mail = new \system\Helper\Mail($config);
+
+        $mail->to($this->user->getEmail());
+
+        $mail->subject("Kích hoạt thành viên mới trong ứng dụng của bạn");
+
+        //get html inline to body
+        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-activate?id={$member->geetId()}&token={$member->getToken()}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/activate.css"]);
+
+        $mail->body($body);
+
+        $mail->send();
+
+        return $this;
     }
 
     //assign role
@@ -109,7 +143,7 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     public function assignDefault($config) {
         $this->role = self::ROLE_DEFAULT;
-        
+
         //new token
         $this->token = \system\Helper\Str::rand();
 
@@ -125,7 +159,7 @@ class Member extends \module\Share\Model\Common\AbsField {
         $mail->body($body);
 
         $mail->send();
-        
+
         return $this;
     }
 
@@ -148,7 +182,34 @@ class Member extends \module\Share\Model\Common\AbsField {
     public function release() {
         $obj = $this->export();
         $obj->role = $this->getRole();
+        $obj->status = $this->getStatus();
         return $obj;
+    }
+
+    //status
+    public function getStatus() {
+        return $this->status;
+    }
+
+    //check status
+    public function isActivate() {
+        return ($this->status == self::STATUS_ACTIVATE);
+    }
+
+    public function isDeactivate() {
+        return ($this->status == self::STATUS_DEACTIVE);
+    }
+
+    //active account
+    public function activate() {
+        $this->status = self::STATUS_ACTIVATE;
+        return $this;
+    }
+
+    //deactive account
+    public function deactivate() {
+        $this->status = self::STATUS_DEACTIVE;
+        return $this;
     }
 
 }

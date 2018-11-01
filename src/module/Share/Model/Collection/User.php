@@ -61,11 +61,6 @@ class User extends \module\Share\Model\Common\AbsField {
      */
     private $email_confirm;
 
-    /**
-     *
-     * @ODM\Field(type="int")
-     */
-    private $status;
 
     /**
      *
@@ -73,10 +68,6 @@ class User extends \module\Share\Model\Common\AbsField {
      */
     private $members;
 
-    //status
-    const STATUS_ACTIVATE = 1;
-    const STATUS_DEACTIVE = -1;
-    const STATUS_PENDING = 0;
     //email
     const EMAIL_CONFIRMED = 1;
     const EMAIL_PENDING = 0;
@@ -86,8 +77,6 @@ class User extends \module\Share\Model\Common\AbsField {
         //init
         $this->init();
 
-        //pending status
-        $this->status = self::STATUS_PENDING;
 
         //pending email
         $this->email_confirm = self::EMAIL_PENDING;
@@ -140,6 +129,8 @@ class User extends \module\Share\Model\Common\AbsField {
         return $this;
     }
 
+   
+
     //function release
     public function release() {
         //object release
@@ -151,36 +142,7 @@ class User extends \module\Share\Model\Common\AbsField {
         $obj->image = $this->getImage();
         $obj->email = $this->getEmail();
         $obj->phone = $this->getPhone();
-        $obj->status = $this->getStatus();
-
-
         return $obj;
-    }
-
-    //status
-    public function getStatus() {
-        return $this->status;
-    }
-
-    //check status
-    public function isActivate() {
-        return ($this->status == self::STATUS_ACTIVATE);
-    }
-
-    public function isDeactivate() {
-        return ($this->status == self::STATUS_DEACTIVE);
-    }
-
-    //active account
-    public function activate() {
-        $this->status = self::STATUS_ACTIVATE;
-        return $this;
-    }
-
-    //deactive account
-    public function deactivate() {
-        $this->status = self::STATUS_DEACTIVE;
-        return $this;
     }
 
     //authentic

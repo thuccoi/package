@@ -44,14 +44,58 @@ class RegisterController extends \system\Template\AbstractController {
                 $this->getCode()->error("URL đã hết hạn, hoặc sai thông tin.", [], $this->getRouter());
             }
 
-            //check status deactivate
-            if ($user->isDeactivate()) {
-                $this->getCode()->forbidden("Tài khoản này đang bị cấm hoạt động trong hệ thống");
-            }
-
             //check email confirm
             if ($user->getEmailConfirm() == $user::EMAIL_CONFIRMED) {
                 $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.", [], $this->getRouter());
+            }
+
+            //check app
+            $entity_app = new \module\Share\Model\Entity\App($this->getConnect(), $this->getCode(), $this->getConfig());
+            //check domain exists in application
+            $domain = $this->getConfig()['DOMAIN'];
+            $app = $entity_app->find($domain, 'domain');
+
+            //check new app
+            $newapp = false;
+            if (!$app) {
+                $data = (object) [
+                            "name" => $this->getConfig()['app']['name'],
+                            "metatype" => $this->getConfig()['app']['metatype'],
+                            "domain" => $domain
+                ];
+
+                //create new an application
+                $app = $entity_app->create($data);
+                $newapp = true;
+            }
+
+
+            //create new member
+            $entity_member = new \module\Share\Model\Entity\Member($this->getConnect(), $this->getCode(), $this->getConfig());
+            $data = (object) [
+                        "app" => $app->getMetatype(),
+                        "user" => $user->getUsername()
+            ];
+
+            $member = $entity_member->create($data);
+
+            //check new app
+            if ($newapp == true) {
+                //member
+                $member->assignOwner($this->getConfig());
+                $this->getConnect()->persist($member);
+                $this->getConnect()->flush();
+            } else {
+                //send confirm to admin
+                $admins = $app->getAdmins();
+                if (count($admins) == 0) {
+                    $admins = $app->getOwners();
+                }
+
+                foreach ($admins as $val) {
+                    //send activate email
+                    $val->sendActivateEmail($member, $this->getConnect());
+                }
             }
 
             //activate account

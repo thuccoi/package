@@ -98,31 +98,7 @@ class User extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($user);
             $this->dm->flush();
 
-            //check app
-            $entity_app = new App($this->dm, $this->code, $this->config);
-            //check domain exists in application
-            $domain = $this->config['DOMAIN'];
-            $app = $entity_app->find($domain, 'domain');
-            if (!$app) {
-                $data = (object) [
-                            "name" => $this->config['app']['name'],
-                            "metatype" => $this->config['app']['metatype'],
-                            "domain" => $domain
-                ];
-
-                //create new an application
-                $app = $entity_app->create($data);
-            }
-
-
-            //create new member
-            $entity_member = new Member($this->dm, $this->code, $this->config);
-            $data = (object) [
-                        "app" => $app->getMetatype(),
-                        "user" => $user->getUsername()
-            ];
-            $member = $entity_member->create($data);
-
+           
             //send verify email
             $user->sendVerifyEmail($this->config);
 
