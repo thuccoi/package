@@ -108,9 +108,6 @@ class Member extends \module\Share\Model\Common\AbsField {
     public function assignOwner($config) {
         $this->role = self::ROLE_OWNER;
 
-        //new token
-        $this->token = \system\Helper\Str::rand();
-
         $mail = new \system\Helper\Mail($config);
 
         $mail->to($this->user->getEmail());
@@ -130,9 +127,6 @@ class Member extends \module\Share\Model\Common\AbsField {
     public function assignAdmin($config) {
         $this->role = self::ROLE_ADMIN;
 
-        //new token
-        $this->token = \system\Helper\Str::rand();
-
         $mail = new \system\Helper\Mail($config);
 
         $mail->to($this->user->getEmail());
@@ -151,9 +145,6 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     public function assignDefault($config) {
         $this->role = self::ROLE_DEFAULT;
-
-        //new token
-        $this->token = \system\Helper\Str::rand();
 
         $mail = new \system\Helper\Mail($config);
 

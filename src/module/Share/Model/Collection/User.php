@@ -110,9 +110,6 @@ class User extends \module\Share\Model\Common\AbsField {
     public function sendConfirmEmail($config) {
         $this->email_confirm = self::EMAIL_CONFIRMED;
 
-        //new token
-        $this->token = \system\Helper\Str::rand();
-
         $mail = new \system\Helper\Mail($config);
 
         $mail->to($this->email);
