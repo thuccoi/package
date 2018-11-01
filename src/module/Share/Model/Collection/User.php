@@ -1,4 +1,3 @@
-
 <?php
 
 namespace module\Share\Model\Collection;
