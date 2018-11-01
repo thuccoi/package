@@ -27,6 +27,8 @@ class RegisterController extends \system\Template\AbstractController {
 
         //register new an user
         $this->entity->create($data);
+
+        $this->getCode()->success("Đăng ký tài khoản thành công, mời bạn hãy vào địa chỉ email của mình để xác nhận thông tin tài khoản của mình vừa cung cấp cho chúng tôi là chính xác.");
     }
 
     //confirm user
@@ -46,7 +48,7 @@ class RegisterController extends \system\Template\AbstractController {
             if ($user->isDeactivate()) {
                 $this->getCode()->forbidden("Tài khoản này đang bị cấm hoạt động trong hệ thống");
             }
-            
+
             //check email confirm
             if ($user->getEmailConfirm() == $user::EMAIL_CONFIRMED) {
                 $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.", [], $this->getRouter());

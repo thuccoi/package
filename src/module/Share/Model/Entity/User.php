@@ -7,6 +7,16 @@ class User extends \module\Share\Model\Common\AbsEntity {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
+    private $entity_app;
+    private $entity_member;
+
+    public function __construct($connect, \system\Helper\Code $code, $config) {
+        $this->init($connect, $code, $config);
+        //new entity
+        $this->entity_app = new App($connect, $code, $config);
+        $this->entity_member = new Member($connect, $code, $config);
+    }
+
     public function create($data) {
 
         //field required
@@ -71,6 +81,7 @@ class User extends \module\Share\Model\Common\AbsEntity {
             $this->code->forbidden("Địa chỉ Email đã tồn tại trong một tài khoản khác của hệ thống");
         }
 
+
         try {
             //new user
             $user = new \module\Share\Model\Collection\User();
@@ -97,10 +108,33 @@ class User extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($user);
             $this->dm->flush();
 
+
+            //check domain exists in application
+            $domain = $this->config['DOMAIN'];
+            $app = $this->entity_app->find($domain, 'domain');
+            if (!$app) {
+                $data = (object) [
+                            "name" => $this->config['app']['name'],
+                            "metatype" => $this->config['app']['metatype'],
+                            "domain" => $domain
+                ];
+
+                //create new an application
+                $app = $this->entity_app->create($data);
+            }
+
+            $data = (object) [
+                        "app" => $app->getId(),
+                        "user" => $user->getId()
+            ];
+
+            //create new member
+            $member = $this->entity_member->create($data);
+
             //send verify email
             $user->sendVerifyEmail($this->config);
 
-            $this->code->success("Đăng ký tài khoản thành công, mời bạn hãy vào địa chỉ email của mình để xác nhận thông tin tài khoản của mình vừa cung cấp cho chúng tôi là chính xác.");
+            return $user;
         } catch (\MongoException $ex) {
             throw $ex;
         }

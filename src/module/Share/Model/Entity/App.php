@@ -61,7 +61,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($app);
             $this->dm->flush();
 
-            $this->code->success("Create new an app is successfuly");
+            return $app;
         } catch (\MongoException $ex) {
             throw $ex;
         }

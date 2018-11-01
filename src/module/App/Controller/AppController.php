@@ -28,6 +28,7 @@ class AppController extends \system\Template\AbstractController {
 
         //register new an user
         $this->entity->create($data);
+        $this->getCode()->success("Ứng dụng đã được tạo thành công.");
     }
 
     public function updateAction() {

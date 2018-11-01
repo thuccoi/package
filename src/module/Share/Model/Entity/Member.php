@@ -63,7 +63,7 @@ class Member extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($member);
             $this->dm->flush();
 
-            $this->code->success("Create new a member is successfuly");
+            return $member;
         } catch (\MongoException $ex) {
             throw $ex;
         }
