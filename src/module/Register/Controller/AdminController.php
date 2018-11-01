@@ -22,6 +22,10 @@ class AdminController extends \system\Template\AbstractController {
             $this->getCode()->notfound("Link hết hạn, hoặc sai", [], $this->getRouter());
         }
 
+        if ($member->isActivate()) {
+            $this->getCode()->error("Tài khoản đã được kích hoạt", [], $this->getRouter());
+        }
+
         //activate member
         $member->activate($this->getConfig());
 
@@ -37,6 +41,10 @@ class AdminController extends \system\Template\AbstractController {
         $member = $this->entity->find($this->getCode()->get("id"));
         if (!$member || $member->getToken() != $this->getCode()->get("token")) {
             $this->getCode()->notfound("Link hết hạn, hoặc sai", [], $this->getRouter());
+        }
+
+        if ($member->isDeactivate()) {
+            $this->getCode()->error("Tài khoản đã được cấm hoạt động", [], $this->getRouter());
         }
 
         //activate member
