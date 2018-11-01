@@ -101,6 +101,8 @@ class RegisterController extends \system\Template\AbstractController {
                     //send activate email
                     $val->sendActivateEmail($member, $this->getConnect());
                 }
+                
+                
             }
 
             //confirm account

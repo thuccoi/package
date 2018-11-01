@@ -167,6 +167,14 @@ class Mail {
     //send
     public function send() {
         $this->mail->send();
+        
+        //close smtp
+        $this->close();
+    }
+
+    //close
+    public function close() {
+        $this->mail->smtpClose();
     }
 
     //convert to html inline style
