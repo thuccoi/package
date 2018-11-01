@@ -30,7 +30,7 @@ class LoginController extends \system\Template\AbstractController {
 
             //check status deactivate
             if ($user->isDeactivate()) {
-                $this->getCode()->forbidden("Tài khoản này đã bị cấm hoạt động trong hệ thống");
+                $this->getCode()->forbidden("Tài khoản này đang bị cấm hoạt động trong hệ thống");
             }
 
             //check status activate
@@ -41,11 +41,30 @@ class LoginController extends \system\Template\AbstractController {
             $this->getCode()->success("Đăng nhập thành công");
         }
 
-        $this->getCode()->notfound("Tên tài khoản này không tồn tại trong hệ thống.");
+        $this->getCode()->notfound("Tên tài khoản hoặc email không tồn tại trong hệ thống.");
     }
 
-    
-    public function forgotPasswordAction(){
+    public function forgotPasswordAction() {
         
     }
+
+    public function newPasswordAction() {
+        $user = $this->entity->find($this->getCode()->post("email"), 'email');
+        if ($user) {
+            
+            //check status deactivate
+            if ($user->isDeactivate()) {
+                $this->getCode()->forbidden("Tài khoản này đang bị cấm hoạt động trong hệ thống");
+            }
+
+            //check status activate
+            if (!$user->isActivate()) {
+                $this->getCode()->forbidden("Tài khoản của bạn chưa được kích hoạt, bạn hãy liên hệ với người quản trị để được hỗ trợ.");
+            }
+
+            $this->getCode()->success("Chúng tôi đã gửi một link tạo mật khẩu mới vào hòm thư của bạn. Bạn hãy làm theo hướng dẫn của chúng tôi trong đó để nhận được mật khẩu mới của mình.");
+        }
+        $this->getCode()->notfound("Địa chỉ Email không tồn tại trong hệ thống.");
+    }
+
 }
