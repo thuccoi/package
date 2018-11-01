@@ -29,7 +29,7 @@ class LoginController extends \system\Template\AbstractController {
             }
 
             //check status deactivate
-            if (!$user->isDeactivate()) {
+            if ($user->isDeactivate()) {
                 $this->getCode()->forbidden("Tài khoản này đã bị cấm hoạt động trong hệ thống");
             }
 
