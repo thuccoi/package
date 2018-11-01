@@ -4,14 +4,14 @@ namespace module\Register\Controller;
 
 class AdminController extends \system\Template\AbstractController {
 
-    //entity user
+    //entity member
     protected $entity;
 
     public function __construct($connect, \system\Router $router, \system\Helper\Code $code, \system\Session $session, array $config = null, array $options = null) {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity
-        $this->entity = new \module\Share\Model\Entity\User($connect, $code, $config);
+        $this->entity = new \module\Share\Model\Entity\Member($connect, $code, $config);
     }
 
     //activate member
