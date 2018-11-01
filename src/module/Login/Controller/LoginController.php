@@ -20,7 +20,7 @@ class LoginController extends \system\Template\AbstractController {
 
     public function loginAction() {
         //get user
-        $user = $this->entity->find($this->getCode()->post("id"));
+        $user = $this->entity->find($this->getCode()->post("email"));
         if ($user) {
 
             //check password
