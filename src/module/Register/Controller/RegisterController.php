@@ -93,7 +93,7 @@ class RegisterController extends \system\Template\AbstractController {
             } else {
                 //send confirm to admin
                 $admins = $app->getAdmins();
-                if (count($admins) == 0) {
+                if (!$admins) {
                     $admins = $app->getOwners();
                 }
 

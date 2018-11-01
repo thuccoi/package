@@ -51,7 +51,7 @@ class App extends \module\Share\Model\Common\AbsField {
             foreach ($this->members as $val) {
                 //check role is owner
                 if ($val->isOwner()) {
-                    $owners = $val;
+                    $owners[] = $val;
                 }
             }
         }
@@ -66,7 +66,7 @@ class App extends \module\Share\Model\Common\AbsField {
             foreach ($this->members as $val) {
                 //check role is admin
                 if ($val->isAdmin()) {
-                    $admins = $val;
+                    $admins[] = $val;
                 }
             }
         }

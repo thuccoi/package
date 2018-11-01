@@ -121,6 +121,5 @@ class Member extends \module\Share\Model\Common\AbsEntity {
         $this->code->success("Assign member success");
     }
     
-    
 
 }
