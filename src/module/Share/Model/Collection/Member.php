@@ -113,7 +113,7 @@ class Member extends \module\Share\Model\Common\AbsField {
 
         $mail = new \system\Helper\Mail($config);
 
-        $mail->to($this->email);
+        $mail->to($this->user->getEmail());
 
         $mail->subject("Bạn được giao vai trò quản trị cho ứng dụng: {$this->app->getName()}");
 
@@ -135,7 +135,7 @@ class Member extends \module\Share\Model\Common\AbsField {
 
         $mail = new \system\Helper\Mail($config);
 
-        $mail->to($this->email);
+        $mail->to($this->user->getEmail());
 
         $mail->subject("Bạn được giao vai trò quản lý cho ứng dụng: {$this->app->getName()}");
 
@@ -157,7 +157,7 @@ class Member extends \module\Share\Model\Common\AbsField {
 
         $mail = new \system\Helper\Mail($config);
 
-        $mail->to($this->email);
+        $mail->to($this->user->getEmail());
 
         $mail->subject("Bạn được giao vai trò thành viên cho ứng dụng: {$this->app->getName()}");
 
