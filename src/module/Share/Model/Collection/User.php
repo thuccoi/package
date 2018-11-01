@@ -64,7 +64,7 @@ class User extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\ReferenceOne(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="user")
+     * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="user")
      */
     private $members;
 
