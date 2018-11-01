@@ -182,6 +182,7 @@ class Member extends \module\Share\Model\Common\AbsField {
         $obj = $this->export();
         $obj->role = $this->getRole();
         $obj->status = $this->getStatus();
+        $obj->token = $this->getToken();
         return $obj;
     }
 

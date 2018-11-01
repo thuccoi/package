@@ -35,6 +35,7 @@ class LoginController extends \system\Template\AbstractController {
 
             //get members
             $members = $user->getMembers();
+            
             foreach ($members as $val) {
                 $app = $val->getApp();
                 if ($app->getDomain() == $this->getConfig()['DOMAIN']) {

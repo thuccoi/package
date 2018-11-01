@@ -97,7 +97,8 @@ class NotifyController extends \system\Template\AbstractController {
         }
 
         return[
-            "member" => $member->release()
+            "member" => $member->release(),
+            "user"=>$member->getUser()->release()
         ];
     }
 
