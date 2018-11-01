@@ -82,7 +82,12 @@ class RegisterController extends \system\Template\AbstractController {
             //check new app
             if ($newapp == true) {
                 //member
+                //assign owner
                 $member->assignOwner($this->getConfig());
+                
+                //activate member
+                $member->activate();
+                
                 $this->getConnect()->persist($member);
                 $this->getConnect()->flush();
             } else {
