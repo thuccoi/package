@@ -98,7 +98,7 @@ class RegisterController extends \system\Template\AbstractController {
                 }
             }
 
-            //activate account
+            //confirm account
             $user->sendConfirmEmail($this->getConfig());
 
             //save record

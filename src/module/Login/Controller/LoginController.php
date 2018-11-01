@@ -32,8 +32,25 @@ class LoginController extends \system\Template\AbstractController {
             if (!$user->authLogin($this->getCode()->post("password"))) {
                 $this->getCode()->forbidden("Sai mật khẩu đăng nhập");
             }
-       
-            $this->getCode()->success("Đăng nhập thành công");
+
+            //get members
+            $members = $user->getMembers();
+            foreach ($members as $val) {
+                $app = $val->getApp();
+                if ($app->getDomain() == $this->getConfig()['DOMAIN']) {
+                    //check deactivate
+                    if ($val->isDeactivate()) {
+                        $this->getCode()->forbidden("Thành viên này đang bị cấm hoạt động");
+                    }
+
+                    //check activate
+                    if ($val->isActivate()) {
+                        $this->getCode()->success("Đăng nhập thành công");
+                    }
+                }
+            }
+
+            $this->getCode()->forbidden("Thành viên này chưa được kích hoạt, bạn hãy liên hệ với người quản trị của ứng dụng để được hỗ trợ.");
         }
 
         $this->getCode()->notfound("Tên tài khoản hoặc email không tồn tại trong hệ thống.");

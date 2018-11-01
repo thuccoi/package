@@ -65,10 +65,18 @@ class Member extends \module\Share\Model\Common\AbsField {
         return $this;
     }
 
+    public function getApp() {
+        return $this->app;
+    }
+
     //add user
     public function setUser(\module\Share\Model\Collection\User $user) {
         $this->user = $user;
         return $this;
+    }
+
+    public function getUser() {
+        return $this->user;
     }
 
     //role
