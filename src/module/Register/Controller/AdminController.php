@@ -1,6 +1,6 @@
 <?php
 
-namespace module\Register;
+namespace module\Register\Controller;
 
 class AmindController extends \system\Template\AbstractController {
 
