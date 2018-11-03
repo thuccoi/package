@@ -126,16 +126,20 @@ class Mail {
         } else {
             $this->mail->AddAddress($email);
         }
+
+        return $this;
     }
 
     //add cc
     public function cc($email) {
         $this->mail->addCC($email);
+        return $this;
     }
 
     //add bcc
     public function bcc($email) {
         $this->mail->addBCC($email);
+        return $this;
     }
 
     //address
@@ -145,11 +149,13 @@ class Mail {
         } else {
             $this->mail->AddAttachment($filename);
         }
+        return $this;
     }
 
     //subject
     public function subject($subject) {
         $this->mail->Subject = $subject;
+        return $this;
     }
 
     //$mail->msgHTML("body abc");
@@ -157,24 +163,25 @@ class Mail {
     //$Mail->msgHTML('<img src="/etc/hostname">test');
     public function body($message, $basedir = '', $advanced = false) {
         $this->mail->MsgHTML($message, $basedir, $advanced);
+        return $this;
     }
 
     //body
     public function altBody($alt) {
         $this->mail->AltBody = $alt;
+        return $this;
     }
 
     //send
     public function send() {
         $this->mail->send();
-        
-        //close smtp
-        $this->close();
+        return $this;
     }
 
     //close
     public function close() {
         $this->mail->smtpClose();
+        return $this;
     }
 
     //convert to html inline style
@@ -207,6 +214,8 @@ class Mail {
         return $cssToInlineStyles->convert(
                         $html, $css
         );
+
+        return $this;
     }
 
 }
