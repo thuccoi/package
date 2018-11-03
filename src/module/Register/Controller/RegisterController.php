@@ -86,7 +86,7 @@ class RegisterController extends \system\Template\AbstractController {
                 $member->assignOwner($this->getConfig());
                 
                 //activate member
-                $member->activate();
+                $member->activate($this->getConfig());
                 
                 $this->getConnect()->persist($member);
                 $this->getConnect()->flush();
