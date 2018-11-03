@@ -214,8 +214,6 @@ class Mail {
         return $cssToInlineStyles->convert(
                         $html, $css
         );
-
-        return $this;
     }
 
 }
