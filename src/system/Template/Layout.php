@@ -11,6 +11,7 @@ class Layout {
     private $view_dir;
     private $param = [];
     private $config;
+    private $code;
     //viewer
     private $viewer;
 
@@ -84,6 +85,16 @@ class Layout {
 
     public function getParam() {
         return $this->param;
+    }
+
+    //viewer
+    public function setCode(\system\Helper\Code $code) {
+        $this->code = $code;
+        return $this;
+    }
+
+    public function getCode() {
+        return $this->code;
     }
 
     //viewer

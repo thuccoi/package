@@ -31,6 +31,9 @@ class System {
                 //set view dir
                 $layout->setViewDir($init['view_dir']);
 
+                //set code
+                $layout->setCode($init["code"]);
+                
                 //set viewer
                 $layout->setViewer($init['viewer']);
 
@@ -149,7 +152,8 @@ class System {
                     "layout" => $layout,
                     "view_dir" => $config['view_dir'],
                     "sysconfig" => $sysconfig,
-                    "viewer" => $obj->getViewer()
+                    "viewer" => $obj->getViewer(),
+                    "code" => $obj->getCode()
                 ];
             } else {
                 echo "Not found controller config";
