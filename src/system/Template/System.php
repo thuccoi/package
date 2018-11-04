@@ -31,6 +31,8 @@ class System {
                 //set view dir
                 $layout->setViewDir($init['view_dir']);
 
+                //set viewer
+                $layout->setViewer($init['viewer']);
 
                 //check no layout
                 if ($init['layout'] != 'TAMI_NOLAYOUT') {
@@ -146,7 +148,8 @@ class System {
                     "view_file" => $config['view_dir'] . $controller . '/' . $action . '.tami',
                     "layout" => $layout,
                     "view_dir" => $config['view_dir'],
-                    "sysconfig" => $sysconfig
+                    "sysconfig" => $sysconfig,
+                    "viewer" => $obj->getViewer()
                 ];
             } else {
                 echo "Not found controller config";

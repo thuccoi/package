@@ -35,7 +35,7 @@ class LoginController extends \system\Template\AbstractController {
 
             //get members
             $members = $user->getMembers();
-            
+
             foreach ($members as $val) {
                 $app = $val->getApp();
                 if ($app->getDomain() == $this->getConfig()['DOMAIN']) {
@@ -46,6 +46,10 @@ class LoginController extends \system\Template\AbstractController {
 
                     //check activate
                     if ($val->isActivate()) {
+
+                        //setViewer session
+                        $val->setViewer($this->getSession());
+
                         $this->getCode()->success("Đăng nhập thành công");
                     }
                 }

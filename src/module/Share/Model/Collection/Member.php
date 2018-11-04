@@ -59,6 +59,15 @@ class Member extends \module\Share\Model\Common\AbsField {
         $this->status = self::STATUS_PENDING;
     }
 
+    //set viewer session
+    public function setViewer($session) {
+        //set session
+        $session->set("auth", 1);
+        $session->set("app", $this->app);
+        $session->set("user", $this->user);
+        $session->set("member", $this->member);
+    }
+
     //add app
     public function setApp(\module\Share\Model\Collection\App $app) {
         $this->app = $app;

@@ -11,6 +11,8 @@ class Layout {
     private $view_dir;
     private $param = [];
     private $config;
+    //viewer
+    private $viewer;
 
     //function set and get
     public function setTitle($title) {
@@ -74,6 +76,16 @@ class Layout {
 
     public function getParam() {
         return $this->param;
+    }
+
+    //viewer
+    public function setViewer($viewer) {
+        $this->viewer = $viewer;
+        return $this;
+    }
+
+    public function getViewer() {
+        return $this->viewer;
     }
 
     //function show
