@@ -65,7 +65,15 @@ class Layout {
         return $this;
     }
 
-    public function getConfig() {
+    public function getConfig($name = '') {
+        if ($name) {
+            //check exists property $name
+            if (isset($this->config[$name])) {
+                return $this->config[$name];
+            } else {
+                return null;
+            }
+        }
         return $this->config;
     }
 

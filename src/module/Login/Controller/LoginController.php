@@ -15,7 +15,12 @@ class LoginController extends \system\Template\AbstractController {
     }
 
     public function indexAction() {
-        
+        if ($this->getViewer() && $this->getViewer()->auth == 1) {
+            //get home
+            $home = $this->getConfig('home');
+            
+            $this->getRouter()->redirect($home['module'], ['controller' => $home['controller'], 'action' => $home['action']]);
+        }
     }
 
     public function loginAction() {

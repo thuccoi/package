@@ -34,6 +34,7 @@ abstract class AbstractController {
 
         if ($session->get("auth")) {
             $this->viewer = (object) [
+                        "auth" => $session->get("auth"),
                         "app" => $session->get("app"),
                         "user" => $session->get("user"),
                         "member" => $session->get("member")
@@ -58,7 +59,15 @@ abstract class AbstractController {
         return $this->session;
     }
 
-    public function getConfig() {
+    public function getConfig($name = "") {
+        if ($name) {
+            //check exists property $name
+            if (isset($this->config[$name])) {
+                return $this->config[$name];
+            } else {
+                return null;
+            }
+        }
         return $this->config;
     }
 
