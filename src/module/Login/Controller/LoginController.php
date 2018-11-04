@@ -18,7 +18,7 @@ class LoginController extends \system\Template\AbstractController {
         if ($this->getViewer() && $this->getViewer()->auth == 1) {
             //get home
             $home = $this->getConfig('home');
-            
+
             $this->getRouter()->redirect($home['module'], ['controller' => $home['controller'], 'action' => $home['action']]);
         }
     }
@@ -64,6 +64,18 @@ class LoginController extends \system\Template\AbstractController {
         }
 
         $this->getCode()->notfound("Tên tài khoản hoặc email không tồn tại trong hệ thống.");
+    }
+
+    public function logoutAction() {
+        if ($this->getViewer()) {
+            //unset viewer
+            $this->getViewer()->unsetViewer();
+        }
+
+        //get home
+        $home = $this->getConfig('home');
+
+        $this->getRouter()->redirect($home['module'], ['controller' => $home['controller'], 'action' => $home['action']]);
     }
 
     public function forgotPasswordAction() {

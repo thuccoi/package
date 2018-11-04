@@ -126,6 +126,7 @@ class Session {
 
     //destroy session
     public function destroy() {
+        session_unset();
         session_destroy();
         return $this;
     }
