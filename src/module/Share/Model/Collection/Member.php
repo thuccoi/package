@@ -68,11 +68,6 @@ class Member extends \module\Share\Model\Common\AbsField {
         $session->set("member", $this);
     }
 
-    public function unsetViewer($session){
-        //destroy session
-        $session->destroy();
-    }
-
     //add app
     public function setApp(\module\Share\Model\Collection\App $app) {
         $this->app = $app;

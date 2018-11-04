@@ -67,11 +67,9 @@ class LoginController extends \system\Template\AbstractController {
     }
 
     public function logoutAction() {
-        //check viewer and member
-        if ($this->getViewer() && isset($this->getViewer()->member) && $this->getViewer()->member) {
-            //unset viewer
-            $this->getViewer()->member->unsetViewer();
-        }
+        
+        //destroy session
+        $this->getSession()->destroy();
 
         //get home
         $home = $this->getConfig('home');
