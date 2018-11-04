@@ -65,7 +65,7 @@ class Member extends \module\Share\Model\Common\AbsField {
         $session->set("auth", 1);
         $session->set("app", $this->app);
         $session->set("user", $this->user);
-        $session->set("member", $this->member);
+        $session->set("member", $this);
     }
 
     //add app
