@@ -21,7 +21,10 @@ class NotifyController extends \system\Template\AbstractController {
 
     //for user
     public function verifyAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         return[
             "id" => $this->getCode()->get("id"),
@@ -30,7 +33,10 @@ class NotifyController extends \system\Template\AbstractController {
     }
 
     public function confirmAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         $user = $this->entity_user->find($this->getCode()->get("id"));
 
@@ -45,7 +51,10 @@ class NotifyController extends \system\Template\AbstractController {
 
     //for member
     public function memberOwnerAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         $member = $this->entity_member->find($this->getCode()->get("id"));
 
@@ -59,7 +68,10 @@ class NotifyController extends \system\Template\AbstractController {
     }
 
     public function memberAdminAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         $member = $this->entity_member->find($this->getCode()->get("id"));
 
@@ -73,7 +85,10 @@ class NotifyController extends \system\Template\AbstractController {
     }
 
     public function memberDefaultAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         $member = $this->entity_member->find($this->getCode()->get("id"));
 
@@ -87,7 +102,10 @@ class NotifyController extends \system\Template\AbstractController {
     }
 
     public function memberActivateAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         $member = $this->entity_member->find($this->getCode()->get("id"));
 
@@ -103,7 +121,10 @@ class NotifyController extends \system\Template\AbstractController {
     }
 
     public function memberDeactivateAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         $member = $this->entity_member->find($this->getCode()->get("id"));
 
@@ -120,7 +141,10 @@ class NotifyController extends \system\Template\AbstractController {
 
     //for admin
     public function adminActivateAction() {
+        //layout
         $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         $member = $this->entity_member->find($this->getCode()->get("id"));
 
