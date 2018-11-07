@@ -1,0 +1,10 @@
+<!-- Import google fonts - Heading first/ text second -->
+<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700' rel='stylesheet' type='text/css'>
+
+<?php $this->css("/tami/css/tami.css"); ?>
+<?php $this->css("/css/account/notify/confirm.css"); ?>
+
+Thông tin tài khoản của bạn đã được xác nhận. Hãy chờ người quản trị xét duyệt tài khoản và phân quyền tài khoản cho tài khoản của bạn.
+
+<?php
+\system\Helper\Code::debug($user);

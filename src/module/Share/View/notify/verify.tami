@@ -1,0 +1,16 @@
+<!-- Import google fonts - Heading first/ text second -->
+<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700' rel='stylesheet' type='text/css'>
+
+<?php $this->css("/tami/css/tami.css"); ?>
+<?php $this->css("/css/account/notify/register.css"); ?>
+
+Xác nhận thông tin tài khoản: 
+<a href="<?=
+$this->url("a", ['controller' => 'register', 'action' => 'confirm', 'param' => [
+        'id' => $id,
+        'token' => $token
+]])
+?>">
+
+    Link xác nhận
+</a>

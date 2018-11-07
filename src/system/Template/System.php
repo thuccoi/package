@@ -33,7 +33,7 @@ class System {
 
                 //set code
                 $layout->setCode($init["code"]);
-                
+
                 //set viewer
                 $layout->setViewer($init['viewer']);
 
@@ -136,21 +136,29 @@ class System {
                 //get parameters 
                 $parameters = $obj->{$naction . "Action"}();
 
+                //view dir
+                $view_dir = $config['view_dir'];
+
+                if ($obj->getViewDir()) {
+                    $view_dir = $obj->getViewDir();
+                }
+
                 //set layout
                 $layout = $config["layout"];
                 if ($obj->getLayout()) {
                     if ($obj->getLayout() != 'TAMI_NOLAYOUT') {
-                        $layout = $config['view_dir'] . $obj->getLayout();
+                        $layout = $view_dir . $obj->getLayout();
                     } else {
                         $layout = $obj->getLayout();
                     }
                 }
 
+
                 return [
                     "parameters" => $parameters,
-                    "view_file" => $config['view_dir'] . $controller . '/' . $action . '.tami',
+                    "view_file" => $view_dir . $controller . '/' . $action . '.tami',
                     "layout" => $layout,
-                    "view_dir" => $config['view_dir'],
+                    "view_dir" => $view_dir,
                     "sysconfig" => $sysconfig,
                     "viewer" => $obj->getViewer(),
                     "code" => $obj->getCode()

@@ -14,6 +14,15 @@ class RegisterController extends \system\Template\AbstractController {
         $this->entity = new \module\Share\Model\Entity\User($connect, $code, $config);
     }
 
+    public function indexAction() {
+        //layout
+        $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
+
+        return [];
+    }
+
     public function createAction() {
         //get data
         $data = (object) [
@@ -84,10 +93,10 @@ class RegisterController extends \system\Template\AbstractController {
                 //member
                 //assign owner
                 $member->assignOwner($this->getConfig());
-                
+
                 //activate member
                 $member->activate($this->getConfig());
-                
+
                 $this->getConnect()->persist($member);
                 $this->getConnect()->flush();
             } else {
@@ -101,8 +110,6 @@ class RegisterController extends \system\Template\AbstractController {
                     //send activate email
                     $val->sendActivateEmail($member, $this->getConfig());
                 }
-                
-                
             }
 
             //confirm account

@@ -15,6 +15,11 @@ class LoginController extends \system\Template\AbstractController {
     }
 
     public function indexAction() {
+        //layout
+        $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
+
         if ($this->getViewer() && $this->getViewer()->auth == 1) {
             //get home
             $home = $this->getConfig('home');
@@ -67,7 +72,12 @@ class LoginController extends \system\Template\AbstractController {
     }
 
     public function forgotPasswordAction() {
-        
+        //layout
+        $this->setLayout('TAMI_NOLAYOUT');
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
+
+        return [];
     }
 
     public function newPasswordAction() {

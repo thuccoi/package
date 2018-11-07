@@ -13,6 +13,8 @@ abstract class AbstractController {
     private $session;
     //viewer
     private $viewer;
+    //view dir
+    private $view_dir;
 
     //init from factory
     public function __construct($connect, \system\Router $router, \system\Helper\Code $code, \system\Session $session, array $config = null, array $options = null) {
@@ -87,6 +89,16 @@ abstract class AbstractController {
 
     public function getLayout() {
         return $this->layout;
+    }
+
+    //view directory
+    public function setViewDir($view_dir) {
+
+        $this->view_dir = $view_dir;
+    }
+
+    public function getViewDir() {
+        return $this->view_dir;
     }
 
 }

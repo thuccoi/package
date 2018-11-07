@@ -1,0 +1,7 @@
+<!-- Import google fonts - Heading first/ text second -->
+<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700' rel='stylesheet' type='text/css'>
+
+<?php $this->css("/tami/css/tami.css"); ?>
+<?php $this->css("/css/account/notify/member/deactivate.css"); ?>
+
+Tài khoản của bạn đã bị từ chối hoạt động  <?=$app->name?>
