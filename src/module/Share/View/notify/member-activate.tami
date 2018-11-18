@@ -4,4 +4,37 @@
 <?php $this->css("/tami/css/tami.css"); ?>
 <?php $this->css("/css/account/notify/member/activate.css"); ?>
 
-Tài khoản của bạn đã được kích hoạt trong ứng dụng <?=$app->name?>
+
+<div class="frame-email">
+    <div class="head">
+
+    </div>
+    <div class="body">
+        <div class="title">
+            <a href="<?= $this->getConfig('URL_ROOT') ?>">
+                <img class="img" src="https://image.ibb.co/j41NYL/logo-dark.png" >
+            </a>
+        </div>
+        <div class="content">
+            <div class="hi">Xin chào bạn,</div>
+            <div class="text">
+                Tài khoản của bạn đã được kích hoạt trong ứng dụng <?=$app->name?>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="left">
+            <div class="note grey">Tami Team</div>
+            <div class="note grey">Số 34, ngõ 83/51, xóm Án, Tân Triều, Thanh Trì, Hà Nội</div>
+            <div class="note blue">
+                <a href="">Điều khoản sử dụng</a>
+                | 
+                <a href="">Chính sách</a>
+            </div>
+
+        </div>
+        <div class="right">
+            <div class="note grey">© 2018 Tami</div>
+        </div>
+    </div>
+</div>
