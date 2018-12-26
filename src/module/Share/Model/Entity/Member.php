@@ -59,6 +59,16 @@ class Member extends \module\Share\Model\Common\AbsEntity {
         try {
             //add new memeber
             $member = new \module\Share\Model\Collection\Member($app, $user);
+            
+            //title
+            if (isset($data->title)) {
+                $member->setTitle($data->title);
+            }
+            
+            //alias
+            if (isset($data->alias)) {
+                $member->setAlias($data->alias);
+            }
 
             $this->dm->persist($member);
             $this->dm->flush();
@@ -120,6 +130,5 @@ class Member extends \module\Share\Model\Common\AbsEntity {
 
         $this->code->success("Assign member success");
     }
-    
 
 }

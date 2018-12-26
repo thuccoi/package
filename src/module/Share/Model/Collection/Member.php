@@ -32,6 +32,18 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     /**
      *
+     * @ODM\Field(type="string")
+     */
+    private $title;
+
+    /**
+     *
+     * @ODM\Field(type="string")
+     */
+    private $alias;
+
+    /**
+     *
      * @ODM\Field(type="int")
      */
     private $status;
@@ -66,6 +78,26 @@ class Member extends \module\Share\Model\Common\AbsField {
         $session->set("app", $this->app);
         $session->set("user", $this->user);
         $session->set("member", $this);
+    }
+
+    //title
+    public function setTitle($title) {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function getTitle() {
+        return $this->title;
+    }
+
+    //alias
+    public function setAlias($alias) {
+        $this->alias = $alias;
+        return $this;
+    }
+
+    public function getAlias() {
+        return $this->alias;
     }
 
     //add app
@@ -190,6 +222,8 @@ class Member extends \module\Share\Model\Common\AbsField {
     public function release() {
         $obj = $this->export();
         $obj->role = $this->getRole();
+        $obj->title = $this->getTitle();
+        $obj->alias = $this->getAlias();
         $obj->status = $this->getStatus();
         $obj->token = $this->getToken();
         return $obj;
