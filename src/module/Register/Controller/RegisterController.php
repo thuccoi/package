@@ -69,7 +69,7 @@ class RegisterController extends \system\Template\AbstractController {
             if (!$app) {
                 $data = (object) [
                             "name" => $this->getConfig()['app']['name'],
-                            "image" => $this->getConfig()['app']['image'],
+                            "image" => $domain . $this->getConfig()['app']['image'],
                             "metatype" => $this->getConfig()['app']['metatype'],
                             "domain" => $domain
                 ];
