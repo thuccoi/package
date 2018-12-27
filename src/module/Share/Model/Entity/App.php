@@ -19,6 +19,15 @@ class App extends \module\Share\Model\Common\AbsEntity {
             $this->code->forbidden("name was not string");
         }
 
+        //image
+        if (\system\Helper\Validate::isEmpty($data->image)) {
+            $this->code->forbidden("image is require");
+        }
+
+        if (!\system\Helper\Validate::isString($data->image)) {
+            $this->code->forbidden("image was not string");
+        }
+
         //metatype
         if (\system\Helper\Validate::isEmpty($data->metatype)) {
             $this->code->forbidden("metatype is require");
@@ -53,7 +62,9 @@ class App extends \module\Share\Model\Common\AbsEntity {
             $app = new \module\Share\Model\Collection\App();
 
             //set information
-            $app->setName($data->name)
+            $app
+                    ->setName($data->name)
+                    ->setImage($data->image)
                     ->setMetatype($data->metatype)
                     ->setDomain($data->domain);
 

@@ -25,6 +25,12 @@ class App extends \module\Share\Model\Common\AbsField {
      *
      * @ODM\Field(type="string")
      */
+    private $image;
+
+    /**
+     *
+     * @ODM\Field(type="string")
+     */
     private $metatype;
 
     /**
@@ -84,6 +90,16 @@ class App extends \module\Share\Model\Common\AbsField {
         return $this;
     }
 
+    //image
+    public function getImage() {
+        return $this->image;
+    }
+
+    public function setImage($image) {
+        $this->image = $image;
+        return $this;
+    }
+
     //metatype
     public function getMetatype() {
         return $this->metatype;
@@ -108,6 +124,7 @@ class App extends \module\Share\Model\Common\AbsField {
         //get export
         $obj = $this->export();
         $obj->name = $this->getName();
+        $obj->image = $this->getImage();
         $obj->metatype = $this->getMetatype();
         $obj->domain = $this->getDomain();
 
