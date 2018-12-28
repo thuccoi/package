@@ -169,4 +169,33 @@ class Router {
         return $url;
     }
 
+    //url inside app
+    public function urlInside() {
+        //make parameters
+        $parameters = [];
+        if ($this->options) {
+            $documents = [];
+            foreach ($this->options as $key => $val) {
+
+                $documents[] = "$key=$val";
+            }
+
+            $parameters = implode("&", $documents);
+        }
+
+        //return url
+        $url = "/{$this->module}/{$this->controller}/{$this->action}";
+
+        //make id
+        if ($this->id) {
+            $url = $url . "/{$this->id}";
+        }
+
+        if ($parameters) {
+            $url = $url . "?" . $parameters;
+        }
+
+        return $url;
+    }
+
 }

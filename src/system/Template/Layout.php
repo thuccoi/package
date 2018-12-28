@@ -221,5 +221,45 @@ class Layout {
 
         return $router->url();
     }
+    
+    /**
+     * 
+     * @param type $module
+     * @param array $options include controller, action, id, param
+     * @return url inside app
+     */
+    public function urlInside($module, array $options = null) {
+
+        //default router
+        $controller = $this->config['routerDefault']['controller'];
+        $action = $this->config['routerDefault']['action'];
+
+        //controller
+        if (isset($options['controller'])) {
+            $controller = $options['controller'];
+        }
+
+        //action
+        if (isset($options['action'])) {
+            $action = $options['action'];
+        }
+
+        //id
+        $id = '';
+        if (isset($options['id'])) {
+            $id = $options['id'];
+        }
+
+        //param
+        $param = [];
+        if (isset($options['param'])) {
+            $param = $options['param'];
+        }
+
+        //make router
+        $router = new \system\Router($module, $controller, $action, $id, $param, $this->config);
+
+        return $router->urlInside();
+    }
 
 }
