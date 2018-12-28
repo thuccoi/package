@@ -36,11 +36,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
         if (!\system\Helper\Validate::isString($data->metatype)) {
             $this->code->forbidden("metatype was not string");
         }
-        //check existed
-        if ($this->find($data->metatype, 'metatype')) {
-            $this->code->forbidden("metatype is existed in system");
-        }
-
+        
         //domain
         if (\system\Helper\Validate::isEmpty($data->domain)) {
             $this->code->forbidden("domain is require");
@@ -82,22 +78,13 @@ class App extends \module\Share\Model\Common\AbsEntity {
 
     public function find($id, $type = '') {
         switch ($type) {
-            case 'metatype':
-                return $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['metatype' => $id]);
-                break;
             case 'domain':
                 return $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['domain' => $id]);
                 break;
             default :
                 //find by id
                 $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->find($id);
-
-                //find by metatype
-                if (!$find) {
-
-                    $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['metatype' => $id]);
-                }
-
+                
                 //find by domain
                 if (!$find) {
                     $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['domain' => $id]);
