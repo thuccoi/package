@@ -154,8 +154,13 @@ class Router {
             $parameters = implode("&", $documents);
         }
 
-        //return url
-        $url = $this->config["URL_ROOT"] . "/{$this->module}/{$this->controller}/{$this->action}";
+        if ($this->action != 'index') {
+            //return url
+            $url = $this->config["URL_ROOT"] . "/{$this->module}/{$this->controller}/{$this->action}";
+        } else {
+            //return url
+            $url = $this->config["URL_ROOT"] . "/{$this->module}/{$this->controller}";
+        }
 
         //make id
         if ($this->id) {
@@ -183,8 +188,13 @@ class Router {
             $parameters = implode("&", $documents);
         }
 
-        //return url
-        $url = "/{$this->module}/{$this->controller}/{$this->action}";
+        if ($this->action != 'index') {
+            //return url
+            $url = "/{$this->module}/{$this->controller}/{$this->action}";
+        } else {
+            //return url
+            $url = "/{$this->module}/{$this->controller}";
+        }
 
         //make id
         if ($this->id) {
