@@ -68,7 +68,7 @@ class User extends \module\Share\Model\Common\AbsField {
      */
     private $members;
 
-    /** @Field(type="float") @NotSaved */
+    /** @ODM\Field(type="float") @ODM\NotSaved */
     public $score;
 
     //email
