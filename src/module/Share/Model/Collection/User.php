@@ -68,9 +68,6 @@ class User extends \module\Share\Model\Common\AbsField {
      */
     private $members;
 
-    /** @ODM\Field(type="float") @ODM\NotSaved */
-    public $score;
-
     //email
     const EMAIL_CONFIRMED = 1;
     const EMAIL_PENDING = 0;
