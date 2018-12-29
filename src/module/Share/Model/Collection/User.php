@@ -7,6 +7,7 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /**
  * @ODM\Document(db="tami_account",collection="Users")  
  * @ODM\HasLifecycleCallbacks
+ * @ODM\Index(keys={"username"="text","first_name"="text","last_name"="text","email"="text"})
  */
 class User extends \module\Share\Model\Common\AbsField {
 
@@ -61,12 +62,14 @@ class User extends \module\Share\Model\Common\AbsField {
      */
     private $email_confirm;
 
-
     /**
      *
      * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="user")
      */
     private $members;
+
+    /** @Field(type="float") @NotSaved */
+    public $score;
 
     //email
     const EMAIL_CONFIRMED = 1;
@@ -125,8 +128,6 @@ class User extends \module\Share\Model\Common\AbsField {
 
         return $this;
     }
-
-   
 
     //function release
     public function release() {
