@@ -16,7 +16,7 @@ class NotifyController extends \system\Template\AbstractController {
         $this->entity_user = new \module\Share\Model\Entity\User($connect, $code, $config);
 
         //init entity member
-        $this->entity_member = new \module\Share\Model\Entity\Member($connect, $code, $config);
+        $this->entity_member = new \module\Share\Model\Link\Member($connect, $code, $config);
     }
 
     //for user

@@ -81,13 +81,13 @@ class RegisterController extends \system\Template\AbstractController {
 
 
             //create new member
-            $entity_member = new \module\Share\Model\Entity\Member($this->getConnect(), $this->getCode(), $this->getConfig());
+            $entity_member = new \module\Share\Model\Link\Member($this->getConnect(), $this->getCode(), $this->getConfig());
             $data = (object) [
                         "app" => $app->getMetatype(),
                         "user" => $user->getUsername()
             ];
 
-            $member = $entity_member->create($data);
+            $member = $entity_member->add($data);
 
             //check new app
             if ($newapp == true) {

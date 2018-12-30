@@ -2,13 +2,11 @@
 
 namespace module\Share\Model\Common;
 
-abstract class AbsEntity {
+abstract class AbsLink {
 
-    //create new object
-    abstract public function create($data);
+    //add new object
+    abstract public function add($data);
 
     //find object
     abstract public function find($id, $type = '');
-    
-    
 }

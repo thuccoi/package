@@ -1,8 +1,8 @@
 <?php
 
-namespace module\Share\Model\Entity;
+namespace module\Share\Model\Link;
 
-class Member extends \module\Share\Model\Common\AbsEntity {
+class Member extends \module\Share\Model\Common\AbsLink {
 
     //entity default
     use \module\Share\Model\Common\EntityDefault;
@@ -18,7 +18,7 @@ class Member extends \module\Share\Model\Common\AbsEntity {
         $this->user_entity = new User($connect, $code, $config);
     }
 
-    public function create($data) {
+    public function add($data) {
 
         //input app
         if (\system\Helper\Validate::isEmpty($data->app)) {
