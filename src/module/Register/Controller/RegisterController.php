@@ -83,7 +83,7 @@ class RegisterController extends \system\Template\AbstractController {
             //create new member
             $entity_member = new \module\Share\Model\Link\Member($this->getConnect(), $this->getCode(), $this->getConfig());
             $data = (object) [
-                        "app" => $app->getId(),
+                        "app" => $app->getDomain(),
                         "user" => $user->getUsername()
             ];
 
