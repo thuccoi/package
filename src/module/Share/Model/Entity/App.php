@@ -36,7 +36,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
         if (!\system\Helper\Validate::isString($data->metatype)) {
             $this->code->forbidden("metatype was not string");
         }
-        
+
         //domain
         if (\system\Helper\Validate::isEmpty($data->domain)) {
             $this->code->forbidden("domain is require");
@@ -76,6 +76,14 @@ class App extends \module\Share\Model\Common\AbsEntity {
         $this->code->error("Error database");
     }
 
+    public function edit($id, $data) {
+        
+    }
+
+    public function delete($id) {
+        
+    }
+
     public function find($id, $type = '') {
         switch ($type) {
             case 'domain':
@@ -84,7 +92,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             default :
                 //find by id
                 $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->find($id);
-                
+
                 //find by domain
                 if (!$find) {
                     $find = $this->dm->getRepository(\module\Share\Model\Collection\App::class)->findOneBy(['domain' => $id]);

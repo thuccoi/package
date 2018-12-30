@@ -98,7 +98,7 @@ class User extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($user);
             $this->dm->flush();
 
-           
+
             //send verify email
             $user->sendVerifyEmail($this->config);
 
@@ -108,6 +108,14 @@ class User extends \module\Share\Model\Common\AbsEntity {
         }
 
         $this->code->error("Lỗi cơ sở dữ liệu");
+    }
+
+    public function edit($id, $data) {
+        
+    }
+
+    public function delete($id) {
+        
     }
 
     public function find($id, $type = '') {

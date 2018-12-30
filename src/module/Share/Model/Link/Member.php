@@ -81,6 +81,14 @@ class Member extends \module\Share\Model\Common\AbsLink {
         $this->code->error("Error database");
     }
 
+    public function update($id, $data) {
+        
+    }
+
+    public function remove($id) {
+        
+    }
+
     public function find($id, $type = '') {
         //find by id
         return $this->dm->getRepository(\module\Share\Model\Collection\Member::class)->find($id);
