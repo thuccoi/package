@@ -100,7 +100,7 @@ class Code {
         return $this->purify($value);
     }
 
-    //get value form method post
+    //get value from method post
     public function post($name) {
         $value = "";
         if (isset($_POST[$name])) {
@@ -118,16 +118,22 @@ class Code {
         return $this->purify($value);
     }
 
+    //get array data 
     public function arr($name, $method = "POST") {
+        
+        $data = [];
+
         if (strtoupper($method) == \system\Helper\HTML::$TAMI_POST) {
             $data = $_POST[$name];
         } else if (strtoupper($method) == \system\Helper\HTML::$TAMI_GET) {
             $data = $_GET[$name];
         }
+
+        return $this->purifyArr($data);
     }
 
     public function purifyArr($data) {
-        
+
         $result = [];
 
         //data
