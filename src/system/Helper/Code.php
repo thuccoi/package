@@ -118,6 +118,34 @@ class Code {
         return $this->purify($value);
     }
 
+    public function arr($name, $method = "POST") {
+        if (strtoupper($method) == \system\Helper\HTML::$TAMI_POST) {
+            $data = $_POST[$name];
+        } else if (strtoupper($method) == \system\Helper\HTML::$TAMI_GET) {
+            $data = $_GET[$name];
+        }
+    }
+
+    public function purifyArr($data) {
+        
+        $result = [];
+
+        //data
+        if (is_array($data)) {
+            foreach ($data as $key => $val) {
+                if (is_array($val)) {
+                    $result[$this->purify($key)] = $this->purifyArr($val);
+                } else {
+                    $result[$this->purify($key)] = $this->purify($val);
+                }
+            }
+        } else {
+            return $this->purify($data);
+        }
+
+        return $result;
+    }
+
     //clean data
     public function purify($value) {
 
