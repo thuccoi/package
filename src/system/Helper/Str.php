@@ -78,16 +78,16 @@ class Str {
 
         //account
         $first_name = $arr[$random_keys[0]];
-        
-        $lastt_name = $arr[$random_keys[1]];
-        
+
+        $last_name = $arr[$random_keys[1]];
+
         //username
-        $username = static::generateUsername("{$first_name} {$lastt_name}", 10);
+        $username = static::generateUsername("{$first_name} {$last_name}", 10);
 
         //return object
         return (object) [
                     "first_name" => $first_name,
-                    "lastt_name" =>$lastt_name,
+                    "last_name" => $last_name,
                     "email" => "$username@gmail.com",
                     "username" => $username
         ];
