@@ -76,13 +76,18 @@ class Str {
 
         $random_keys = array_rand($arr, 2);
 
+        //account
+        $first_name = $arr[$random_keys[0]];
+        
+        $lastt_name = $arr[$random_keys[1]];
+        
         //username
-        $username = static::generateUsername("{$arr[$random_keys[0]]} {$arr[$random_keys[1]]}", 10);
+        $username = static::generateUsername("{$first_name} {$lastt_name}", 10);
 
         //return object
         return (object) [
-                    "first_name" => $arr[$random_keys[0]],
-                    "lastt_name" => $arr[$random_keys[0]],
+                    "first_name" => $first_name,
+                    "lastt_name" =>$lastt_name,
                     "email" => "$username@gmail.com",
                     "username" => $username
         ];
