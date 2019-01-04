@@ -3,6 +3,7 @@
 namespace module\Share\Model\Entity;
 
 use Doctrine\ODM\MongoDB\SoftDelete\Configuration;
+use Doctrine\ODM\MongoDB\SoftDelete\UnitOfWork;
 use Doctrine\ODM\MongoDB\SoftDelete\SoftDeleteManager;
 use Doctrine\Common\EventManager;
 
