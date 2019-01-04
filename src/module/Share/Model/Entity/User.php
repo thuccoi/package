@@ -2,6 +2,10 @@
 
 namespace module\Share\Model\Entity;
 
+use Doctrine\ODM\MongoDB\SoftDelete\Configuration;
+use Doctrine\ODM\MongoDB\SoftDelete\SoftDeleteManager;
+use Doctrine\Common\EventManager;
+
 class User extends \module\Share\Model\Common\AbsEntity {
 
     //entity default
@@ -125,12 +129,14 @@ class User extends \module\Share\Model\Common\AbsEntity {
         //find user
         $user = $this->find($id);
         if ($user) {
+            $config = new Configuration();
+            $evm = new EventManager();
+            $eventSubscriber = new \module\Share\Model\Subscriber\User();
+            $evm->addEventSubscriber($eventSubscriber);
+            $sdm = new SoftDeleteManager($this->dm, $config, $evm);
 
-            $euser = new \module\Share\Model\Subscriber\User();
-            $this->evm->addEventSubscriber($euser);
-
-            $this->sdm->delete($user);
-            $this->sdm->flush();
+            $sdm->delete($user);
+            $sdm->flush();
         }
     }
 
@@ -138,12 +144,14 @@ class User extends \module\Share\Model\Common\AbsEntity {
         //find user
         $user = $this->find($id);
         if ($user) {
+            $config = new Configuration();
+            $evm = new EventManager();
+            $eventSubscriber = new \module\Share\Model\Subscriber\User();
+            $evm->addEventSubscriber($eventSubscriber);
+            $sdm = new SoftDeleteManager($this->dm, $config, $evm);
 
-            $euser = new \module\Share\Model\Subscriber\User();
-            $this->evm->addEventSubscriber($euser);
-
-            $this->sdm->restore($user);
-            $this->sdm->flush();
+            $sdm->restore($user);
+            $sdm->flush();
         }
     }
 

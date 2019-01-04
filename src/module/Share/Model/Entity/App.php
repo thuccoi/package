@@ -2,6 +2,10 @@
 
 namespace module\Share\Model\Entity;
 
+use Doctrine\ODM\MongoDB\SoftDelete\Configuration;
+use Doctrine\ODM\MongoDB\SoftDelete\SoftDeleteManager;
+use Doctrine\Common\EventManager;
+
 class App extends \module\Share\Model\Common\AbsEntity {
 
     //entity default
@@ -92,11 +96,14 @@ class App extends \module\Share\Model\Common\AbsEntity {
         $app = $this->find($id);
         if ($app) {
 
-            $subcriber = new \module\Share\Model\Subscriber\App();
-            $this->evm->addEventSubscriber($subcriber);
+            $config = new Configuration();
+            $evm = new EventManager();
+            $eventSubscriber = new \module\Share\Model\Subscriber\App();
+            $evm->addEventSubscriber($eventSubscriber);
+            $sdm = new SoftDeleteManager($this->dm, $config, $evm);
 
-            $this->sdm->delete($app);
-            $this->sdm->flush();
+            $sdm->delete($app);
+            $sdm->flush();
         }
     }
 
@@ -105,11 +112,14 @@ class App extends \module\Share\Model\Common\AbsEntity {
         $app = $this->find($id);
         if ($app) {
 
-            $subcriber = new \module\Share\Model\Subscriber\App();
-            $this->evm->addEventSubscriber($subcriber);
+            $config = new Configuration();
+            $evm = new EventManager();
+            $eventSubscriber = new \module\Share\Model\Subscriber\App();
+            $evm->addEventSubscriber($eventSubscriber);
+            $sdm = new SoftDeleteManager($this->dm, $config, $evm);
 
-            $this->sdm->restore($app);
-            $this->sdm->flush();
+            $sdm->restore($app);
+            $sdm->flush();
         }
     }
 
