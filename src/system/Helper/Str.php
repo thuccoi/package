@@ -6,6 +6,12 @@ class Str {
 
     public static function toTimeString(\DateTime $dt) {
         $today = new \DateTime();
+        
+        //set timezone
+        $dt->setTimezone(new \DateTimeZone('asia/Ho_Chi_Minh'));
+        $today->setTimezone(new \DateTimeZone('asia/Ho_Chi_Minh'));
+
+        //show date time
         if ($dt->format("Y") == $today->format("Y")) {
             if ($dt->format("m") == $today->format("m")) {
                 if ($dt->format("d") == $today->format("d")) {
