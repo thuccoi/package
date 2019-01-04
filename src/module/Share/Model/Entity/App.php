@@ -7,6 +7,13 @@ class App extends \module\Share\Model\Common\AbsEntity {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
+    //set properties code
+    public function __construct($connect, \system\Helper\Code $code, $config) {
+
+        // $dm is a DocumentManager instance we should already have
+        $this->init($connect, $code, $config);
+    }
+
     public function create($data) {
 
         //field required
