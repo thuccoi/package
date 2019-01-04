@@ -10,7 +10,7 @@ class Member implements \Doctrine\Common\EventSubscriber {
     public function preSoftDelete(LifecycleEventArgs $args) {
         $sdm = $args->getSoftDeleteManager();
         $document = $args->getDocument();
-        if ($document instanceof \module\Share\Model\Link\Member) {
+        if ($document instanceof \module\Share\Model\Collection\Member) {
             
         }
     }
@@ -18,7 +18,7 @@ class Member implements \Doctrine\Common\EventSubscriber {
     public function preRestore(LifecycleEventArgs $args) {
         $sdm = $args->getSoftDeleteManager();
         $document = $args->getDocument();
-        if ($document instanceof \module\Share\Model\Link\Member) {
+        if ($document instanceof \module\Share\Model\Collection\Member) {
             
         }
     }

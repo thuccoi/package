@@ -10,16 +10,16 @@ class App implements \Doctrine\Common\EventSubscriber {
     public function preSoftDelete(LifecycleEventArgs $args) {
         $sdm = $args->getSoftDeleteManager();
         $document = $args->getDocument();
-        if ($document instanceof \module\Share\Model\Entity\App) {
-            $sdm->deleteBy(\module\Share\Model\Link\Member::class, array('app.id' => $document->getId()));
+        if ($document instanceof \module\Share\Model\Collection\App) {
+            $sdm->deleteBy(\module\Share\Model\Collection\Member::class, array('app.id' => $document->getId()));
         }
     }
 
     public function preRestore(LifecycleEventArgs $args) {
         $sdm = $args->getSoftDeleteManager();
         $document = $args->getDocument();
-        if ($document instanceof \module\Share\Model\Entity\App) {
-            $sdm->restoreBy(\module\Share\Model\Link\Member::class, array('app.id' => $document->getId()));
+        if ($document instanceof \module\Share\Model\Collection\App) {
+            $sdm->restoreBy(\module\Share\Model\Collection\Member::class, array('app.id' => $document->getId()));
         }
     }
 
