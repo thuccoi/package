@@ -57,7 +57,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
         }
 
         try {
-            //add new memeber
+            //add new member
             $member = new \module\Share\Model\Collection\Member($app, $user);
 
             //title
@@ -71,6 +71,12 @@ class Member extends \module\Share\Model\Common\AbsLink {
             }
 
             $this->dm->persist($member);
+            $this->dm->flush();
+
+            //add new member log
+            $log = new \module\Share\Model\Collection\MemberLog($app->getId(), $user->getId(), "add", "<a href='{$user->getId()}'>{$user->getName()}</a> đã được thêm vào ứng dụng <a href='{$app->getId()}'>{$app->getName()}</a>");
+
+            $this->dm->persist($log);
             $this->dm->flush();
 
             return $member;

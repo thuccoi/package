@@ -11,6 +11,8 @@ abstract class AbsLink {
 
     abstract public function remove($id);
 
+    abstract public function restore($id);
+
     //find object
     abstract public function find($id, $type = '');
 }
