@@ -36,7 +36,10 @@ trait FieldDefault {
      */
     private $options;
 
-    /**  @ODM\Field(type="date") */
+    /**  
+     * 
+     * @ODM\Field(type="date")
+     */
     private $deleted_at;
 
     public function getDeletedAt() {
@@ -44,7 +47,7 @@ trait FieldDefault {
     }
 
     public function delete() {
-        $this->deleted_at = new \MongoDate();
+        $this->deleted_at = new \DateTime();
         return $this;
     }
 
