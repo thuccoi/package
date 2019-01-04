@@ -11,7 +11,7 @@ class User implements \Doctrine\Common\EventSubscriber {
         $sdm = $args->getSoftDeleteManager();
         $document = $args->getDocument();
         if ($document instanceof \module\Share\Model\Collection\User) {
-            $sdm->deleteBy(\module\Share\Model\Collection\Member::class, array('user.id' => $document->getId()));
+            $sdm->deleteBy('module\Share\Model\Collection\Member', array('user.id' => $document->getId()));
         }
     }
 
@@ -19,7 +19,7 @@ class User implements \Doctrine\Common\EventSubscriber {
         $sdm = $args->getSoftDeleteManager();
         $document = $args->getDocument();
         if ($document instanceof \module\Share\Model\Collection\User) {
-            $sdm->restoreBy(\module\Share\Model\Collection\Member::class, array('user.id' => $document->getId()));
+            $sdm->restoreBy('module\Share\Model\Collection\Member', array('user.id' => $document->getId()));
         }
     }
 
