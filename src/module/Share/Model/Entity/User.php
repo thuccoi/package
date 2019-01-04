@@ -2,11 +2,6 @@
 
 namespace module\Share\Model\Entity;
 
-use Doctrine\ODM\MongoDB\SoftDelete\Configuration;
-use Doctrine\ODM\MongoDB\SoftDelete\UnitOfWork;
-use Doctrine\ODM\MongoDB\SoftDelete\SoftDeleteManager;
-use Doctrine\Common\EventManager;
-
 class User extends \module\Share\Model\Common\AbsEntity {
 
     //entity default
@@ -127,33 +122,11 @@ class User extends \module\Share\Model\Common\AbsEntity {
     }
 
     public function delete($id) {
-        //find user
-        $user = $this->find($id);
-        if ($user) {
-            $config = new Configuration();
-            $evm = new EventManager();
-            $eventSubscriber = new \module\Share\Model\Subscriber\User();
-            $evm->addEventSubscriber($eventSubscriber);
-            $sdm = new SoftDeleteManager($this->dm, $config, $evm);
-
-            $sdm->delete($user);
-            $sdm->flush();
-        }
+       
     }
 
     public function restore($id) {
-        //find user
-        $user = $this->find($id);
-        if ($user) {
-            $config = new Configuration();
-            $evm = new EventManager();
-            $eventSubscriber = new \module\Share\Model\Subscriber\User();
-            $evm->addEventSubscriber($eventSubscriber);
-            $sdm = new SoftDeleteManager($this->dm, $config, $evm);
-
-            $sdm->restore($user);
-            $sdm->flush();
-        }
+      
     }
 
     public function find($id, $type = '') {

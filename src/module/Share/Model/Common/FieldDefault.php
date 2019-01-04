@@ -37,10 +37,10 @@ trait FieldDefault {
     private $options;
 
     /**  @ODM\Field(type="date") */
-    private $deletedAt;
+    private $deleted_at;
 
     public function getDeletedAt() {
-        return $this->deletedAt;
+        return $this->deleted_at;
     }
 
     public function __construct() {
