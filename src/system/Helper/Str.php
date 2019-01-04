@@ -4,6 +4,22 @@ namespace system\Helper;
 
 class Str {
 
+    public static function toTimeString(\DateTime $dt) {
+        if ($dt->format("Y") == date("Y")) {
+            if ($dt->format("m") == date("m")) {
+                if ($dt->format("d") == date("d")) {
+                    return $dt->format("H:i") . " hôm nay";
+                }
+
+                return $dt->format("H:i") . " ngày " . $dt->format("d") . " tháng này";
+            }
+
+            return $dt->format("H:i") . " ngày " . $dt->format("d") . " tháng " . $dt->format("m");
+        }
+
+        return $dt->format("H:i") . " ngày " . $dt->format("d") . " tháng " . $dt->format("m") . " năm " . $dt->format("Y");
+    }
+
     //random string
     public static function rand(int $length = 32) {
         //64 / 2 = 32
