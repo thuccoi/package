@@ -43,6 +43,16 @@ trait FieldDefault {
         return $this->deleted_at;
     }
 
+    public function delete() {
+        $this->deleted_at = new \MongoDate();
+        return $this;
+    }
+
+    public function restore() {
+        $this->deleted_at = null;
+        return $this;
+    }
+
     public function __construct() {
         $this->init();
     }

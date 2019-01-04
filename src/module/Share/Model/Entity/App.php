@@ -88,11 +88,31 @@ class App extends \module\Share\Model\Common\AbsEntity {
     }
 
     public function delete($id) {
-        
+        $obj = $this->find($id);
+        if ($obj) {
+            foreach ($obj->getMembers() as $val) {
+                $val->delete();
+                $this->dm->persist($val);
+            }
+
+            $obj->delete();
+            $this->dm->persist($obj);
+            $this->dm->flush();
+        }
     }
 
     public function restore($id) {
-       
+        $obj = $this->find($id);
+        if ($obj) {
+            foreach ($obj->getMembers() as $val) {
+                $val->restore();
+                $this->dm->persist($val);
+            }
+
+            $obj->restore();
+            $this->dm->persist($obj);
+            $this->dm->flush();
+        }
     }
 
     public function find($id, $type = '') {
