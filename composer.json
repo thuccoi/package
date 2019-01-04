@@ -19,7 +19,8 @@
         "alcaeus/mongo-php-adapter": "dev-master",
         "doctrine/mongodb-odm": "^2.0@dev",
         "phpmailer/phpmailer": "dev-master",
-        "tijsverkoyen/css-to-inline-styles": "^2.2@dev"
+        "tijsverkoyen/css-to-inline-styles": "^2.2@dev",
+        "doctrine/mongodb-odm-softdelete": "dev-master"
     },
     "config": {
         "platform": {

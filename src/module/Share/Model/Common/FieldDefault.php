@@ -36,6 +36,13 @@ trait FieldDefault {
      */
     private $options;
 
+    /**  @ODM\Field(type="date") */
+    private $deletedAt;
+
+    public function getDeletedAt() {
+        return $this->deletedAt;
+    }
+
     public function __construct() {
         $this->init();
     }

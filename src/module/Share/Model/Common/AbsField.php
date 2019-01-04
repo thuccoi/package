@@ -2,7 +2,9 @@
 
 namespace module\Share\Model\Common;
 
-abstract class AbsField {
+use \Doctrine\ODM\MongoDB\SoftDelete\SoftDeleteable;
+
+    abstract class AbsField implements SoftDeleteable {
 
     //release function
     abstract public function release();

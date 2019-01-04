@@ -81,7 +81,29 @@ class App extends \module\Share\Model\Common\AbsEntity {
     }
 
     public function delete($id) {
-        
+        //find app
+        $app = $this->find($id);
+        if ($app) {
+
+            $subcriber = new \module\Share\Model\Subscriber\App();
+            $this->evm->addEventSubscriber($subcriber);
+
+            $this->sdm->delete($app);
+            $this->sdm->flush();
+        }
+    }
+
+    public function restore($id) {
+        //find app
+        $app = $this->find($id);
+        if ($app) {
+
+            $subcriber = new \module\Share\Model\Subscriber\App();
+            $this->evm->addEventSubscriber($subcriber);
+
+            $this->sdm->restore($app);
+            $this->sdm->flush();
+        }
     }
 
     public function find($id, $type = '') {

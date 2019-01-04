@@ -115,7 +115,29 @@ class User extends \module\Share\Model\Common\AbsEntity {
     }
 
     public function delete($id) {
-        
+        //find user
+        $user = $this->find($id);
+        if ($user) {
+            
+            $euser = new \module\Share\Model\Subscriber\User();
+            $this->evm->addEventSubscriber($euser);
+
+            $this->sdm->delete($user);
+            $this->sdm->flush();
+        }
+    }
+
+    public function restore($id) {
+        //find user
+        $user = $this->find($id);
+        if ($user) {
+            
+            $euser = new \module\Share\Model\Subscriber\User();
+            $this->evm->addEventSubscriber($euser);
+
+            $this->sdm->restore($user);
+            $this->sdm->flush();
+        }
     }
 
     public function find($id, $type = '') {

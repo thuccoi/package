@@ -89,6 +89,10 @@ class Member extends \module\Share\Model\Common\AbsLink {
         
     }
 
+    public function restore($id) {
+        
+    }
+
     public function find($id, $type = '') {
         //find by id
         return $this->dm->getRepository(\module\Share\Model\Collection\Member::class)->find($id);
