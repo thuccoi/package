@@ -75,6 +75,12 @@ class App extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($app);
             $this->dm->flush();
 
+            //log create app
+            $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
+            $applog->add((object) [
+                        "message" => "Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> Đã được tạo mới"
+            ]);
+
             return $app;
         } catch (\MongoException $ex) {
             throw $ex;
