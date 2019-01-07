@@ -21,4 +21,34 @@ trait EntityDefault {
         $this->config = $config;
     }
 
+    //config
+    public function setConfig($config) {
+        $this->config = $config;
+        return $this;
+    }
+
+    public function getConfig() {
+        return $this->config;
+    }
+
+    //code
+    public function setCode(\system\Helper\Code $code) {
+        $this->code = $code;
+        return $this;
+    }
+
+    public function getCode() {
+        return $this->code;
+    }
+
+    //connect
+    public function setConnect($connect) {
+        $this->dm = $connect;
+        return $this;
+    }
+
+    public function getConnect() {
+        return $this->dm;
+    }
+
 }

@@ -119,7 +119,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //edit metatype
             if (!\system\Helper\Validate::isEmpty($data->metatype) && $data->metatype != $app->getMetatype()) {
 
-                $metatype = \system\Helper\ArrayCallback::find($this->getConfig()['account_app']['metatype'], $data->metatype, function($e, $metatype) {
+                $metatype = \system\Helper\ArrayCallback::find($this->config['account_app']['metatype'], $data->metatype, function($e, $metatype) {
                             if ($e['value'] == $metatype) {
                                 return true;
                             }
