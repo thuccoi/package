@@ -101,4 +101,9 @@ abstract class AbstractController {
         return $this->view_dir;
     }
 
+    //render parameter in php to javascript
+    public function toJS($name, $data) {
+        echo '<script > if(typeof TAMI.pagedata == "undefined"){TAMI.pagedata={};} var TAMI.pagedata.' . $name . '=' . json_encode($data) . '</script>';
+    }
+
 }
