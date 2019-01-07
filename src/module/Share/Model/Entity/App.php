@@ -105,7 +105,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
                 $app->setImage($data->image);
                 $editinfo [] = '
                         <div class="timeline-content">
-                            <p>Ảnh của ứng dụng <a href="' . $this->config['URL_ROOT'] . '/application/index/view/{$app->getId()}">' . $app->getName() . '</a> đã được thay đổi"></p>
+                            <p>Ảnh của ứng dụng <a href="' . $this->config['URL_ROOT'] . '/application/index/view/{$app->getId()}">' . $app->getName() . '</a> đã được thay đổi</p>
                         </div>
                         <div class="timeline-user">
                             <img class="timeline-avatar" src="' . $data->image . '" alt="timeline avatar">
