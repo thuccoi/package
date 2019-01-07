@@ -12,6 +12,14 @@ class App extends \module\Share\Model\Common\AbsLink {
     }
 
     public function add($data) {
+        //input app id 
+        if (\system\Helper\Validate::isEmpty($data->app_id)) {
+            $this->code->forbidden("app_id is require");
+        }
+
+        if (!\system\Helper\Validate::isString($data->app_id)) {
+            $this->code->forbidden("type input app_id is not string");
+        }
 
         //input message
         if (\system\Helper\Validate::isEmpty($data->message)) {
@@ -26,7 +34,7 @@ class App extends \module\Share\Model\Common\AbsLink {
         try {
 
             //add new memeber log
-            $memberlog = new \module\Share\Model\Collection\AppLog("add", $data->message);
+            $memberlog = new \module\Share\Model\Collection\AppLog($data->app_id, "add", $data->message);
 
             $this->dm->persist($memberlog);
             $this->dm->flush();

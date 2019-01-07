@@ -78,7 +78,8 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //log create app
             $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
             $applog->add((object) [
-                        "message" => "Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> Đã được tạo mới"
+                        "app_id" => (string) $app->getId(),
+                        "message" => "Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được tạo mới"
             ]);
 
             return $app;

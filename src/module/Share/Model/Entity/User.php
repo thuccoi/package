@@ -109,6 +109,14 @@ class User extends \module\Share\Model\Common\AbsEntity {
             //send verify email
             $user->sendVerifyEmail($this->config);
 
+
+            //log create user
+            $userlog = new \module\Share\Model\Log\User($this->dm, $this->code, $this->config);
+            $userlog->add((object) [
+                        "app_id" => (string) $user->getId(),
+                        "message" => "Người dùng <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được tạo mới"
+            ]);
+
             return $user;
         } catch (\MongoException $ex) {
             throw $ex;

@@ -2,7 +2,7 @@
 
 namespace module\Share\Model\Log;
 
-class App extends \module\Share\Model\Common\AbsLink {
+class User extends \module\Share\Model\Common\AbsLink {
 
     //entity default
     use \module\Share\Model\Common\EntityDefault;
@@ -12,6 +12,15 @@ class App extends \module\Share\Model\Common\AbsLink {
     }
 
     public function add($data) {
+
+        //input user id
+        if (\system\Helper\Validate::isEmpty($data->user_id)) {
+            $this->code->forbidden("user_id is require");
+        }
+
+        if (!\system\Helper\Validate::isString($data->user_id)) {
+            $this->code->forbidden("type input user_id is not string");
+        }
 
         //input message
         if (\system\Helper\Validate::isEmpty($data->message)) {
@@ -26,7 +35,7 @@ class App extends \module\Share\Model\Common\AbsLink {
         try {
 
             //add new memeber log
-            $memberlog = new \module\Share\Model\Collection\UserLog("add", $data->message);
+            $memberlog = new \module\Share\Model\Collection\UserLog($data->user_id, "add", $data->message);
 
             $this->dm->persist($memberlog);
             $this->dm->flush();
