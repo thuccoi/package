@@ -14,6 +14,8 @@
         $this->title("Login | Tami Admin Template")
                 ->css('http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700')
                 ->css("/tami/css/tami.css");
+        //param js
+        echo $this->renderParamJs();
         ?>
         <!-- Fav and touch icons -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/img/ico/apple-touch-icon-144-precomposed.png">

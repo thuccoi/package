@@ -26,3 +26,8 @@
 <script>
     var ENV = <?= json_encode($this->getConfig()['eviroment']) ?>;
 </script>
+
+<?php
+//param js
+echo $this->renderParamJs();
+?>
