@@ -37,7 +37,7 @@ class AppController extends \system\Template\AbstractController {
 
     public function editAction() {
         //get id on router
-        $id = $this->getCode()->getRouter('id');
+        $id = $this->getRouter()->getId('id');
         //get data
         $data = (object) [
                     "name" => $this->getCode()->post("name"),
