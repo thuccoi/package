@@ -103,7 +103,16 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //edit image
             if (!\system\Helper\Validate::isEmpty($data->image) && $data->image != $app->getImage()) {
                 $app->setImage($data->image);
-                $editinfo [] = "Ảnh của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành <img src='{$data->image}'>";
+                $editinfo [] = '
+                        <div class="timeline-content">
+                            <p>Ảnh của ứng dụng <a href="' . $this->config['URL_ROOT'] . '/application/index/view/{$app->getId()}">' . $app->getName() . '</a> đã được thay đổi"></p>
+                        </div>
+                        <div class="timeline-user">
+                            <img class="timeline-avatar" src="' . $data->image . '" alt="timeline avatar">
+                            <p class="timeline-user-name">Đổi biểu tượng thương hiệu</p>
+                            <p class="timeline-user-subtitle"><span class="color-green">' . $data->image . '</span>
+                            </p>
+                        </div>';
             }
 
             //edit metatype
