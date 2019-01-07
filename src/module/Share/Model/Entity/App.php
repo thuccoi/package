@@ -127,7 +127,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
 
                 if ($metatype) {
                     $app->setMetatype($data->metatype);
-                    $editinfo [] = "<div class='timeline-content'>Lĩnh vực của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$metatype['name']}</div>";
+                    $editinfo [] = "<div class='timeline-content'>Lĩnh vực của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành <b>{$metatype['name']}</b></div>";
                 }
             }
 
