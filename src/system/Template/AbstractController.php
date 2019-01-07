@@ -46,6 +46,9 @@ abstract class AbstractController {
         }
 
         $this->paramjs = [];
+        
+        //set viewer
+        $this->paramjs['viewer'] = $this->viewer;
     }
 
     //function get
