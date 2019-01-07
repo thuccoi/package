@@ -98,7 +98,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //edit name
             if (!\system\Helper\Validate::isEmpty($data->name) && $data->name != $app->getName()) {
                 $app->setName($data->name);
-                $editinfo [] = "<div class='timeline-content'>Tên của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$data->name }</div>";
+                $editinfo [] = "<div class='timeline-content'>Tên của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$data->name }</a></div>";
             }
 
             //edit image
@@ -125,7 +125,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //edit domain
             if (!\system\Helper\Validate::isEmpty($data->domain) && $data->domain != $app->getDomain()) {
                 $app->setDomain($data->domain);
-                $editinfo [] = "<div class='timeline-content'>Tên miền của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$data->domain}></div>";
+                $editinfo [] = "<div class='timeline-content'>Tên miền của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành <b>{$data->domain}</b></div>";
             }
 
             if (\system\Helper\Validate::isEmpty($editinfo)) {
