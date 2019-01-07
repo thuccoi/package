@@ -91,7 +91,53 @@ class App extends \module\Share\Model\Common\AbsEntity {
     }
 
     public function edit($id, $data) {
-        
+        $app = $this->find($id);
+        if ($app) {
+            $editinfo = [];
+            //edit name
+            if (!\system\Helper\Validate::isEmpty($data->name) && $data->name != $app->getName()) {
+                $app->setName($data->name);
+                $editinfo [] = "Tên của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$data->name }";
+            }
+
+            //edit image
+            if (!\system\Helper\Validate::isEmpty($data->image) && $data->image != $app->getImage()) {
+                $app->setImage($data->image);
+                $editinfo [] = "Ảnh của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành <img src='{$data->image}'>";
+            }
+
+            //edit metatype
+            if (!\system\Helper\Validate::isEmpty($data->metatype) && $data->metatype != $app->getMetatype()) {
+                $app->setMetatype($data->metatype);
+                $editinfo [] = "Loại của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$data->metatype}>";
+            }
+
+            //edit domain
+            if (!\system\Helper\Validate::isEmpty($data->domain) && $data->domain != $app->getDomain()) {
+                $app->setDomain($data->domain);
+                $editinfo [] = "Tên miền của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$data->domain}>";
+            }
+
+            if (\system\Helper\Validate::isEmpty($editinfo)) {
+                $this->code->error("Data not changed");
+            }
+
+            //save and send email
+            $this->dm->persist($app);
+            $this->dm->flush();
+
+            //log create app
+            foreach ($editinfo as $message) {
+                $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
+                $applog->add((object) [
+                            "app_id" => (string) $app->getId(),
+                            "message" => $message
+                ]);
+            }
+            return $app;
+        } else {
+            $this->code->notfound("App not exists in system");
+        }
     }
 
     public function delete($id) {

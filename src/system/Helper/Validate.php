@@ -88,6 +88,11 @@ class Validate {
         if ($obj === null) {
             return true;
         }
+        
+        //check empty
+        if (empty($obj)) {
+            return true;
+        }
 
         //check empty string
         if ($obj === "") {
