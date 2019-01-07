@@ -23,6 +23,11 @@
         <link rel="icon" href="/static/img/ico/favicon.ico" type="image/png">
         <!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
         <meta name="msapplication-TileColor" content="#3399cc" />
+
+        <script>
+            var ENV = <?= json_encode($this->getConfig()['eviroment']) ?>;
+        </script>
+
     </head>
     <body class="login-page">
         <!-- Start login container -->
