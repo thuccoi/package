@@ -122,7 +122,7 @@ class Layout {
         $script = '<script type="text/javascript"> if(typeof TAMI.pagedata =="undefined"){TAMI.pagedata={}; } ';
 
         foreach ($this->paramjs as $key => $val) {
-            $script = $script . ' var TAMI.pagedata.' . $key . '=' . json_encode($val) . '; ';
+            $script = $script . ' TAMI.pagedata.' . $key . '=' . json_encode($val) . '; ';
         }
 
         $script = $script . ' </script>';
