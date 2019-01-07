@@ -109,7 +109,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //edit metatype
             if (!\system\Helper\Validate::isEmpty($data->metatype) && $data->metatype != $app->getMetatype()) {
                 $app->setMetatype($data->metatype);
-                $editinfo [] = "Loại của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$data->metatype}>";
+                $editinfo [] = "Lĩnh vực của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được đổi thành {$data->metatype}";
             }
 
             //edit domain
