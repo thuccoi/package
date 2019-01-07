@@ -79,6 +79,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $memberlog->add((object) [
                         'user_id' => (string) $user->getId(),
                         'app_id' => (string) $app->getId(),
+                        "metatype" => "add",
                         'message' => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
             ]);
 

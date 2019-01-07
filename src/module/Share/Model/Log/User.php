@@ -31,11 +31,19 @@ class User extends \module\Share\Model\Common\AbsLink {
             $this->code->forbidden("type input message is not string");
         }
 
+        //input metatype
+        if (\system\Helper\Validate::isEmpty($data->metatype)) {
+            $this->code->forbidden("metatype is require");
+        }
+
+        if (!\system\Helper\Validate::isString($data->metatype)) {
+            $this->code->forbidden("type input metatype is not string");
+        }
 
         try {
 
             //add new memeber log
-            $memberlog = new \module\Share\Model\Collection\UserLog($data->user_id, "add", $data->message);
+            $memberlog = new \module\Share\Model\Collection\UserLog($data->user_id, $data->metatype, $data->message);
 
             $this->dm->persist($memberlog);
             $this->dm->flush();

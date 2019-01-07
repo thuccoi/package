@@ -31,6 +31,15 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $this->code->forbidden("type input user_id is not string");
         }
 
+        //input metatype
+        if (\system\Helper\Validate::isEmpty($data->metatype)) {
+            $this->code->forbidden("metatype is require");
+        }
+
+        if (!\system\Helper\Validate::isString($data->metatype)) {
+            $this->code->forbidden("type input metatype is not string");
+        }
+
         //input message
         if (\system\Helper\Validate::isEmpty($data->message)) {
             $this->code->forbidden("message is require");
@@ -44,7 +53,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
         try {
 
             //add new memeber log
-            $memberlog = new \module\Share\Model\Collection\MemberLog($data->app_id, $data->user_id, "add", $data->message);
+            $memberlog = new \module\Share\Model\Collection\MemberLog($data->app_id, $data->user_id, $data->metatype, $data->message);
 
             $this->dm->persist($memberlog);
             $this->dm->flush();
