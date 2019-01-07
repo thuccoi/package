@@ -10,6 +10,7 @@ class Layout {
     private $url;
     private $view_dir;
     private $param = [];
+    private $paramjs = [];
     private $config;
     private $code;
     //viewer
@@ -87,6 +88,15 @@ class Layout {
         return $this->param;
     }
 
+    public function setParamJs($paramjs) {
+        $this->paramjs = $paramjs;
+        return $this;
+    }
+
+    public function getParamJs() {
+        return $this->paramjs;
+    }
+
     //viewer
     public function setCode(\system\Helper\Code $code) {
         $this->code = $code;
@@ -107,6 +117,19 @@ class Layout {
         return $this->viewer;
     }
 
+    //render param php to js
+    public function renderParamJs() {
+        $script = '<script type="text/javascript"> if(typeof TAMI.pagedata =="undefined"){TAMI.pagedata={}; } ';
+
+        foreach ($this->paramjs as $key => $val) {
+            $script = $script . ' var TAMI.pagedata.' . $key . '=' . json_encode($val) . '; ';
+        }
+
+        $script = $script . ' </script>';
+        
+        return $script;
+    }
+
     //function show
     public function showLayout(array $param = null) {
         //make parameters
@@ -115,7 +138,7 @@ class Layout {
                 $$key = $val;
             }
         }
-
+        
         require_once $this->getLayout();
     }
 
@@ -221,7 +244,7 @@ class Layout {
 
         return $router->url();
     }
-    
+
     /**
      * 
      * @param type $module

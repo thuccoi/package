@@ -20,7 +20,13 @@ class System {
                 if (isset($init['parameters']) && $init['parameters']) {
                     $layout->setParam($init['parameters']);
                 }
+                
+                //init param js
+                if (isset($init['paramjs']) && $init['paramjs']) {
+                    $layout->setParamJs($init['paramjs']);
+                }
 
+                
 
 
                 if (!file_exists($init["view_file"])) {
@@ -136,6 +142,9 @@ class System {
                 //get parameters 
                 $parameters = $obj->{$naction . "Action"}();
 
+                //get paramjs
+                $paramjs = $obj->getParamJs();
+
                 //view dir
                 $view_dir = $config['view_dir'];
 
@@ -156,6 +165,7 @@ class System {
 
                 return [
                     "parameters" => $parameters,
+                    "paramjs" => $paramjs,
                     "view_file" => $view_dir . $controller . '/' . $action . '.tami',
                     "layout" => $layout,
                     "view_dir" => $view_dir,

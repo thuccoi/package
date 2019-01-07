@@ -15,6 +15,8 @@ abstract class AbstractController {
     private $viewer;
     //view dir
     private $view_dir;
+    //parameter js
+    private $paramjs;
 
     //init from factory
     public function __construct($connect, \system\Router $router, \system\Helper\Code $code, \system\Session $session, array $config = null, array $options = null) {
@@ -42,6 +44,8 @@ abstract class AbstractController {
                         "member" => $session->get("member")
             ];
         }
+
+        $this->paramjs = [];
     }
 
     //function get
@@ -102,8 +106,18 @@ abstract class AbstractController {
     }
 
     //render parameter in php to javascript
-    public function toJS($name, $data) {
-        echo '<script > if(typeof TAMI.pagedata == "undefined"){TAMI.pagedata={};} var TAMI.pagedata.' . $name . '=' . json_encode($data) . '</script>';
+    public function toParamJs($name, $data) {
+        $this->paramjs[$name] = $data;
+        return $this;
+    }
+
+    public function setParamJs($paramjs) {
+        $this->paramjs = $paramjs;
+        return $this;
+    }
+
+    public function getParamJs() {
+        return $this->paramjs;
     }
 
 }
