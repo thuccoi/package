@@ -74,10 +74,13 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $this->dm->flush();
 
             //add new member log
-            $log = new \module\Share\Model\Collection\MemberLog($app->getId(), $user->getId(), "add", "<a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>");
+            $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
-            $this->dm->persist($log);
-            $this->dm->flush();
+            $memberlog->add((object) [
+                        'user_id' => (string) $user->getId(),
+                        'app_id' => (string) $app->getId(),
+                        'message' => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
+            ]);
 
             return $member;
         } catch (\MongoException $ex) {

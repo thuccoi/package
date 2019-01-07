@@ -10,7 +10,7 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  */
 class MemberLog extends \module\Share\Model\Common\AbsField {
 
-    use \module\Share\Model\Common\FieldDefault;
+    use \module\Share\Model\Common\FieldLogDefault;
 
     /**
      *
@@ -24,34 +24,16 @@ class MemberLog extends \module\Share\Model\Common\AbsField {
      */
     private $user_id;
 
-    /**
-     *
-     * @ODM\Field(type="string")
-     */
-    private $metatype;
-
-    /**
-     *
-     * @ODM\Field(type="string")
-     */
-    private $message;
-
     public function __construct($app_id = "", $user_id = "", $metatype = "", $message = "") {
-        $this->init();
+        $this->initLog($metatype, $message);
         $this->app_id = $app_id;
         $this->user_id = $user_id;
-
-        $this->metatype = $metatype;
-
-        $this->message = $message;
     }
 
     public function release() {
-        $obj = $this->export();
+        $obj = $this->exportLog();
         $obj->app_id = $this->getAppId();
         $obj->user_id = $this->getUserId();
-        $obj->type = $this->getType();
-        $obj->message = $this->getMessage();
 
         return $obj;
     }
@@ -74,26 +56,6 @@ class MemberLog extends \module\Share\Model\Common\AbsField {
 
     public function getUserId() {
         return $this->user_id;
-    }
-
-    //meta type
-    public function setMetatype($metatype) {
-        $this->metatype = $metatype;
-        return $this;
-    }
-
-    public function getMetatype() {
-        return $this->metatype;
-    }
-
-    //message
-    public function setMessage($message) {
-        $this->message = $message;
-        return $this;
-    }
-
-    public function getMessage() {
-        return $this->message;
     }
 
 }
