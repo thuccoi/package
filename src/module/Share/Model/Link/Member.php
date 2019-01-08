@@ -166,7 +166,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                             'user_id' => (string) $member->getUser()->getId(),
                             'app_id' => (string) $member->getApp()->getId(),
                             "metatype" => "assign",
-                            'message' => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$member->getUser()->getId()}'>{$member->getUser()->getName()}</a> đã được bổ nhiệm là {$role['name']} thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$member->getApp()->getId()}'>{$member->getApp()->getName()}</a>"
+                            'message' => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$member->getUser()->getId()}'>{$member->getUser()->getName()}</a> đã được bổ nhiệm là <b>{$role['name']}</b> của ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$member->getApp()->getId()}'>{$member->getApp()->getName()}</a>"
                 ]);
             }
         }
