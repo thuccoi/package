@@ -51,7 +51,7 @@ class Member extends \module\Share\Model\Common\AbsField {
     //role
     const ROLE_OWNER = "owner";
     const ROLE_ADMIN = "admin";
-    const ROLE_DEFAULT = "default";
+    const ROLE_DEFAULT = "member";
     //status
     const STATUS_ACTIVATE = 1;
     const STATUS_DEACTIVE = -1;
