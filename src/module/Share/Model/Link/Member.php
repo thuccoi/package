@@ -152,6 +152,23 @@ class Member extends \module\Share\Model\Common\AbsLink {
         if ($hasasign === true) {
             $this->dm->persist($member);
             $this->dm->flush();
+
+            $role = \system\Helper\ArrayCallback::find($this->getConfig()['account_member']['role'], $role, function($e, $role) {
+                        if ($e['value'] == $role) {
+                            return true;
+                        }
+                    });
+            if ($role) {
+                //assign new member log
+                $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
+
+                $memberlog->add((object) [
+                            'user_id' => (string) $member->getUser()->getId(),
+                            'app_id' => (string) $member->getApp()->getId(),
+                            "metatype" => "assign",
+                            'message' => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$member->getUser()->getId()}'>{$member->getUser()->getName()}</a> đã được bổ nhiệm là {$role['name']} thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$member->getApp()->getId()}'>{$member->getApp()->getName()}</a>"
+                ]);
+            }
         }
 
 
