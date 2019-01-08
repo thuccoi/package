@@ -50,5 +50,10 @@ class MemberController extends \system\Template\AbstractController {
         //assign default
         $this->entity->assign($this->getCode()->post("id"), \module\Share\Model\Collection\Member::ROLE_DEFAULT);
     }
+    
+    public function removeAction(){
+        //remove
+        $this->entity->remove($this->getCode()->post("id"));
+    }
 
 }
