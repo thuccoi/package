@@ -107,7 +107,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
         $app = $obj->getApp();
 
         $this->getConnect()->remove($obj);
-        $this->flush();
+        $this->getConnect()->flush();
 
         $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
