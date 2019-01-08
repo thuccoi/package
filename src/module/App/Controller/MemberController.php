@@ -26,7 +26,10 @@ class MemberController extends \system\Template\AbstractController {
         //assign
         $role = $this->getCode()->post("role");
         if (!\system\Helper\Validate::isEmpty($role)) {
-            $this->entity->assign($member->getId(), $role);
+            //check role default
+            if ($role != \module\Share\Model\Collection\Member::ROLE_DEFAULT) {
+                $this->entity->assign($member->getId(), $role);
+            }
         }
 
         $this->getCode()->success("Create new a member is successfuly");
