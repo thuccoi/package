@@ -83,6 +83,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                         'message' => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
             ]);
 
+
             return $member;
         } catch (\MongoException $ex) {
             throw $ex;
@@ -116,6 +117,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $this->getCode()->notfound("Not found member in apps");
         }
 
+        $hasasign = false;
         //assign
         switch ($role) {
             case \module\Share\Model\Collection\Member::ROLE_OWNER:
@@ -123,7 +125,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 if ($member->isOwner()) {
                     $this->code->error("User was Owner");
                 }
-
+                $hasasign = true;
                 //assign owner
                 $member->assignOwner($this->config);
                 break;
@@ -132,7 +134,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 if ($member->isAdmin()) {
                     $this->code->error("User was Admin");
                 }
-
+                $hasasign = true;
                 //assign admin
                 $member->assignAdmin($this->config);
                 break;
@@ -141,14 +143,17 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 if ($member->isDefault()) {
                     $this->code->error("User was Default");
                 }
-
+                $hasasign = true;
                 //assign default
                 $member->assignDefault($this->config);
                 break;
         }
 
-        $this->dm->persist($member);
-        $this->dm->flush();
+        if ($hasasign === true) {
+            $this->dm->persist($member);
+            $this->dm->flush();
+        }
+
 
         $this->code->success("Assign member success");
     }

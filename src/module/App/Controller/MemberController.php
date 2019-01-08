@@ -21,7 +21,13 @@ class MemberController extends \system\Template\AbstractController {
         ];
 
         //add new a member
-        $this->entity->add($data);
+        $member = $this->entity->add($data);
+
+        //assign
+        $role = $this->getCode()->post("role");
+        if (!\system\Helper\Validate::isEmpty($role)) {
+            $this->entity->assign($member->getId(), $role);
+        }
 
         $this->getCode()->success("Create new a member is successfuly");
     }
