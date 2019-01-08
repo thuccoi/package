@@ -64,7 +64,11 @@ class User extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="user")
+     * @ODM\ReferenceMany(
+     *  targetDocument=module\Share\Model\Collection\Member::class, 
+     *  mappedBy="user",
+     *  sort={"create_at"="desc"}
+     * )
      */
     private $members;
 

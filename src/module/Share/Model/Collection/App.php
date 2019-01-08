@@ -41,7 +41,11 @@ class App extends \module\Share\Model\Common\AbsField {
 
     /**
      *
-     * @ODM\ReferenceMany(targetDocument=module\Share\Model\Collection\Member::class, mappedBy="app")
+     * @ODM\ReferenceMany(
+     *  targetDocument=module\Share\Model\Collection\Member::class, 
+     *  mappedBy="app",
+     *  sort={"create_at"="desc"}
+     * )
      */
     private $members;
 
