@@ -123,7 +123,7 @@ class System {
                 $objfactory = new $factory;
 
                 //init controller
-                $obj = $objfactory($loader, $config['controller'], $router, $code, $session, $sysconfig, []);
+                $obj = $objfactory($connect, $config['controller'], $router, $code, $session, $sysconfig, []);
 
                 $naction = "";
                 for ($i = 0; $i < strlen($action); $i++) {
