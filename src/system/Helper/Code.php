@@ -128,7 +128,22 @@ class Code {
         return FALSE;
     }
 
-    public function checkTamiCode($tamicode) {
+    public function checkTamiCode($method) {
+
+        $tamicode = '';
+        //get Tami code
+        if (strtoupper($method) == \system\Helper\HTML::$TAMI_POST) {
+            if (isset($_POST['__TAMI_CODE'])) {
+
+                $tamicode = $_POST['__TAMI_CODE'];
+            }
+        } else if (strtoupper($method) == \system\Helper\HTML::$TAMI_GET) {
+            if (isset($_GET['__TAMI_CODE'])) {
+
+                $tamicode = $_GET['__TAMI_CODE'];
+            }
+        }
+
         if (!$this->verifyTamiCode($tamicode)) {
             $this->forbidden("Forbidden You do not have permission to access!!!");
         }
@@ -139,7 +154,7 @@ class Code {
 //get value on url
     public function get($name) {
         //check tami code
-        $this->checkTamiCode($_GET['__TAMI_CODE']);
+        $this->checkTamiCode('GET');
 
         $value = "";
         if (isset($_GET[$name])) {
@@ -152,7 +167,7 @@ class Code {
 //get value from method post
     public function post($name) {
         //check tami code
-        $this->checkTamiCode($_POST['__TAMI_CODE']);
+        $this->checkTamiCode('POST');
 
         $value = "";
         if (isset($_POST[$name])) {
@@ -176,16 +191,16 @@ class Code {
         $data = [];
 
         if (strtoupper($method) == \system\Helper\HTML::$TAMI_POST) {
-            
+
             //check tami code
-            $this->checkTamiCode($_POST['__TAMI_CODE']);
-            
+            $this->checkTamiCode('POST');
+
             $data = $_POST[$name];
         } else if (strtoupper($method) == \system\Helper\HTML::$TAMI_GET) {
-            
+
             //check tami code
-            $this->checkTamiCode($_GET['__TAMI_CODE']);
-            
+            $this->checkTamiCode('GET');
+
             $data = $_GET[$name];
         }
 
