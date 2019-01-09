@@ -27,8 +27,8 @@ class NotifyController extends \system\Template\AbstractController {
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         return[
-            "id" => $this->getCode()->get("id"),
-            "token" => $this->getCode()->get("token")
+            "id" => $this->getCode()->get("id", FALSE),
+            "token" => $this->getCode()->get("token", FALSE)
         ];
     }
 
@@ -38,9 +38,9 @@ class NotifyController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
-        $user = $this->entity_user->find($this->getCode()->get("id"));
+        $user = $this->entity_user->find($this->getCode()->get("id", FALSE));
 
-        if (!$user || $user->getToken() != $this->getCode()->get("token")) {
+        if (!$user || $user->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 
@@ -56,9 +56,9 @@ class NotifyController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
-        $member = $this->entity_member->find($this->getCode()->get("id"));
+        $member = $this->entity_member->find($this->getCode()->get("id", FALSE));
 
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 
@@ -73,9 +73,9 @@ class NotifyController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
-        $member = $this->entity_member->find($this->getCode()->get("id"));
+        $member = $this->entity_member->find($this->getCode()->get("id", FALSE));
 
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 
@@ -90,9 +90,9 @@ class NotifyController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
-        $member = $this->entity_member->find($this->getCode()->get("id"));
+        $member = $this->entity_member->find($this->getCode()->get("id", FALSE));
 
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 
@@ -107,9 +107,9 @@ class NotifyController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
-        $member = $this->entity_member->find($this->getCode()->get("id"));
+        $member = $this->entity_member->find($this->getCode()->get("id", FALSE));
 
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 
@@ -126,9 +126,9 @@ class NotifyController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
-        $member = $this->entity_member->find($this->getCode()->get("id"));
+        $member = $this->entity_member->find($this->getCode()->get("id", FALSE));
 
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 
@@ -146,9 +146,9 @@ class NotifyController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
-        $member = $this->entity_member->find($this->getCode()->get("id"));
+        $member = $this->entity_member->find($this->getCode()->get("id", FALSE));
 
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->forbidden("Link xác nhận sai hoặc hết hiệu lực", [], $this->getRouter());
         }
 

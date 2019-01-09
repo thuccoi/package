@@ -26,12 +26,12 @@ class RegisterController extends \system\Template\AbstractController {
     public function createAction() {
         //get data
         $data = (object) [
-                    "first_name" => $this->getCode()->post("first_name"),
-                    "last_name" => $this->getCode()->post("last_name"),
-                    "username" => $this->getCode()->post("username"),
-                    "password" => $this->getCode()->post("password"),
-                    "email" => $this->getCode()->post("email"),
-                    "phone" => $this->getCode()->post("phone")
+                    "first_name" => $this->getCode()->post("first_name", FALSE),
+                    "last_name" => $this->getCode()->post("last_name", FALSE),
+                    "username" => $this->getCode()->post("username", FALSE),
+                    "password" => $this->getCode()->post("password", FALSE),
+                    "email" => $this->getCode()->post("email", FALSE),
+                    "phone" => $this->getCode()->post("phone", FALSE)
         ];
 
         //register new an user
@@ -43,8 +43,8 @@ class RegisterController extends \system\Template\AbstractController {
     //confirm user
     public function confirmAction() {
         //token
-        $id = $this->getCode()->get("id");
-        $token = $this->getCode()->get("token");
+        $id = $this->getCode()->get("id", FALSE);
+        $token = $this->getCode()->get("token", FALSE);
 
         $user = $this->entity->find($id);
         if ($user) {

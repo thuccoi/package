@@ -30,7 +30,7 @@ class LoginController extends \system\Template\AbstractController {
 
     public function loginAction() {
         //get user
-        $user = $this->entity->find($this->getCode()->post("email"));
+        $user = $this->entity->find($this->getCode()->post("email", FALSE));
         if ($user) {
 
             //check email confirm
@@ -39,7 +39,7 @@ class LoginController extends \system\Template\AbstractController {
             }
 
             //check password
-            if (!$user->authLogin($this->getCode()->post("password"))) {
+            if (!$user->authLogin($this->getCode()->post("password", FALSE))) {
                 $this->getCode()->forbidden("Sai mật khẩu đăng nhập");
             }
 
@@ -81,7 +81,7 @@ class LoginController extends \system\Template\AbstractController {
     }
 
     public function newPasswordAction() {
-        $user = $this->entity->find($this->getCode()->post("email"), 'email');
+        $user = $this->entity->find($this->getCode()->post("email", FALSE), 'email');
         if ($user) {
 
             //check email confirm

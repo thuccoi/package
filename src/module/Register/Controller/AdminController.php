@@ -17,8 +17,8 @@ class AdminController extends \system\Template\AbstractController {
     //activate member
     public function activateAction() {
         //check query param
-        $member = $this->entity->find($this->getCode()->get("id"));
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        $member = $this->entity->find($this->getCode()->get("id", FALSE));
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->notfound("Link hết hạn, hoặc sai", [], $this->getRouter());
         }
 
@@ -38,8 +38,8 @@ class AdminController extends \system\Template\AbstractController {
     //deactivate member
     public function deactivateAction() {
         //check query param
-        $member = $this->entity->find($this->getCode()->get("id"));
-        if (!$member || $member->getToken() != $this->getCode()->get("token")) {
+        $member = $this->entity->find($this->getCode()->get("id", FALSE));
+        if (!$member || $member->getToken() != $this->getCode()->get("token", FALSE)) {
             $this->getCode()->notfound("Link hết hạn, hoặc sai", [], $this->getRouter());
         }
 
