@@ -49,7 +49,13 @@ class AppController extends \system\Template\AbstractController {
         //edit the app
         $this->entity->edit($id, $data);
 
-        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
+        //check redirect
+        if ($this->getCode()->post('fromajax')) {
+            
+            $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
+        }
+
+        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], $this->getRouter()->redirect('application'));
     }
 
     public function removeAction() {
