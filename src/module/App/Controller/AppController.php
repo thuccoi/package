@@ -36,7 +36,7 @@ class AppController extends \system\Template\AbstractController {
             $this->getCode()->success("Ứng dụng đã được tạo thành công.");
         }
 
-        $this->getCode()->success("Ứng dụng đã được tạo thành công.", [], $this->getRouter()->redirect('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
+        $this->getCode()->success("Ứng dụng đã được tạo thành công.", [], $this->url('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
     }
 
     public function editAction() {
@@ -59,7 +59,7 @@ class AppController extends \system\Template\AbstractController {
             $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
         }
 
-        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], $this->getRouter()->redirect('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
+        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], $this->url('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
     }
 
     public function removeAction() {

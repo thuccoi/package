@@ -67,16 +67,16 @@ class Code {
     ];
     private $config;
 
-    //init config
+//init config
     public function __construct($config) {
         $this->config = $config;
     }
 
-    //data input inline
+//data input inline
     public function inputInline($name, $method = "GET") {
 
         $result = "";
-        //switch method
+//switch method
         switch ($method) {
             case \system\Helper\HTML::$TAMI_GET:
                 $result = $this->get($name);
@@ -90,7 +90,7 @@ class Code {
         return $result;
     }
 
-    //get value on url
+//get value on url
     public function get($name) {
         $value = "";
         if (isset($_GET[$name])) {
@@ -100,14 +100,14 @@ class Code {
         return $this->purify($value);
     }
 
-    //get value from method post
+//get value from method post
     public function post($name) {
         $value = "";
         if (isset($_POST[$name])) {
             $value = $_POST[$name];
         } else {
 
-            //'contentType': 'application/json'
+//'contentType': 'application/json'
             $POSTdata = json_decode(file_get_contents("php://input"), true);
 
             if (isset($POSTdata[$name])) {
@@ -118,9 +118,9 @@ class Code {
         return $this->purify($value);
     }
 
-    //get array data 
+//get array data 
     public function arr($name, $method = "POST") {
-        
+
         $data = [];
 
         if (strtoupper($method) == \system\Helper\HTML::$TAMI_POST) {
@@ -136,7 +136,7 @@ class Code {
 
         $result = [];
 
-        //data
+//data
         if (is_array($data)) {
             foreach ($data as $key => $val) {
                 if (is_array($val)) {
@@ -152,16 +152,16 @@ class Code {
         return $result;
     }
 
-    //clean data
+//clean data
     public function purify($value) {
 
         $result = '';
 
-        //get length of value string
+//get length of value string
         $len = strlen($value);
         for ($i = 0; $i < $len; $i++) {
             $char = mb_substr($value, $i, 1);
-            //purify all char
+//purify all char
             if (in_array(mb_strtolower($char), $this->charaters)) {
                 $result = $result . $char;
             }
@@ -170,74 +170,43 @@ class Code {
         return $result;
     }
 
-    //release ajax
-    public function release($status = 405, $message = "Error!", $data = [], \system\Router $router = null) {
-        //page router
-        if (!$router) {
-            if (!headers_sent()) {
-                header('Content-Type: application/json; charset=utf-8');
-            }
+//release ajax
+    public function release($status = 405, $message = "Error!", $data = [], $tourl = "") {
 
-            echo json_encode([
-                "status" => $status,
-                "message" => $message,
-                "data" => $data
-            ]);
-            exit;
+        if (!headers_sent()) {
+            header('Content-Type: application/json; charset=utf-8');
         }
 
-        if (!isset($this->config['routerError'])) {
-            echo 'Code Not found config routerError';
-            exit;
-        }
-
-        if (!isset($this->config['routerError']['module'])) {
-            echo 'Code Not found config module routerError';
-            exit;
-        }
-
-        if (!isset($this->config['routerError']['controller'])) {
-            echo 'Code Not found config controller routerError';
-            exit;
-        }
-
-        if (!isset($this->config['routerError']['action'])) {
-            echo 'Code Not found config action routerError';
-            exit;
-        }
-
-        //redirect to page error
-        $router->redirect($this->config['routerError']['module'], [
-            'controller' => $this->config['routerError']['controller'],
-            'action' => $this->config['routerError']['action'],
-            'param' => [
-                'status' => $status,
-                'message' => $message
-            ]
+        echo json_encode([
+            "status" => $status,
+            "message" => $message,
+            "data" => $data,
+            "tourl" => $tourl
         ]);
+        exit;
     }
 
-    //release error
-    public function error($message = "Error!", $data = [], \system\Router $router = null) {
-        $this->release(405, $message, $data, $router);
+//release error
+    public function error($message = "Error!", $data = [], $tourl = "") {
+        $this->release(405, $message, $data, $tourl);
     }
 
-    //release success
-    public function success($message = "Success!", $data = [], \system\Router $router = null) {
-        $this->release(200, $message, $data, $router);
+//release success
+    public function success($message = "Success!", $data = [], $tourl = "") {
+        $this->release(200, $message, $data, $tourl);
     }
 
-    //release notfound
-    public function notfound($message = "Not Found!", $data = [], \system\Router $router = null) {
-        $this->release(404, $message, $data, $router);
+//release notfound
+    public function notfound($message = "Not Found!", $data = [], $tourl = "") {
+        $this->release(404, $message, $data, $tourl);
     }
 
-    //release forbidden
-    public function forbidden($message = "Forbidden!", $data = [], \system\Router $router = null) {
-        $this->release(403, $message, $data, $router);
+//release forbidden
+    public function forbidden($message = "Forbidden!", $data = [], $tourl = "") {
+        $this->release(403, $message, $data, $tourl);
     }
 
-    //pretty varial
+//pretty varial
     public static function debug($obj, $dump = false) {
         echo "<pre>";
         if (!$dump) {
