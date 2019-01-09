@@ -71,7 +71,9 @@ class System {
         //get config of system
         $sysconfig = \system\Template\Container::getSysConfig();
 
-        $code = new \system\Helper\Code($sysconfig, $loader);
+        //make connect
+        $connect = \system\Database\DoctrineMongo::connect($loader, $sysconfig);
+        $code = new \system\Helper\Code($sysconfig, $connect);
 
         $request_uri = $_SERVER['REQUEST_URI'];
 
