@@ -33,6 +33,9 @@ abstract class AbstractController {
 
         $this->options = $options;
 
+        
+        $this->paramjs = [];
+
         //viewer
         $this->viewer = null;
 
@@ -43,9 +46,24 @@ abstract class AbstractController {
                         "user" => $session->get("user"),
                         "member" => $session->get("member")
             ];
-        }
 
-        $this->paramjs = [];
+            //make tami code
+            $member_id = $this->viewer->member->id;
+
+            $user_id = $this->viewer->user->id;
+
+            $app_id = $this->viewer->app->id;
+
+            $time = date("Y-m-d H:i");
+
+            //struct member_id user_id app_id time  
+            $hash = md5("$member_id.$user_id.$app_id.$time");
+
+            //join member_id and hash to __TAMI_CODE
+            $__TAMI_CODE = "$member_id.$hash";
+
+            $this->paramjs['__TAMI_CODE'] = $__TAMI_CODE;
+        }
 
         //set viewer
         $this->paramjs['viewer'] = $this->viewer;
@@ -105,11 +123,11 @@ abstract class AbstractController {
      * @return url
      */
     public function url($module, array $options = null) {
-        
+
         //get url in layout
         $layout = new \system\Template\Layout();
         $layout->setConfig($this->config);
-       
+
         return $layout->url($module, $options);
     }
 
