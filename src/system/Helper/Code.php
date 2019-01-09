@@ -118,14 +118,16 @@ class Code {
         $user_id = $member->getUser()->getId();
         $app_id = $member->getApp()->getId();
 
-        $time = date("Y-m-d H:i");
-        $hashserver = md5("$member_id.$user_id.$app_id.$time");
-
-        if ($clienthash == $hashserver) {
-            return TRUE;
+        $hashserver = [];
+        //expire about 5 minutes
+        for ($i = 0; $i < 5; $i++) {
+            //last 1 minute 
+            $time = date("Y-m-d H:i", time() - $i * 60);
+            $hashserver[] = md5("$member_id.$user_id.$app_id.$time");
         }
 
-        return FALSE;
+        //check in array
+        return in_array($clienthash, $hashserver);
     }
 
     public function checkTamiCode($method) {
@@ -201,12 +203,12 @@ class Code {
             }
             $data = $_POST[$name];
         } else if (strtoupper($method) == \system\Helper\HTML::$TAMI_GET) {
-            
+
             if ($checkcode === true) {
                 //check tami code
                 $this->checkTamiCode('GET');
             }
-            
+
             $data = $_GET[$name];
         }
 
