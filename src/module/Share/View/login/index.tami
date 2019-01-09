@@ -19,7 +19,7 @@
                 ->js("/static/js/pages/login.js")
                 ->js("/js/common/autoload.js")
                 ->js("/js/account/login.js");
-        
+
         //param js
         echo $this->renderParamJs();
         ?>
@@ -48,7 +48,7 @@
                     </h4>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal mt0" action="<?= $this->url('a', ['controller' => 'login', 'action' => 'login']) ?>" id="login-form" method="POST" role="form">
+                    <form tourl="<?= $this->url('application') ?>" class="form-horizontal mt0" action="<?= $this->url('a', ['controller' => 'login', 'action' => 'login']) ?>" id="login-form" method="POST" role="form">
                         <div class="form-group">
                             <div class="col-lg-12">
                                 <div class="input-group input-icon">
