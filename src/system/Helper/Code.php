@@ -119,8 +119,8 @@ class Code {
         $app_id = $member->getApp()->getId();
 
         $hashserver = [];
-        //expire about 5 minutes
-        for ($i = 0; $i < 5; $i++) {
+        //expire about $this->config['tamicode']['lifetime'] minutes
+        for ($i = 0; $i < $this->config['tamicode']['lifetime']; $i++) {
             //last 1 minute 
             $time = date("Y-m-d H:i", time() - $i * 60);
             $hashserver[] = md5("$member_id.$user_id.$app_id.$time");
