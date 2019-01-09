@@ -127,7 +127,7 @@
         </div>
 
         <script>
-            Register.create("#register-form");
+            Register.validate("#register-form");
         </script>
 
 

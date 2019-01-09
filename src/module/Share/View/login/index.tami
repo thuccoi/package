@@ -106,7 +106,7 @@
         </div>
 
         <script>
-            Login.login('#login-form');
+            Login.validate('#login-form');
         </script>
     </body>
 </html>
