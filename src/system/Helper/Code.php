@@ -152,9 +152,11 @@ class Code {
     }
 
 //get value on url
-    public function get($name) {
-        //check tami code
-        $this->checkTamiCode('GET');
+    public function get($name, $checkcode = true) {
+        if ($checkcode === true) {
+            //check tami code
+            $this->checkTamiCode('GET');
+        }
 
         $value = "";
         if (isset($_GET[$name])) {
@@ -165,9 +167,11 @@ class Code {
     }
 
 //get value from method post
-    public function post($name) {
-        //check tami code
-        $this->checkTamiCode('POST');
+    public function post($name, $checkcode = true) {
+        if ($checkcode === true) {
+            //check tami code
+            $this->checkTamiCode('POST');
+        }
 
         $value = "";
         if (isset($_POST[$name])) {
@@ -186,21 +190,23 @@ class Code {
     }
 
 //get array data 
-    public function arr($name, $method = "POST") {
+    public function arr($name, $method = "POST", $checkcode = true) {
 
         $data = [];
 
         if (strtoupper($method) == \system\Helper\HTML::$TAMI_POST) {
-
-            //check tami code
-            $this->checkTamiCode('POST');
-
+            if ($checkcode === true) {
+                //check tami code
+                $this->checkTamiCode('POST');
+            }
             $data = $_POST[$name];
         } else if (strtoupper($method) == \system\Helper\HTML::$TAMI_GET) {
-
-            //check tami code
-            $this->checkTamiCode('GET');
-
+            
+            if ($checkcode === true) {
+                //check tami code
+                $this->checkTamiCode('GET');
+            }
+            
             $data = $_GET[$name];
         }
 
