@@ -15,6 +15,11 @@
                 ->css('http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700')
                 ->css('/tami/css/tami.css');
 
+        $this->js('/tami/js/tami.js')
+                ->js("/static/js/pages/login.js")
+                ->js("/js/common/autoload.js")
+                ->js("/js/account/register.js");
+        
         //param js
         echo $this->renderParamJs();
         ?>
@@ -120,12 +125,6 @@
                 ?>
             </div>
         </div>
-        <?php
-        $this->js('/tami/js/tami.js')
-                ->js("/static/js/pages/login.js")
-                ->js("/js/common/autoload.js")
-                ->js("/js/account/register.js");
-        ?>
 
         <script>
             Register.create("#register-form");
