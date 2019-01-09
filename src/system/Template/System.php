@@ -20,13 +20,13 @@ class System {
                 if (isset($init['parameters']) && $init['parameters']) {
                     $layout->setParam($init['parameters']);
                 }
-                
+
                 //init param js
                 if (isset($init['paramjs']) && $init['paramjs']) {
                     $layout->setParamJs($init['paramjs']);
                 }
 
-                
+
 
 
                 if (!file_exists($init["view_file"])) {
@@ -71,7 +71,7 @@ class System {
         //get config of system
         $sysconfig = \system\Template\Container::getSysConfig();
 
-        $code = new \system\Helper\Code($sysconfig);
+        $code = new \system\Helper\Code($sysconfig, $loader);
 
         $request_uri = $_SERVER['REQUEST_URI'];
 

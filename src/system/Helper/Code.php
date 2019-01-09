@@ -66,10 +66,20 @@ class Code {
         '+', '-', '=', '&', '?', '/', ' ', '.', '@', '_'
     ];
     private $config;
+    private $dm;
 
 //init config
-    public function __construct($config) {
+    public function __construct($config, $connect) {
         $this->config = $config;
+        $this->dm = $connect;
+    }
+
+    public function getConfig() {
+        return $this->config;
+    }
+
+    public function getConnect() {
+        return $this->dm;
     }
 
 //data input inline
@@ -90,8 +100,47 @@ class Code {
         return $result;
     }
 
+    public function verifyTamiCode($tamicode) {
+        $arr = explode(".", $tamicode);
+        if (!$tamicode || count($arr) != 2) {
+            return FALSE;
+        }
+
+        $member_id = $arr[0];
+        $clienthash = $arr[1];
+
+        $member = $this->dm->getRepository(\module\Share\Model\Collection\Member::class)->find($member_id);
+        if (!$member) {
+            return FALSE;
+        }
+
+        //make TAMI CODE on server
+        $user_id = $member->getUser()->getId();
+        $app_id = $member->getApp()->getId();
+
+        $time = date("Y-m-d H:i");
+        $hashserver = md5("$member_id.$user_id.$app_id.$time");
+
+        if ($clienthash == $hashserver) {
+            return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    public function checkTamiCode($tamicode) {
+        if (!$this->verifyTamiCode($tamicode)) {
+            $this->forbidden("Forbidden You do not have permission to access!!!");
+        }
+
+        return true;
+    }
+
 //get value on url
     public function get($name) {
+        //check tami code
+        $this->checkTamiCode($_GET['__TAMI_CODE']);
+
         $value = "";
         if (isset($_GET[$name])) {
             $value = $_GET[$name];
@@ -102,6 +151,9 @@ class Code {
 
 //get value from method post
     public function post($name) {
+        //check tami code
+        $this->checkTamiCode($_POST['__TAMI_CODE']);
+
         $value = "";
         if (isset($_POST[$name])) {
             $value = $_POST[$name];
@@ -124,8 +176,16 @@ class Code {
         $data = [];
 
         if (strtoupper($method) == \system\Helper\HTML::$TAMI_POST) {
+            
+            //check tami code
+            $this->checkTamiCode($_POST['__TAMI_CODE']);
+            
             $data = $_POST[$name];
         } else if (strtoupper($method) == \system\Helper\HTML::$TAMI_GET) {
+            
+            //check tami code
+            $this->checkTamiCode($_GET['__TAMI_CODE']);
+            
             $data = $_GET[$name];
         }
 
