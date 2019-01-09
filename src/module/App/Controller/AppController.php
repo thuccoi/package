@@ -31,12 +31,12 @@ class AppController extends \system\Template\AbstractController {
         ];
 
         //create new app
-        $this->entity->create($data);
+        $app = $this->entity->create($data);
         if ($this->getCode()->post('fromajax')) {
             $this->getCode()->success("Ứng dụng đã được tạo thành công.");
         }
 
-        $this->getCode()->success("Ứng dụng đã được tạo thành công.", [], $this->getRouter()->redirect('application'));
+        $this->getCode()->success("Ứng dụng đã được tạo thành công.", [], $this->getRouter()->redirect('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
     }
 
     public function editAction() {
@@ -51,7 +51,7 @@ class AppController extends \system\Template\AbstractController {
         ];
 
         //edit the app
-        $this->entity->edit($id, $data);
+        $app = $this->entity->edit($id, $data);
 
         //check redirect
         if ($this->getCode()->post('fromajax')) {
@@ -59,7 +59,7 @@ class AppController extends \system\Template\AbstractController {
             $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
         }
 
-        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], $this->getRouter()->redirect('application'));
+        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], $this->getRouter()->redirect('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
     }
 
     public function removeAction() {
