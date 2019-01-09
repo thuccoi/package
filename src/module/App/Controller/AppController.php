@@ -32,7 +32,11 @@ class AppController extends \system\Template\AbstractController {
 
         //create new app
         $this->entity->create($data);
-        $this->getCode()->success("Ứng dụng đã được tạo thành công.");
+        if ($this->getCode()->post('fromajax')) {
+            $this->getCode()->success("Ứng dụng đã được tạo thành công.");
+        }
+
+        $this->getCode()->success("Ứng dụng đã được tạo thành công.", [], $this->getRouter()->redirect('application'));
     }
 
     public function editAction() {
@@ -51,7 +55,7 @@ class AppController extends \system\Template\AbstractController {
 
         //check redirect
         if ($this->getCode()->post('fromajax')) {
-            
+
             $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
         }
 
