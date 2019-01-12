@@ -17,7 +17,7 @@
 
         $this->js("/tami/js/tami.js")
                 ->js("/static/js/pages/login.js")
-                ->js("/js/common/autoload.js")
+                ->js("/tami/js/common/autoload.js")
                 ->js("/js/account/login.js");
 
         //param js

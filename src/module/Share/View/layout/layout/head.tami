@@ -22,7 +22,7 @@
 <link href="/tami/css/tami.css" rel="stylesheet" />
 
 <script src="/tami/js/tami.js"></script>
-<script src="/js/common/autoload.js"></script>
+<script src="/tami/js/common/autoload.js"></script>
 
 <script>
     var ENV = <?= json_encode($this->getConfig()['eviroment']) ?>;
