@@ -6,9 +6,9 @@ abstract class AbsLog {
 
     public static $parents = [];
 
-    abstract public function add(&$data);
+    abstract public function add(array $data = null);
 
-    final public function log(&$data) {
+    final public function log(array $data = null) {
         //this
         if (!isset($data["chilren"]) || $data["children"] == get_class($this)) {
             $data["chilren"] = "";
