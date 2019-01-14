@@ -13,8 +13,8 @@ abstract class AbsLog {
 
     final public function log($data) {
         //this
-        if (!isset($data["chilren"]) || $data["children"] == get_class($this)) {
-            $data["chilren"] = "";
+        if (!isset($data->chilren) || $data->chilren == get_class($this)) {
+            $data->chilren = "";
         }
 
         //this
@@ -26,7 +26,7 @@ abstract class AbsLog {
 
             $obj = new $val($this->dm, $this->code, $this->config);
 
-            $data["chilren"] = get_class($this);
+            $data->chilren = get_class($this);
 
             $obj->log($data);
         }
