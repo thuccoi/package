@@ -76,7 +76,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
             //add new member log
             $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
-            $memberlog->add((object) [
+            $memberlog->log((object) [
                         'user_id' => (string) $user->getId(),
                         'app_id' => (string) $app->getId(),
                         "metatype" => "add",
@@ -111,7 +111,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
 
         $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
-        $memberlog->add((object) [
+        $memberlog->log((object) [
                     'user_id' => (string) $user->getId(),
                     'app_id' => (string) $app->getId(),
                     "metatype" => "remove",
@@ -183,7 +183,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 //assign new member log
                 $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
-                $memberlog->add((object) [
+                $memberlog->log((object) [
                             'user_id' => (string) $member->getUser()->getId(),
                             'app_id' => (string) $member->getApp()->getId(),
                             "metatype" => "assign",

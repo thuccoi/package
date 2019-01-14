@@ -77,7 +77,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
 
             //log create app
             $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
-            $applog->add((object) [
+            $applog->log((object) [
                         "app_id" => (string) $app->getId(),
                         "metatype" => "create",
                         "message" => "Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được tạo mới"
@@ -148,7 +148,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //log create app
             foreach ($editinfo as $message) {
                 $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
-                $applog->add((object) [
+                $applog->log((object) [
                             "app_id" => (string) $app->getId(),
                             "metatype" => "edit",
                             "message" => $message
