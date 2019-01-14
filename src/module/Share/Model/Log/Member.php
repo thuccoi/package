@@ -2,13 +2,12 @@
 
 namespace module\Share\Model\Log;
 
-class Member extends \module\Share\Model\Common\AbsLog {
+class Member extends \module\Share\Model\Common\AbsLink {
 
     //entity default
-    use \module\Share\Model\Common\LogDefault;
-    
+    use \module\Share\Model\Common\EntityDefault;
+
     public function __construct($connect, \system\Helper\Code $code, $config) {
-        static::$parents = [\module\Share\Model\Log\App::class, \module\Share\Model\Log\User::class];
         $this->init($connect, $code, $config);
     }
 
@@ -65,6 +64,23 @@ class Member extends \module\Share\Model\Common\AbsLog {
         }
 
         $this->code->error("Error database");
+    }
+
+    public function update($id, $data) {
+        
+    }
+
+    public function remove($id) {
+        
+    }
+
+    public function restore($id) {
+        
+    }
+
+    public function find($id, $type = '') {
+        //find by id
+        return $this->dm->getRepository(\module\Share\Model\Collection\MemberLog::class)->find($id);
     }
 
 }

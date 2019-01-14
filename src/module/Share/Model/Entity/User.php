@@ -112,7 +112,7 @@ class User extends \module\Share\Model\Common\AbsEntity {
 
             //log create user
             $userlog = new \module\Share\Model\Log\User($this->dm, $this->code, $this->config);
-            $userlog->log((object) [
+            $userlog->add((object) [
                         "user_id" => (string) $user->getId(),
                         "metatype" => "create",
                         "message" => "Người dùng <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được tạo mới"
