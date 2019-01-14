@@ -4,9 +4,9 @@ namespace module\Share\Model\Common;
 
 abstract class AbsLog {
 
-    //entity default
-    use \module\Share\Model\Common\EntityDefault;
-
+    public static $dm;
+    public static $code;
+    public static $config;
     public static $parents = [];
 
     abstract public function add($data);
@@ -24,7 +24,7 @@ abstract class AbsLog {
         $parents = static::$parents;
         foreach ($parents as $val) {
 
-            $obj = new $val($this->dm, $this->code, $this->config);
+            $obj = new $val(static::$dm, static::$code, static::$config);
 
             $data->chilren = get_class($this);
 
