@@ -2,12 +2,13 @@
 
 namespace module\Share\Model\Log;
 
-class App extends \module\Share\Model\Common\AbsLink {
+class App extends \module\Share\Model\Common\AbsLog {
 
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
     public function __construct($connect, \system\Helper\Code $code, $config) {
+        static::$parents = [];
         $this->init($connect, $code, $config);
     }
 
@@ -56,21 +57,5 @@ class App extends \module\Share\Model\Common\AbsLink {
         $this->code->error("Error database");
     }
 
-    public function update($id, $data) {
-        
-    }
-
-    public function remove($id) {
-        
-    }
-
-    public function restore($id) {
-        
-    }
-
-    public function find($id, $type = '') {
-        //find by id
-        return $this->dm->getRepository(\module\Share\Model\Collection\MemberLog::class)->find($id);
-    }
 
 }
