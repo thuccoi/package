@@ -9,9 +9,9 @@ abstract class AbsLog {
 
     public static $parents = [];
 
-    abstract public function add(array $data = null);
+    abstract public function add($data);
 
-    final public function log(array $data = null) {
+    final public function log($data) {
         //this
         if (!isset($data["chilren"]) || $data["children"] == get_class($this)) {
             $data["chilren"] = "";
@@ -23,7 +23,7 @@ abstract class AbsLog {
         //list parents
         $parents = static::$parents;
         foreach ($parents as $val) {
-            
+
             $obj = new $val($this->dm, $this->code, $this->config);
 
             $data["chilren"] = get_class($this);
