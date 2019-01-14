@@ -4,9 +4,6 @@ namespace module\Share\Model\Log;
 
 class Member extends \module\Share\Model\Common\AbsLog {
 
-    //entity default
-    use \module\Share\Model\Common\EntityDefault;
-
     public function __construct($connect, \system\Helper\Code $code, $config) {
         static::$parents = [\module\Share\Model\Log\App::class, \module\Share\Model\Log\User::class];
         $this->init($connect, $code, $config);
