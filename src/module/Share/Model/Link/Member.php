@@ -106,7 +106,9 @@ class Member extends \module\Share\Model\Common\AbsLink {
         $user = $obj->getUser();
         $app = $obj->getApp();
 
-        $this->getConnect()->remove($obj);
+        $obj->delete();
+
+        $this->getConnect()->persist($obj);
         $this->getConnect()->flush();
 
         $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
@@ -122,7 +124,31 @@ class Member extends \module\Share\Model\Common\AbsLink {
     }
 
     public function restore($id) {
+        $obj = $this->find($id);
+
+        if (!$obj) {
+            $this->code->forbidden("Member not exist");
+        }
+
+        $user = $obj->getUser();
+        $app = $obj->getApp();
         
+        //restore
+        $obj->restore();
+
+        $this->getConnect()->persist($obj);
+        $this->getConnect()->flush();
+
+        $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
+
+        $memberlog->add((object) [
+                    'user_id' => (string) $user->getId(),
+                    'app_id' => (string) $app->getId(),
+                    "metatype" => "restore",
+                    'message' => "Thành viên <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được khôi phục lại trong ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
+        ]);
+
+        $this->getCode()->success("restore is successfully");
     }
 
     public function find($id, $type = '') {

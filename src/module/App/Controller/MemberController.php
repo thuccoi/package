@@ -31,7 +31,10 @@ class MemberController extends \system\Template\AbstractController {
                 $this->entity->assign($member->getId(), $role);
             }
         }
-
+        
+        //send email active
+        $member->sendActivateEmail($member, $this->getConfig());
+        
         $this->getCode()->success("Create new a member is successfuly");
     }
 
