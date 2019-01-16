@@ -193,7 +193,7 @@ class Member extends \module\Share\Model\Common\AbsField {
     }
 
     public function isAdmin() {
-        //role is admin or owner
+        //role is admin 
         return ($this->role == self::ROLE_ADMIN);
     }
 

@@ -22,6 +22,7 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function createAction() {
+        
         //get data
         $data = (object) [
                     "name" => $this->getCode()->post("name"),
