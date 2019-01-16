@@ -33,7 +33,7 @@ abstract class AbstractController {
 
         $this->options = $options;
 
-        
+
         $this->paramjs = [];
 
         //viewer
@@ -67,6 +67,15 @@ abstract class AbstractController {
 
         //set viewer
         $this->paramjs['viewer'] = $this->viewer;
+
+        //login
+        if (!($router->getModule() == 'a' && $router->getController() == 'login')) {
+            //redirect to login
+            if (!$this->getViewer() || !$this->getViewer()->auth) {
+                //login
+                $router->redirect('a', ['controller' => 'login']);
+            }
+        }
     }
 
     //function get
