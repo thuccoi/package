@@ -36,14 +36,18 @@ trait FieldDefault {
      */
     private $options;
 
-    /**  
+    /**
      * 
      * @ODM\Field(type="date")
      */
     private $deleted_at;
 
     public function getDeletedAt() {
-        return $this->deleted_at;
+        if ($this->deleted_at) {
+            return $this->deleted_at->format("d/m/Y");
+        }
+
+        return '';
     }
 
     public function delete() {
@@ -127,6 +131,7 @@ trait FieldDefault {
                     "id" => $this->getId(),
                     "create_at" => $this->getCreateAt(),
                     "update_at" => $this->getUpdateAt(),
+                    "deleted_at" => $this->getDeletedAt(),
                     "options" => $this->getOptions()
         ];
     }
