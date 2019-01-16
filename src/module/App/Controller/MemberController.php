@@ -55,5 +55,10 @@ class MemberController extends \system\Template\AbstractController {
         //remove
         $this->entity->remove($this->getCode()->post("id"));
     }
+    
+    public function restoreAction(){
+        //remove
+        $this->entity->restore($this->getCode()->post("id"));
+    }
 
 }
