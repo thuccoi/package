@@ -50,12 +50,12 @@ class RegisterController extends \system\Template\AbstractController {
         if ($user) {
             //check token
             if ($user->getToken() != $token) {
-                $this->getCode()->error("URL đã hết hạn, hoặc sai thông tin.", [], $this->getRouter());
+                $this->getCode()->error("URL đã hết hạn, hoặc sai thông tin.");
             }
 
             //check email confirm
             if ($user->getEmailConfirm() == $user::EMAIL_CONFIRMED) {
-                $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.", [], $this->getRouter());
+                $this->getCode()->error("Hành động lỗi do thông tin tài khoản này đã được xác nhận.");
             }
 
             //check app
@@ -120,10 +120,10 @@ class RegisterController extends \system\Template\AbstractController {
             $this->getConnect()->flush();
 
 
-            $this->getCode()->success("Xác nhận thông tin thành công.", [], $this->getRouter());
+            $this->getCode()->success("Xác nhận thông tin thành công.");
         }
 
-        $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.", [], $this->getRouter());
+        $this->getCode()->notfound("Tài khoản không tồn tại trong hệ thống.");
     }
 
 }

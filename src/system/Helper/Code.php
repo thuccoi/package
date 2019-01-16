@@ -272,21 +272,40 @@ class Code {
 
 //release error
     public function error($message = "Error!", $data = [], $tourl = "") {
+        if ($tourl == "") {
+            $tourl = $this->url('application', ['controller' => 'error', 'action' => 'index', 'param' => [
+                    'status' => 405,
+                    'message' => $message
+            ]]);
+        }
         $this->release(405, $message, $data, $tourl);
     }
 
 //release success
     public function success($message = "Success!", $data = [], $tourl = "") {
+
         $this->release(200, $message, $data, $tourl);
     }
 
 //release notfound
     public function notfound($message = "Not Found!", $data = [], $tourl = "") {
+        if ($tourl == "") {
+            $tourl = $this->url('application', ['controller' => 'error', 'action' => 'index', 'param' => [
+                    'status' => 404,
+                    'message' => $message
+            ]]);
+        }
         $this->release(404, $message, $data, $tourl);
     }
 
 //release forbidden
     public function forbidden($message = "Forbidden!", $data = [], $tourl = "") {
+        if ($tourl == "") {
+            $tourl = $this->url('application', ['controller' => 'error', 'action' => 'index', 'param' => [
+                    'status' => 403,
+                    'message' => $message
+            ]]);
+        }
         $this->release(403, $message, $data, $tourl);
     }
 
