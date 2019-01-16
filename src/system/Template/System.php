@@ -8,9 +8,7 @@ class System {
         if ($init) {
             if (isset($init["view_file"]) && isset($init['layout'])) {
 
-                $layout = new \system\Template\Layout();
-
-                $layout->setConfig($init['sysconfig']);
+                $layout = new \system\Template\Layout($init['sysconfig']);
 
                 $layout->setLayout($init['layout']);
                 $layout->setViewFile($init['view_file']);

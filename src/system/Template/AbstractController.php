@@ -125,10 +125,23 @@ abstract class AbstractController {
     public function url($module, array $options = null) {
 
         //get url in layout
-        $layout = new \system\Template\Layout();
-        $layout->setConfig($this->config);
+        $layout = new \system\Template\Layout($this->config);
 
         return $layout->url($module, $options);
+    }
+
+    /**
+     * 
+     * @param type $module
+     * @param array $options include controller, action, id, param
+     * @return url
+     */
+    public function urlInside($module, array $options = null) {
+
+        //get url in layout
+        $layout = new \system\Template\Layout($this->config);
+
+        return $layout->urlInside($module, $options);
     }
 
     //view directory

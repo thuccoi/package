@@ -256,18 +256,23 @@ class Code {
 
 //release ajax
     public function release($status = 405, $message = "Error!", $data = [], $tourl = "") {
+        if ($this->isFromAjax()) {
+            if (!headers_sent()) {
+                header('Content-Type: application/json; charset=utf-8');
+            }
 
-        if (!headers_sent()) {
-            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode([
+                "status" => $status,
+                "message" => $message,
+                "data" => $data,
+                "tourl" => $tourl
+            ]);
+            exit;
+        } else {
+            //rediect to router
+            header("$tourl");
+            exit;
         }
-
-        echo json_encode([
-            "status" => $status,
-            "message" => $message,
-            "data" => $data,
-            "tourl" => $tourl
-        ]);
-        exit;
     }
 
 //release error
@@ -283,7 +288,12 @@ class Code {
 
 //release success
     public function success($message = "Success!", $data = [], $tourl = "") {
-
+        if ($tourl == "") {
+            $tourl = $this->url('application', ['controller' => 'error', 'action' => 'index', 'param' => [
+                    'status' => 200,
+                    'message' => $message
+            ]]);
+        }
         $this->release(200, $message, $data, $tourl);
     }
 
@@ -318,6 +328,30 @@ class Code {
             var_dump($obj);
         }
         exit;
+    }
+
+//check from ajax
+    public function isFromAjax() {
+        if ($this->get("__TAMI_FROM_AJAX")) {
+            return TRUE;
+        }
+
+        if ($this->post("__TAMI_FROM_AJAX")) {
+            return TRUE;
+        }
+
+        return FALSE;
+    }
+
+//url
+    public function url($module, array $options = null) {
+        $layout = new \system\Template\Layout($this->config);
+        return $layout->url($module, $options);
+    }
+
+    public function urlInside($module, array $options = null) {
+        $layout = new \system\Template\Layout($this->config);
+        return $layout->urlInside($module, $options);
     }
 
 }

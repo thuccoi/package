@@ -16,6 +16,10 @@ class Layout {
     //viewer
     private $viewer;
 
+    public function __construct($config) {
+        $this->config = $config;
+    }
+
     //function set and get
     public function setTitle($title) {
         $this->title = $title;
@@ -126,7 +130,7 @@ class Layout {
         }
 
         $script = $script . ' </script>';
-        
+
         return $script;
     }
 
@@ -138,7 +142,7 @@ class Layout {
                 $$key = $val;
             }
         }
-        
+
         require_once $this->getLayout();
     }
 
