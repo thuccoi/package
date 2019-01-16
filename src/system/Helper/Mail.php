@@ -174,7 +174,7 @@ class Mail {
 
     //send
     public function send() {
-        $this->mail->send();
+        @$this->mail->send();
         return $this;
     }
 
