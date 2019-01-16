@@ -75,6 +75,7 @@ class Member extends \module\Share\Model\Common\AbsField {
     public function setViewer($session) {
         //set session
         $session->set("auth", 1);
+        $session->set("role", $this->getRole());
         $session->set("app", $this->getApp()->release());
         $session->set("user", $this->getUser()->release());
         $session->set("member", $this->release());

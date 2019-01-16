@@ -42,6 +42,7 @@ abstract class AbstractController {
         if ($session->get("auth")) {
             $this->viewer = (object) [
                         "auth" => $session->get("auth"),
+                        "role" => $session->get("role"),
                         "app" => $session->get("app"),
                         "user" => $session->get("user"),
                         "member" => $session->get("member")
