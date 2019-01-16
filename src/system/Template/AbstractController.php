@@ -69,11 +69,57 @@ abstract class AbstractController {
         $this->paramjs['viewer'] = $this->viewer;
 
         //login
-        if (!($router->getModule() == 'a' && $router->getController() == 'login')) {
-            //redirect to login
-            if (!$this->getViewer() || !$this->getViewer()->auth) {
-                //login
-                $router->redirect('a', ['controller' => 'login']);
+        $this->toLogin();
+    }
+
+    //check auth
+    public function toLogin() {
+
+
+        if (!($this->router->getModule() == 'a' && $this->router->getController() == 'login')) {
+
+            $flag = FALSE;
+            foreach ($this->config['outsideRouter'] as $val) {
+
+                if ($flag === TRUE) {
+                    break;
+                }
+
+                if (!isset($val['module'])) {
+                    $flag = TRUE;
+                    break;
+                }
+
+                if (isset($val['action'])) {
+
+                    if (!isset($val['controller'])) {
+                        $flag = TRUE;
+                        break;
+                    }
+
+                    if ($this->router->getModule() != $val['module'] || $this->router->getController() != $val['controller'] || $this->router->getAction() != $val['action']) {
+                        $flag = TRUE;
+                        break;
+                    }
+                } else if (isset($val['controller'])) {
+                    if ($this->router->getModule() != $val['module'] || $this->router->getController() != $val['controller']) {
+                        $flag = TRUE;
+                        break;
+                    }
+                } else {
+                    if ($this->router->getModule() != $val['module']) {
+                        $flag = TRUE;
+                        break;
+                    }
+                }
+            }
+
+            if ($flag) {
+                //redirect to login
+                if (!$this->getViewer() || !$this->getViewer()->auth) {
+                    //login
+                    $this->router->redirect('a', ['controller' => 'login']);
+                }
             }
         }
     }
