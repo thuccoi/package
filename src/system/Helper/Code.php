@@ -332,11 +332,11 @@ class Code {
 
 //check from ajax
     public function isFromAjax() {
-        if ($this->get("__TAMI_FROM_AJAX")) {
+        if ($this->get("__TAMI_FROM_AJAX", false)) {
             return TRUE;
         }
 
-        if ($this->post("__TAMI_FROM_AJAX")) {
+        if ($this->post("__TAMI_FROM_AJAX", false)) {
             return TRUE;
         }
 
