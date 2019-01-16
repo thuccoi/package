@@ -44,7 +44,7 @@ trait FieldDefault {
 
     public function getDeletedAt() {
         if ($this->deleted_at) {
-            
+
             return \system\Helper\Str::toTimeString($this->deleted_at);
         }
 
@@ -93,7 +93,7 @@ trait FieldDefault {
 
     public function getCreateAt() {
         if ($this->create_at) {
-            return $this->create_at->format("d/m/Y");
+            return \system\Helper\Str::toTimeString($this->create_at);
         }
 
         return '';
@@ -106,7 +106,7 @@ trait FieldDefault {
 
     public function getUpdateAt() {
         if ($this->update_at) {
-            return $this->update_at->format("d/m/Y");
+            return \system\Helper\Str::toTimeString($this->update_at);
         }
 
         return '';
