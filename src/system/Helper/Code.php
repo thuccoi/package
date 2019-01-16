@@ -270,7 +270,7 @@ class Code {
             exit;
         } else {
             //rediect to router
-            header("$tourl");
+            header("Location: $tourl");
             exit;
         }
     }
