@@ -44,7 +44,8 @@ trait FieldDefault {
 
     public function getDeletedAt() {
         if ($this->deleted_at) {
-            return $this->deleted_at->format("d/m/Y");
+            
+            return \system\Helper\Str::toTimeString($this->deleted_at);
         }
 
         return '';
