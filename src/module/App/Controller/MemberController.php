@@ -32,9 +32,6 @@ class MemberController extends \system\Template\AbstractController {
             }
         }
         
-        //send email active
-        $member->sendActivateEmail($member, $this->getConfig());
-        
         $this->getCode()->success("Create new a member is successfuly");
     }
 

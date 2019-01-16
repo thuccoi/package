@@ -109,7 +109,6 @@ class RegisterController extends \system\Template\AbstractController {
 
                 foreach ($admins as $val) {
                     //send activate email
-                    $val->sendActivateEmail($member, $this->getConfig());
                 }
             }
 

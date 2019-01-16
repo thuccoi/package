@@ -67,8 +67,8 @@ class Member extends \module\Share\Model\Common\AbsField {
         $this->role = self::ROLE_DEFAULT;
 
 
-        //pending status
-        $this->status = self::STATUS_PENDING;
+        //activate status
+        $this->status = self::STATUS_ACTIVATE;
     }
 
     //set viewer session
@@ -125,26 +125,6 @@ class Member extends \module\Share\Model\Common\AbsField {
     //role
     public function getRole() {
         return $this->role;
-    }
-
-    //activate member
-    //send activate email
-    public function sendActivateEmail($member, $config) {
-
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->user->getEmail());
-
-        $mail->subject("Kích hoạt thành viên mới trong ứng dụng của bạn");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/admin-activate?id={$member->getId()}&token={$member->getToken()}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/admin/activate.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
-
-        return $this;
     }
 
     //assign role
