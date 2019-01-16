@@ -60,7 +60,7 @@ class LoginController extends \system\Template\AbstractController {
                         //setViewer session
                         $val->setViewer($this->getSession());
 
-                        $this->getCode()->success("Đăng nhập thành công");
+                        $this->getCode()->success("Đăng nhập thành công", [], $this->urlInside("application"));
                     }
                 }
             }
