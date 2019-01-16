@@ -22,7 +22,10 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function createAction() {
-        
+        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
+            $this->getCode()->forbidden("You don't permission to create a new application.");
+        }
+
         //get data
         $data = (object) [
                     "name" => $this->getCode()->post("name"),
@@ -41,6 +44,10 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function editAction() {
+        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
+            $this->getCode()->forbidden("You don't permission to edit this application.");
+        }
+
         //get id on router
         $id = $this->getRouter()->getId('id');
         //get data
@@ -63,8 +70,16 @@ class AppController extends \system\Template\AbstractController {
         $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], $this->url('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
     }
 
-    public function removeAction() {
-        
+    public function deleteAction() {
+        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
+            $this->getCode()->forbidden("You don't permission to delete this application.");
+        }
+    }
+
+    public function restoreAction() {
+        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
+            $this->getCode()->forbidden("You don't permission to restore this application.");
+        }
     }
 
 }
