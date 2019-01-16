@@ -51,20 +51,38 @@ class App extends \module\Share\Model\Common\AbsField {
 
     //members
     public function getMembers() {
-        return $this->members;
+        $members = [];
+        foreach ($this->members as $val) {
+            if (!$val->getDeletedAt()) {
+                $members [] = $val;
+            }
+        }
+        return $members;
+    }
+
+    //members was deleted
+    public function getMembersWD() {
+        $members = [];
+        foreach ($this->members as $val) {
+            if ($val->getDeletedAt()) {
+                $members [] = $val;
+            }
+        }
+        return $members;
     }
 
     //get list owners of app
     public function getOwners() {
         $owners = [];
-        if ($this->members) {
-            foreach ($this->members as $val) {
-                //check role is owner
-                if ($val->isOwner()) {
-                    $owners[] = $val;
-                }
+
+        $members = $this->getMembers();
+        foreach ($members as $val) {
+            //check role is owner
+            if ($val->isOwner()) {
+                $owners[] = $val;
             }
         }
+
 
         return $owners;
     }
@@ -72,14 +90,15 @@ class App extends \module\Share\Model\Common\AbsField {
     //get list admins of app
     public function getAdmins() {
         $admins = [];
-        if ($this->members) {
-            foreach ($this->members as $val) {
-                //check role is admin
-                if ($val->isAdmin()) {
-                    $admins[] = $val;
-                }
+
+        $members = $this->getMembers();
+        foreach ($members as $val) {
+            //check role is admin
+            if ($val->isAdmin()) {
+                $admins[] = $val;
             }
         }
+
 
         return $admins;
     }

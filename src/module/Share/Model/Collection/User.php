@@ -88,7 +88,24 @@ class User extends \module\Share\Model\Common\AbsField {
 
     //members
     public function getMembers() {
-        return $this->members;
+        $members = [];
+        foreach ($this->members as $val) {
+            if (!$val->getDeletedAt()) {
+                $members [] = $val;
+            }
+        }
+        return $members;
+    }
+
+    //members was deleted
+    public function getMembersWD() {
+        $members = [];
+        foreach ($this->members as $val) {
+            if ($val->getDeletedAt()) {
+                $members [] = $val;
+            }
+        }
+        return $members;
     }
 
     //send Verify email
