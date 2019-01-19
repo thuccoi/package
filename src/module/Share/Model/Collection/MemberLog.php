@@ -6,7 +6,6 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(collection="MemberLogs", db="tami_account")
- * @ODM\HasLifecycleCallbacks
  */
 class MemberLog extends \module\Share\Model\Common\AbsField {
 

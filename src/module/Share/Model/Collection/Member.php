@@ -6,7 +6,6 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(collection="Members", db="tami_account")
- * @ODM\HasLifecycleCallbacks
  */
 class Member extends \module\Share\Model\Common\AbsField {
 
@@ -195,7 +194,7 @@ class Member extends \module\Share\Model\Common\AbsField {
     }
 
     //deactive account
-    public function deactivate($config) {
+    public function deactivate() {
         $this->status = self::STATUS_DEACTIVE;
 
         return $this;

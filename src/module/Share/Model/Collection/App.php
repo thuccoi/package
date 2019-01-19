@@ -9,7 +9,6 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *   db="tami_account", 
  *   collection="Apps"
  * )  
- * @ODM\HasLifecycleCallbacks
  */
 class App extends \module\Share\Model\Common\AbsField {
 

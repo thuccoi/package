@@ -6,7 +6,6 @@ use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(db="tami_account",collection="Users")  
- * @ODM\HasLifecycleCallbacks
  * @ODM\Index(keys={"username"="text","first_name"="text","last_name"="text","email"="text"})
  */
 class User extends \module\Share\Model\Common\AbsField {
