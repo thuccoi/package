@@ -174,7 +174,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 }
                 $hasasign = true;
                 //assign owner
-                $member->assignOwner($this->config);
+                $member->assignOwner();
                 break;
             case \module\Share\Model\Collection\Member::ROLE_ADMIN:
                 //check admin
@@ -183,7 +183,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 }
                 $hasasign = true;
                 //assign admin
-                $member->assignAdmin($this->config);
+                $member->assignAdmin();
                 break;
             case \module\Share\Model\Collection\Member::ROLE_DEFAULT:
                 //check default
@@ -192,7 +192,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 }
                 $hasasign = true;
                 //assign default
-                $member->assignDefault($this->config);
+                $member->assignDefault();
                 break;
         }
 

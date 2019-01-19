@@ -129,59 +129,20 @@ class Member extends \module\Share\Model\Common\AbsField {
     }
 
     //assign role
-    public function assignOwner($config) {
+    public function assignOwner() {
         $this->role = self::ROLE_OWNER;
 
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->user->getEmail());
-
-        $mail->subject("Bạn được giao vai trò quản trị cho ứng dụng: {$this->app->getName()}");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-owner?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/owner.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
-
         return $this;
     }
 
-    public function assignAdmin($config) {
+    public function assignAdmin() {
         $this->role = self::ROLE_ADMIN;
 
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->user->getEmail());
-
-        $mail->subject("Bạn được giao vai trò quản lý cho ứng dụng: {$this->app->getName()}");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-admin?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/admin.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
-
         return $this;
     }
 
-    public function assignDefault($config) {
+    public function assignDefault() {
         $this->role = self::ROLE_DEFAULT;
-
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->user->getEmail());
-
-        $mail->subject("Bạn được giao vai trò thành viên cho ứng dụng: {$this->app->getName()}");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-default?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/default.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
 
         return $this;
     }
@@ -227,21 +188,8 @@ class Member extends \module\Share\Model\Common\AbsField {
     }
 
     //active account
-    public function activate($config) {
+    public function activate() {
         $this->status = self::STATUS_ACTIVATE;
-
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->user->getEmail());
-
-        $mail->subject("Tài khoản thành viên của bạn đã được kích hoạt trong ứng dụng: {$this->app->getName()}");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-activate?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/activate.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
 
         return $this;
     }
@@ -249,19 +197,6 @@ class Member extends \module\Share\Model\Common\AbsField {
     //deactive account
     public function deactivate($config) {
         $this->status = self::STATUS_DEACTIVE;
-
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->user->getEmail());
-
-        $mail->subject("Tài khoản thành viên của bạn đã bị từ chối hoạt động trong ứng dụng: {$this->app->getName()}");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/member-deactivate?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/member/deactivate.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
 
         return $this;
     }

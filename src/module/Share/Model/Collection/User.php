@@ -83,7 +83,7 @@ class User extends \module\Share\Model\Common\AbsField {
 
 
         //pending email
-        $this->email_confirm = self::EMAIL_PENDING;
+        $this->email_confirm = self::EMAIL_CONFIRMED;
     }
 
     //members
@@ -108,44 +108,6 @@ class User extends \module\Share\Model\Common\AbsField {
         return $members;
     }
 
-    //send Verify email
-    public function sendVerifyEmail($config) {
-
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->email);
-
-        $mail->subject("Bạn đã tạo tài khoản");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/verify?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/register.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
-
-        return $this;
-    }
-
-    //send confirm email
-    public function sendConfirmEmail($config) {
-        $this->email_confirm = self::EMAIL_CONFIRMED;
-
-        $mail = new \system\Helper\Mail($config);
-
-        $mail->to($this->email);
-
-        $mail->subject("Thông tin tài khoản của bạn đã được xác nhận");
-
-        //get html inline to body
-        $body = $mail->inline($config['URL_ROOT'] . "/a/notify/confirm?id={$this->id}&token={$this->token}", ['http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700', $config['DIR_PUBLIC'] . 'tami/css/tami.css', $config['DIR_PUBLIC'] . "css/account/notify/confirm.css"]);
-
-        $mail->body($body);
-
-        $mail->send();
-
-        return $this;
-    }
 
     //function release
     public function release() {

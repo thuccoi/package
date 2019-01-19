@@ -105,11 +105,6 @@ class User extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($user);
             $this->dm->flush();
 
-
-            //send verify email
-            $user->sendVerifyEmail($this->config);
-
-
             //log create user
             $userlog = new \module\Share\Model\Log\User($this->dm, $this->code, $this->config);
             $userlog->add((object) [

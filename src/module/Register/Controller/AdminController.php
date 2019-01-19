@@ -48,7 +48,7 @@ class AdminController extends \system\Template\AbstractController {
         }
 
         //activate member
-        $member->deactivate($this->getConfig());
+        $member->deactivate();
 
         $this->getConnect()->persist($member);
         $this->getConnect()->flush();

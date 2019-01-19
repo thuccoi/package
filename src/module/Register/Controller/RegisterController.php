@@ -27,11 +27,11 @@ class RegisterController extends \system\Template\AbstractController {
         //get data
         $data = (object) [
                     "first_name" => $this->getCode()->post("first_name", FALSE),
-                    "last_name" => $this->getCode()->post("last_name", FALSE),
-                    "username" => $this->getCode()->post("username", FALSE),
-                    "password" => $this->getCode()->post("password", FALSE),
-                    "email" => $this->getCode()->post("email", FALSE),
-                    "phone" => $this->getCode()->post("phone", FALSE)
+                    "last_name"  => $this->getCode()->post("last_name", FALSE),
+                    "username"   => $this->getCode()->post("username", FALSE),
+                    "password"   => $this->getCode()->post("password", FALSE),
+                    "email"      => $this->getCode()->post("email", FALSE),
+                    "phone"      => $this->getCode()->post("phone", FALSE)
         ];
 
         //register new an user
@@ -68,10 +68,10 @@ class RegisterController extends \system\Template\AbstractController {
             $newapp = false;
             if (!$app) {
                 $data = (object) [
-                            "name" => $this->getConfig()['app']['name'],
-                            "image" => $this->getConfig()['URL_ROOT'] . $this->getConfig()['app']['image'],
+                            "name"     => $this->getConfig()['app']['name'],
+                            "image"    => $this->getConfig()['URL_ROOT'] . $this->getConfig()['app']['image'],
                             "metatype" => $this->getConfig()['app']['metatype'],
-                            "domain" => $domain
+                            "domain"   => $domain
                 ];
 
                 //create new an application
@@ -83,7 +83,7 @@ class RegisterController extends \system\Template\AbstractController {
             //create new member
             $entity_member = new \module\Share\Model\Link\Member($this->getConnect(), $this->getCode(), $this->getConfig());
             $data = (object) [
-                        "app" => $app->getDomain(),
+                        "app"  => $app->getDomain(),
                         "user" => $user->getUsername()
             ];
 
@@ -93,10 +93,10 @@ class RegisterController extends \system\Template\AbstractController {
             if ($newapp == true) {
                 //member
                 //assign owner
-                $member->assignOwner($this->getConfig());
+                $member->assignOwner();
 
                 //activate member
-                $member->activate($this->getConfig());
+                $member->activate();
 
                 $this->getConnect()->persist($member);
                 $this->getConnect()->flush();
@@ -112,8 +112,6 @@ class RegisterController extends \system\Template\AbstractController {
                 }
             }
 
-            //confirm account
-            $user->sendConfirmEmail($this->getConfig());
 
             //save record
             $this->getConnect()->persist($user);
