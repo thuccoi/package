@@ -16,9 +16,9 @@ class RoleController extends \system\Template\AbstractController {
 
     public function indexAction() {
         //layout
-        $this->setLayout('TAMI_NOLAYOUT');
+//        $this->setLayout('TAMI_NOLAYOUT');
         //view dir
-        $this->setViewDir(dirname(__DIR__) . '/../View/');
+        $this->setViewDir(dirname(__DIR__) . '/View/');
     }
 
     public function createAction() {

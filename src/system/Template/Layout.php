@@ -209,6 +209,23 @@ class Layout {
         require_once $dir;
     }
 
+    public function partialLayout($file, array $param = null) {
+        $dir = dirname($this->layout) . DIRECTORY_SEPARATOR . $file;
+
+        if (!file_exists($dir)) {
+            echo "View file not exists";
+            exit;
+        }
+
+        //make parameters
+        if ($param) {
+            foreach ($param as $key => $val) {
+                $$key = $val;
+            }
+        }
+        require_once $dir;
+    }
+
     /**
      * 
      * @param type $module
