@@ -2,6 +2,8 @@
 
 namespace module\Assignment\Model\Collection;
 
+use \Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * @ODM\Document(
  *   db="tami_assignment", 
