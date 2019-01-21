@@ -35,7 +35,6 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $this->code->forbidden("name was not string");
         }
 
-
         //metatype
         $data->metatype = \system\Helper\Str::toMetatype($data->name);
 
@@ -44,6 +43,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         if ($this->find($data->metatype, 'metatype')) {
             $this->code->forbidden("metatype is existed in system");
         }
+
 
         try {
             //new obj
@@ -54,10 +54,32 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                     ->setMetatype($data->metatype)
                     ->setAppId($data->viewer->app->id)
                     ->setCreatorId($data->viewer->member->id);
-            
-            //save and send email
+
+            //save 
             $this->dm->persist($obj);
             $this->dm->flush();
+
+
+            //children_id
+            if (!\system\Helper\Validate::isEmpty($data->children_id)) {
+                
+                if (!\system\Helper\Validate::isString($data->children_id)) {
+                    $this->code->forbidden("children_id was not string");
+                }
+
+                $children = $this->find($data->children_id);
+                if (!$children || $children->getAppId() != $data->viewer->app->id) {
+                    $this->code->notfound("children is not found");
+                }
+
+                $obj->addChildren($children);
+
+                //save 
+                $this->dm->persist($children);
+                $this->dm->persist($obj);
+                $this->dm->flush();
+            }
+
 
             //log create app
 //            $log = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config);
