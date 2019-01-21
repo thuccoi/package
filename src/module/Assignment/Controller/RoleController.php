@@ -15,10 +15,17 @@ class RoleController extends \system\Template\AbstractController {
     }
 
     public function indexAction() {
-        //layout
-//        $this->setLayout('TAMI_NOLAYOUT');
+        $objs = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\Role::class)
+                ->field('app_id')->equals($this->getViewer()->app->id)
+                ->getQuery()
+                ->execute();
+
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
+
+        return [
+            "roles" => $objs
+        ];
     }
 
     public function createAction() {
@@ -28,9 +35,11 @@ class RoleController extends \system\Template\AbstractController {
 
         //get data
         $data = (object) [
-                    "name"     => $this->getCode()->post("name"),
-                    "metatype" => $this->getCode()->post("metatype")
+                    "name" => $this->getCode()->post("name")
         ];
+
+        //viewer
+        $data->viewer = $this->getViewer();
 
         //create new obj
         $obj = $this->entity->create($data);

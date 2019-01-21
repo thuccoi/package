@@ -102,4 +102,51 @@ class Validate {
         return false;
     }
 
+    //check is viewer
+    public static function isViewer(&$obj) {
+      
+        //obj
+        if (static::isEmpty($obj)) {
+            return false;
+        }
+       
+        if (!static::isObject($obj)) {
+            return false;
+        }
+
+        //auth
+        if (static::isEmpty($obj->auth)) {
+            return false;
+        }
+
+        //app
+        if (!static::isObject($obj->app)) {
+            return false;
+        }
+
+        if (static::isEmpty($obj->app->id)) {
+            return false;
+        }
+
+        //user
+        if (!static::isObject($obj->user)) {
+            return false;
+        }
+
+        if (static::isEmpty($obj->user->id)) {
+            return false;
+        }
+
+        //member
+        if (!static::isObject($obj->member)) {
+            return false;
+        }
+
+        if (static::isEmpty($obj->member->id)) {
+            return false;
+        }
+        
+        return true;
+    }
+
 }

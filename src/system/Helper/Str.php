@@ -4,6 +4,18 @@ namespace system\Helper;
 
 class Str {
 
+    //to metatype
+    public static function toMetatype($str) {
+
+        $str = static::viToStr($str);
+
+        $str = strtolower($str);
+
+        $str = preg_replace('/\s+/', '_', $str);
+
+        return $str;
+    }
+    
     public static function toTimeString(\DateTime $dt) {
         $today = new \DateTime();
         

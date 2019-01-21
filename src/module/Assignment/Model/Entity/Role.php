@@ -17,6 +17,15 @@ class Role extends \module\Share\Model\Common\AbsEntity {
     public function create($data) {
 
         //field required
+        //viewer
+        if (\system\Helper\Validate::isEmpty($data->viewer)) {
+            $this->code->forbidden("viewer is require");
+        }
+
+        if (!\system\Helper\Validate::isViewer($data->viewer)) {
+            $this->code->forbidden("viewer invalid");
+        }
+
         //name
         if (\system\Helper\Validate::isEmpty($data->name)) {
             $this->code->forbidden("name is require");
@@ -26,14 +35,9 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $this->code->forbidden("name was not string");
         }
 
-        //metatype
-        if (\system\Helper\Validate::isEmpty($data->metatype)) {
-            $this->code->forbidden("metatype is require");
-        }
 
-        if (!\system\Helper\Validate::isString($data->metatype)) {
-            $this->code->forbidden("metatype was not string");
-        }
+        //metatype
+        $data->metatype = \system\Helper\Str::toMetatype($data->name);
 
 
         //check existed
@@ -47,8 +51,10 @@ class Role extends \module\Share\Model\Common\AbsEntity {
 
             //set information
             $obj->setName($data->name)
-                    ->setMetatype($data->metatype);
-
+                    ->setMetatype($data->metatype)
+                    ->setAppId($data->viewer->app->id)
+                    ->setCreatorId($data->viewer->member->id);
+            
             //save and send email
             $this->dm->persist($obj);
             $this->dm->flush();
