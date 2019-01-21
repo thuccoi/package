@@ -16,6 +16,18 @@ trait FieldDefault {
      *
      * @ODM\Field(type="string")
      */
+    private $app_id;
+
+    /**
+     *
+     * @ODM\Field(type="string")
+     */
+    private $creator_id;
+
+    /**
+     *
+     * @ODM\Field(type="string")
+     */
     private $token;
 
     /**
@@ -86,6 +98,26 @@ trait FieldDefault {
         return $this;
     }
 
+    //app id
+    public function getAppId() {
+        return $this->app_id;
+    }
+
+    public function setAppId($app_id) {
+        $this->app_id = $app_id;
+        return $this;
+    }
+
+    //creator id
+    public function getCreatorId() {
+        return $this->creator_id;
+    }
+
+    public function setCreatorId($creator_id) {
+        $this->creator_id = $creator_id;
+        return $this;
+    }
+
     //get token
     public function getToken() {
         return $this->token;
@@ -129,11 +161,13 @@ trait FieldDefault {
     //function export
     public function export() {
         return (object) [
-                    "id" => $this->getId(),
-                    "create_at" => $this->getCreateAt(),
-                    "update_at" => $this->getUpdateAt(),
+                    "id"         => $this->getId(),
+                    "app_id"     => $this->getAppId(),
+                    "creator_id" => $this->getCreatorId(),
+                    "create_at"  => $this->getCreateAt(),
+                    "update_at"  => $this->getUpdateAt(),
                     "deleted_at" => $this->getDeletedAt(),
-                    "options" => $this->getOptions()
+                    "options"    => $this->getOptions()
         ];
     }
 
