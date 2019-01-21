@@ -59,28 +59,6 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $this->dm->persist($obj);
             $this->dm->flush();
 
-
-            //children_id
-            if (!\system\Helper\Validate::isEmpty($data->children_id)) {
-                
-                if (!\system\Helper\Validate::isString($data->children_id)) {
-                    $this->code->forbidden("children_id was not string");
-                }
-
-                $children = $this->find($data->children_id);
-                if (!$children || $children->getAppId() != $data->viewer->app->id) {
-                    $this->code->notfound("children is not found");
-                }
-
-                $obj->addChildren($children);
-
-                //save 
-                $this->dm->persist($children);
-                $this->dm->persist($obj);
-                $this->dm->flush();
-            }
-
-
             //log create app
 //            $log = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config);
 //            $log->add((object) [

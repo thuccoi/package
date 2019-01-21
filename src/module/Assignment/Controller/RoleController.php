@@ -35,8 +35,7 @@ class RoleController extends \system\Template\AbstractController {
 
         //get data
         $data = (object) [
-                    "name"        => $this->getCode()->post("name"),
-                    "children_id" => $this->getCode()->post("children_id")
+                    "name" => $this->getCode()->post("name")
         ];
 
         //viewer
