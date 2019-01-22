@@ -152,4 +152,5 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         return null;
     }
 
+    
 }

@@ -1,1 +1,11 @@
-hello
+<iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
+
+<script>
+    var dataJSON = [
+        {"id": "1", "parentid": "20", "name": "Nguyễn Thế Thức"},
+        {"id": "2", "parentid": "1", "name": "Đoàn Văn Thọ"},
+        {"id": "3", "parentid": "1", "name": "Vũ Thành Đạt"},
+        {"id": "4", "parentid": "1", "name": "Trần Văn Huy"},
+        {"id": "5", "parentid": "2", "name": "Nguyễn Thế Anh"}
+    ];
+</script>
