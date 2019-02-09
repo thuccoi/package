@@ -1,11 +1,29 @@
+<!-- Start .page-content-inner -->
+<div id="page-header" class="clearfix">
+    <div class="page-header">
+        <h2>Danh sách các Vai trò trong ứng dụng</h2>
+        <span class="txt">Phân các vai trò trong hệ thống.</span>
+    </div>
+    <div class="header-stats">
+        <div class="spark clearfix">
+            <div class="spark-info"><span class="number">1</span>Vai trò</div>
+            <div id="spark-visitors" class="sparkline"></div>
+        </div>
+        <div class="spark clearfix">
+            Tạo  mới
+        </div>
+    </div>
+</div>
+
+
 <iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
 
 <script>
     var dataJSON = [
-        {"id": "1", "parentid": "20", "name": "Nguyễn Thế Thức"},
-        {"id": "2", "parentid": "1", "name": "Đoàn Văn Thọ"},
-        {"id": "3", "parentid": "1", "name": "Vũ Thành Đạt"},
-        {"id": "4", "parentid": "1", "name": "Trần Văn Huy"},
-        {"id": "5", "parentid": "2", "name": "Nguyễn Thế Anh"}
+        {"id": "1", "parentid": "0", "name": "Quản trị"},
+        {"id": "2", "parentid": "1", "name": "Quản lý"},
     ];
+    
+    var urlAdd = 'http://userdata.com/add?id=';
+    var urlRemove =  'http://userdata.com/remove?id=';
 </script>
