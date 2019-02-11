@@ -1,29 +1,212 @@
 <!-- Start .page-content-inner -->
 <div id="page-header" class="clearfix">
     <div class="page-header">
-        <h2>Danh sách các Vai trò trong ứng dụng</h2>
-        <span class="txt">Phân các vai trò trong hệ thống.</span>
+        <h2>Danh sách các Vai trò</h2>
+        <span class="txt">Danh sách các vai trò trong ứng dụng.</span>
     </div>
     <div class="header-stats">
         <div class="spark clearfix">
-            <div class="spark-info"><span class="number">1</span>Vai trò</div>
-            <div id="spark-visitors" class="sparkline"></div>
-        </div>
-        <div class="spark clearfix">
-            Tạo  mới
+            <button type="button" class="btn btn-primary mr5 mb10">Tạo  mới</button>
         </div>
     </div>
 </div>
 
+<div class="row">
+    <!-- Start .row -->
+    <div class="col-lg-9 col-md-8">
+        <!-- col-lg-6 start here -->
+        <div class="panel panel-default plain toggle panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Thông tin chi tiết</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="per5">
+                                <div class="checkbox-custom">
+                                    <input id="masterCheck1" class="check-all" type="checkbox" value="option1">
+                                    <label for="masterCheck1"></label>
+                                </div>
+                            </th>
+                            <th class="per40">Tên vai trò</th>
+                            <th class="per40">vai trò cha</th>
+                            <th class="per15"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="checkbox-custom">
+                                    <input id="check4" class="check" type="checkbox" value="option2">
+                                    <label for="check4"></label>
+                                </div>
+                            </td>
+                            <td>Jacob Olsen</td>
+                            <td>Developer</td>
+                            <td>
+                                <i class="btn btn-link fa fa-edit"></i>
+                                <i class="btn btn-link fa fa-trash"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox-custom">
+                                    <input id="check5" class="check" type="checkbox" value="option3">
+                                    <label for="check5"></label>
+                                </div>
+                            </td>
+                            <td>Lara James</td>
+                            <td>SEO</td>
+                            <td>
+                                <i class="btn btn-link fa fa-edit"></i>
+                                <i class="btn btn-link fa fa-trash"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox-custom">
+                                    <input id="check6" class="check" type="checkbox" value="option4">
+                                    <label for="check6"></label>
+                                </div>
+                            </td>
+                            <td>Steve Sidwell</td>
+                            <td>Photographer</td>
+                            <td>
+                                <i class="btn btn-link fa fa-edit"></i>
+                                <i class="btn btn-link fa fa-trash"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox-custom">
+                                    <input id="check7" class="check" type="checkbox" value="option5">
+                                    <label for="check7"></label>
+                                </div>
+                            </td>
+                            <td>Elena Dobrev</td>
+                            <td>Project manger</td>
+                            <td>
+                                <i class="btn btn-link fa fa-edit"></i>
+                                <i class="btn btn-link fa fa-trash"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End .panel -->
 
-<iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
+        <div class="panel panel-default plain toggle panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Sơ đồ quan hệ</h4>
+            </div>
+            <div class="panel-body">
+                <iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
+            </div>
+        </div>
+        <!-- End .panel -->
+    </div>
+    <!-- col-lg-6 end here -->
+    <div class="col-lg-3 col-md-4">
+        <!-- col-lg-6 start here -->
+        <div class="panel panel-default plain toggle panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Hoạt động gần đây</h4>
+            </div>
+            <div class="panel-body">
+                <ul class="timeline timeline-simple">
+                    <li>
+                        <p>
+                            <a href="#">Jonh Doe</a> attached new <a href="#">file</a>
+                            <span class="timeline-date">Dec 10, 22:00</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Admin</a> approved <a href="#">3 new comments</a>
+                            <span class="timeline-date">Dec 8, 13:35</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Jonh Smith</a> deposit 300$
+                            <span class="timeline-date">Dec 6, 10:17</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Serena Williams</a> purchase <a href="#">3 items</a>
+                            <span class="timeline-date">Dec 5, 04:36</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">3 invoices </a> are send to <a href="#">Klaudia Chambers</a>
+                            <span class="timeline-date">Dec 4, 18:40</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            You received 136 new likes for <a href="#">your page</a>
+                            <span class="timeline-date">Dec 4, 12:00</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">12 settings </a> are changed from <a href="#">Master Admin</a>
+                            <span class="timeline-date">Dec 3, 23:17</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Klaudia Chambers</a> change your photo
+                            <span class="timeline-date">Dec 2, 05:17</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Master server </a> is down for 10 min.
+                            <span class="timeline-date">Dec 2, 04:56</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">12 links </a> are broken
+                            <span class="timeline-date">Dec 1, 22:13</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Last backup </a> is restored by <a href="#">Master admin</a>
+                            <span class="timeline-date">Dec 1, 17:42</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            You have <a href="#">3 missed calls </a> from <a href="#">Jonathan Santos</a>
+                            <span class="timeline-date">Dec 1, 12:00</span>
+                        </p>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+            </div>
+        </div>
+        <!-- End .panel -->
+    </div>
+    <!-- col-lg-6 end here -->
+</div>
+<!-- End .row -->
 
 <script>
     var dataJSON = [
         {"id": "1", "parentid": "0", "name": "Quản trị"},
         {"id": "2", "parentid": "1", "name": "Quản lý"},
     ];
-    
+
     var urlAdd = 'http://userdata.com/add?id=';
-    var urlRemove =  'http://userdata.com/remove?id=';
+    var urlRemove = 'http://userdata.com/remove?id=';
 </script>
