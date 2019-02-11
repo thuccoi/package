@@ -29,10 +29,7 @@ class RoleController extends \system\Template\AbstractController {
     }
 
     public function createAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to create a new role.");
-        }
-
+     
         //get data
         $data = (object) [
                     "name" => $this->getCode()->post("name")
@@ -51,9 +48,7 @@ class RoleController extends \system\Template\AbstractController {
     }
 
     public function editAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to edit this role.");
-        }
+       
 
         //get id on router
         $id = $this->getRouter()->getId('id');
@@ -75,15 +70,11 @@ class RoleController extends \system\Template\AbstractController {
     }
 
     public function deleteAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to delete this role.");
-        }
+     
     }
 
     public function restoreAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to restore this role.");
-        }
+       
     }
 
 }
