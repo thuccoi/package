@@ -25,6 +25,12 @@ class Member extends \module\Share\Model\Common\AbsField {
 
     /**
      *
+     * @ODM\ReferenceMany(targetDocument=module\Assignment\Model\Collection\RoleToMember::class, mappedBy="member")
+     */
+    private $roles;
+
+    /**
+     *
      * @ODM\Field(type="string")
      */
     private $title;
@@ -65,6 +71,11 @@ class Member extends \module\Share\Model\Common\AbsField {
         $session->set("member", $this->release());
 
         return $this;
+    }
+
+    //roles
+    public function getRoles() {
+        return $this->roles;
     }
 
     //title

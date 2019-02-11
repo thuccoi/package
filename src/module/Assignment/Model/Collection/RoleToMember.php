@@ -19,11 +19,10 @@ class RoleToMember extends \module\Share\Model\Common\AbsField {
      */
     private $role;
 
-    /**
-     *
-     * @ODM\Field(type="string")
+      /**
+     * @ODM\ReferenceOne(targetDocument="module\Share\Model\Collection\Member", inversedBy="roles")
      */
-    private $member_id;
+    private $member;
 
     //role
     public function getRole() {
@@ -35,13 +34,13 @@ class RoleToMember extends \module\Share\Model\Common\AbsField {
         return $this;
     }
 
-    //member id
-    public function getMemberId() {
-        return $this->member_id;
+    //member
+    public function getMember() {
+        return $this->member;
     }
 
-    public function setMemberId($member_id) {
-        $this->member_id = $member_id;
+    public function setMember(\module\Share\Model\Collection\Member $member) {
+        $this->member = $member;
         return $this;
     }
 
