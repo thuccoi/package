@@ -1,0 +1,67 @@
+<!-- Import google fonts - Heading first/ text second -->
+<!-- <link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700' rel='stylesheet' type='text/css'> -->
+
+<?php $this->css("/tami/css/tami.css"); ?>
+<?php $this->css("/css/account/notify/register.css"); ?>
+
+<div class="frame-email">
+    <div class="head">
+        
+    </div>
+    <div class="body">
+        <div class="title">
+            <a href="<?= $this->getConfig('URL_ROOT') ?>">
+                <img class="img" src="https://image.ibb.co/j41NYL/logo-dark.png" >
+            </a>
+        </div>
+        <div class="content">
+            <div class="hi">Xin chào bạn,</div>
+            <div class="text">
+                Chúng tôi đã nhận được một yêu cầu đăng ký tài khoản tại 
+                <a href="<?= $this->getConfig('URL_ROOT') ?>">tami.vn</a>
+                tới địa chỉ email của bạn.
+                Nếu bạn là người đăng ký, vui lòng bấm vào nút phía dưới để xác nhận địa chỉ email.
+            </div>
+        <a class="btn-confirm blue" href="<?=
+        $this->url("a", ['controller' => 'register', 'action' => 'confirm', 'param' => [
+                'id' => $id,
+                'token' => $token
+        ]])
+        ?>">
+                Xác nhận email
+        </a>
+        <div class="content">
+            <div class="text">
+                Trong trường hợp bạn không click vào nút xác nhận ở trên thì có thể sao chép đường dẫn và dán lên trình duyệt để xác nhận:
+                <code>
+                    <?=
+                    $this->url("a", ['controller' => 'register', 'action' => 'confirm', 'param' => [
+                            'id' => $id,
+                            'token' => $token
+                    ]])
+                    ?>
+                </code>
+            </div>
+            <div class="text">
+                    Để biết thêm thông tin về ứng dụng, hãy truy cập vào địa chỉ
+                    <a href="">Tami.vn</a>.
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="left">
+            <div class="note grey">Tami Team</div>
+            <div class="note grey">Số 34, ngõ 83/51, xóm Án, Tân Triều, Thanh Trì, Hà Nội</div>
+            <div class="note blue">
+                <a href="">Điều khoản sử dụng</a>
+                | 
+                <a href="">Chính sách</a>
+            </div>
+
+        </div>
+        <div class="right">
+            <div class="note grey">© 2018 Tami</div>
+        </div>
+    </div>
+</div>
