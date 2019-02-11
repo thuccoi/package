@@ -1,4 +1,0 @@
-nbproject/*
-vendor/*
-!vendor/autoload.php
-composer.lock
