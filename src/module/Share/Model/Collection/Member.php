@@ -27,12 +27,6 @@ class Member extends \module\Share\Model\Common\AbsField {
      *
      * @ODM\Field(type="string")
      */
-    private $role;
-
-    /**
-     *
-     * @ODM\Field(type="string")
-     */
     private $title;
 
     /**
@@ -47,10 +41,6 @@ class Member extends \module\Share\Model\Common\AbsField {
      */
     private $status;
 
-    //role
-    const ROLE_OWNER = "owner";
-    const ROLE_ADMIN = "admin";
-    const ROLE_DEFAULT = "member";
     //status
     const STATUS_ACTIVATE = 1;
     const STATUS_DEACTIVE = -1;
@@ -61,11 +51,6 @@ class Member extends \module\Share\Model\Common\AbsField {
         $this->app = $app;
         $this->user = $user;
 
-
-        //role default default
-        $this->role = self::ROLE_DEFAULT;
-
-
         //activate status
         $this->status = self::STATUS_ACTIVATE;
     }
@@ -74,7 +59,7 @@ class Member extends \module\Share\Model\Common\AbsField {
     public function setViewer($session) {
         //set session
         $session->set("auth", 1);
-        $session->set("role", $this->getRole());
+
         $session->set("app", $this->getApp()->release());
         $session->set("user", $this->getUser()->release());
         $session->set("member", $this->release());
@@ -122,49 +107,9 @@ class Member extends \module\Share\Model\Common\AbsField {
         return $this->user;
     }
 
-    //role
-    public function getRole() {
-        return $this->role;
-    }
-
-    //assign role
-    public function assignOwner() {
-        $this->role = self::ROLE_OWNER;
-
-        return $this;
-    }
-
-    public function assignAdmin() {
-        $this->role = self::ROLE_ADMIN;
-
-        return $this;
-    }
-
-    public function assignDefault() {
-        $this->role = self::ROLE_DEFAULT;
-
-        return $this;
-    }
-
-    //check role
-    public function isOwner() {
-        //role is owner
-        return ($this->role == self::ROLE_OWNER);
-    }
-
-    public function isAdmin() {
-        //role is admin 
-        return ($this->role == self::ROLE_ADMIN);
-    }
-
-    public function isDefault() {
-        //role is default
-        return ($this->role == self::ROLE_DEFAULT);
-    }
-
     public function release() {
         $obj = $this->export();
-        $obj->role = $this->getRole();
+
         $obj->title = $this->getTitle();
         $obj->alias = $this->getAlias();
         $obj->status = $this->getStatus();

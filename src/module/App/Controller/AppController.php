@@ -22,9 +22,7 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function createAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to create a new application.");
-        }
+      
 
         //get data
         $data = (object) [
@@ -44,9 +42,7 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function editAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to edit this application.");
-        }
+       
 
         //get id on router
         $id = $this->getRouter()->getId('id');
@@ -71,15 +67,11 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function deleteAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to delete this application.");
-        }
+        
     }
 
     public function restoreAction() {
-        if ($this->getViewer()->role != \module\Share\Model\Collection\Member::ROLE_OWNER) {
-            $this->getCode()->forbidden("You don't permission to restore this application.");
-        }
+       
     }
 
 }

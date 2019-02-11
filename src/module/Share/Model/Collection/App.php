@@ -70,37 +70,6 @@ class App extends \module\Share\Model\Common\AbsField {
         return $members;
     }
 
-    //get list owners of app
-    public function getOwners() {
-        $owners = [];
-
-        $members = $this->getMembers();
-        foreach ($members as $val) {
-            //check role is owner
-            if ($val->isOwner()) {
-                $owners[] = $val;
-            }
-        }
-
-
-        return $owners;
-    }
-
-    //get list admins of app
-    public function getAdmins() {
-        $admins = [];
-
-        $members = $this->getMembers();
-        foreach ($members as $val) {
-            //check role is admin
-            if ($val->isAdmin()) {
-                $admins[] = $val;
-            }
-        }
-
-
-        return $admins;
-    }
 
     //name
     public function getName() {

@@ -20,7 +20,8 @@ class PermissionToRole extends \module\Share\Model\Common\AbsField {
     private $role;
 
     /**
-     * @ODM\ReferenceOne(targetDocument="module\Assignment\Model\Collection\Permission", inversedBy="roles")
+     *
+     * @ODM\Field(type="string")
      */
     private $permission;
 
@@ -39,8 +40,8 @@ class PermissionToRole extends \module\Share\Model\Common\AbsField {
         return $this->permission;
     }
 
-    public function setPermission(\module\Assignment\Model\Collection\Permission $obj) {
-        $this->permission = $obj;
+    public function setPermission($per) {
+        $this->permission = $per;
         return $this;
     }
 
