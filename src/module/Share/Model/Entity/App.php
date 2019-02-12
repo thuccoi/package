@@ -78,10 +78,19 @@ class App extends \module\Share\Model\Common\AbsEntity {
             //log create app
             $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
             $applog->add((object) [
-                        "app_id" => (string) $app->getId(),
+                        "app_id"   => (string) $app->getId(),
                         "metatype" => "create",
-                        "message" => "Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được tạo mới"
+                        "message"  => "Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a> đã được tạo mới"
             ]);
+
+            //create new role owner for this app
+            $role = new \module\Assignment\Model\Collection\Role();
+            $role->setName("Quản trị")
+                    ->setMetatype("owner")
+                    ->setAppId($app->getId());
+
+            $this->dm->persist($role);
+            $this->dm->flush();
 
             return $app;
         } catch (\MongoException $ex) {
@@ -149,9 +158,9 @@ class App extends \module\Share\Model\Common\AbsEntity {
             foreach ($editinfo as $message) {
                 $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
                 $applog->add((object) [
-                            "app_id" => (string) $app->getId(),
+                            "app_id"   => (string) $app->getId(),
                             "metatype" => "edit",
-                            "message" => $message
+                            "message"  => $message
                 ]);
             }
             return $app;
