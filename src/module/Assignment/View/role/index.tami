@@ -167,10 +167,7 @@
 <!-- End .row -->
 
 <script>
-    var dataJSON = [
-        {"id": "1", "parentid": "0", "name": "Quản trị"},
-        {"id": "2", "parentid": "1", "name": "Quản lý"},
-    ];
+    var dataJSON = TAMI.pagedata.dataJSON;
 
     var urlAdd = 'http://userdata.com/add?id=';
     var urlRemove = 'http://userdata.com/remove?id=';

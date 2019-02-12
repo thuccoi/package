@@ -42,7 +42,11 @@ class RoleController extends \system\Template\AbstractController {
 
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
-
+        
+        //data json
+        $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($objs, function($e) {
+                    return ["id" => $e->getId(), "parentid" => ($e->getParent() ? $e->getParent()->getId() : ''), 'name' => $e->getName()];
+                }));
         return [
             "roles" => $objs
         ];
@@ -52,7 +56,8 @@ class RoleController extends \system\Template\AbstractController {
 
         //get data
         $data = (object) [
-                    "name" => $this->getCode()->post("name")
+                    "name"   => $this->getCode()->post("name"),
+                    "parent" => $this->getCode()->post("parent")
         ];
 
         //viewer
