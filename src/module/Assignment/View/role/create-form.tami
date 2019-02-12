@@ -9,11 +9,6 @@
             </a>
         </span>
     </div>
-    <div class="header-stats">
-        <div class="spark clearfix">
-            <a type="button" class="btn btn-primary mr5 mb10">Thực hiện</a>
-        </div>
-    </div>
 </div>
 
 <!-- Start .row -->
@@ -34,6 +29,7 @@
                             <input type="text" class="form-control" placeholder="Tên vai trò" name="default">
                         </div>
                     </div>
+                    <!-- End .form-group  -->
 
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Vai trò cha</label>
@@ -41,7 +37,7 @@
                             <select class="form-control select2">
 
                                 <option value="AK">Quản trị</option>
-                                <option value="HI">Hawaii</option>
+                                <option value="HI">Quản lý</option>
 
                             </select>
                         </div>
@@ -54,20 +50,25 @@
                             <textarea placeholder="Mô tả về vai trò" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
-
+                    <!-- End .form-group  -->
 
                     <div class="form-group">
-                        <label class="col-lg-2 col-md-3 control-label" for="">Các quyền hạn</label>
+                        <label class="col-lg-2 col-md-3 control-label" for="">Các quyền hạn thuộc vai trò này</label>
                         <div class="col-lg-10 col-md-9">
                             <select multiple="multiple" size="10" name="duallistbox" class="duallistbox">
-                                <optgroup label="Alaskan/Hawaiian Time Zone">
-                                    <option value="AK">Alaska</option>
-                                    <option value="HI">Hawaii</option>
-                                </optgroup>
+                                <option value="AK">Tạo ứng dụng</option>
+                                <option value="HI">Chỉnh sửa ứng dụng</option>
                             </select>
                         </div>
                     </div>
+                    <!-- End .form-group  -->
 
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-md-offset-3">
+                            <button type="submit" class="btn btn-md btn-primary ml15">Tạo mới</button>
+                            <a type="button" href="<?= $this->urlInside('assignment', ['controller' => 'role']) ?>" class="btn text-dark btn-alt btn-link btn-xs ml15">Hủy bỏ</a>
+                        </div>
+                    </div>
                     <!-- End .form-group  -->
                 </form>
             </div>
