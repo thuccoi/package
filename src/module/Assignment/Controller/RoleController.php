@@ -28,8 +28,13 @@ class RoleController extends \system\Template\AbstractController {
         ];
     }
 
+    public function createFormAction() {
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/View/');
+    }
+
     public function createAction() {
-     
+
         //get data
         $data = (object) [
                     "name" => $this->getCode()->post("name")
@@ -48,7 +53,7 @@ class RoleController extends \system\Template\AbstractController {
     }
 
     public function editAction() {
-       
+
 
         //get id on router
         $id = $this->getRouter()->getId('id');
@@ -70,11 +75,11 @@ class RoleController extends \system\Template\AbstractController {
     }
 
     public function deleteAction() {
-     
+        
     }
 
     public function restoreAction() {
-       
+        
     }
 
 }

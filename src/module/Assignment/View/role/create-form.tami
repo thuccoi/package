@@ -1,99 +1,75 @@
 <!-- Start .page-content-inner -->
 <div id="page-header" class="clearfix">
     <div class="page-header">
-        <h2>Danh sách các Vai trò</h2>
-        <span class="txt">Danh sách các vai trò trong ứng dụng.</span>
+        <h2>Tạo một vai trò mới</h2>
+        <span class="txt">
+            <a href="<?= $this->urlInside('assignment', ['controller' => 'role']) ?>">
+                <i class="fa  fa-arrow-circle-left"></i>
+                Quay lại danh sách vai trò
+            </a>
+        </span>
     </div>
     <div class="header-stats">
         <div class="spark clearfix">
-            <a href="<?= $this->urlInside('assignment', ['controller' => 'role', 'action' => 'create-form']) ?>" type="button" class="btn btn-primary mr5 mb10">Tạo  mới</a>
+            <a type="button" class="btn btn-primary mr5 mb10">Thực hiện</a>
         </div>
     </div>
 </div>
 
+<!-- Start .row -->
 <div class="row">
-    <!-- Start .row -->
     <div class="col-lg-9 col-md-8">
-        <!-- col-lg-6 start here -->
-        <div class="panel panel-default plain toggle panelRefresh">
+        <!-- col-lg-9 start here -->
+        <div class="panel panel-default toggle panelMove panelRefresh">
             <!-- Start .panel -->
-            <div class="panel-heading white-bg">
-                <h4 class="panel-title">Thông tin chi tiết</h4>
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list-alt"></i> Mẫu tạo mới vai trò</h4>
             </div>
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th class="per5">
-                                <div class="checkbox-custom">
-                                    <input id="masterCheck1" class="check-all" type="checkbox" value="option1">
-                                    <label for="masterCheck1"></label>
-                                </div>
-                            </th>
-                            <th class="per40">Tên vai trò</th>
-                            <th class="per40">vai trò cha</th>
-                            <th class="per15"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check4" class="check" type="checkbox" value="option2">
-                                    <label for="check4"></label>
-                                </div>
-                            </td>
-                            <td>Jacob Olsen</td>
-                            <td>Developer</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check5" class="check" type="checkbox" value="option3">
-                                    <label for="check5"></label>
-                                </div>
-                            </td>
-                            <td>Lara James</td>
-                            <td>SEO</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check6" class="check" type="checkbox" value="option4">
-                                    <label for="check6"></label>
-                                </div>
-                            </td>
-                            <td>Steve Sidwell</td>
-                            <td>Photographer</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check7" class="check" type="checkbox" value="option5">
-                                    <label for="check7"></label>
-                                </div>
-                            </td>
-                            <td>Elena Dobrev</td>
-                            <td>Project manger</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="panel-body pt0 pb0">
+
+                <form class="form-horizontal group-border stripped" role="form">
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Tên vai trò</label>
+                        <div class="col-lg-10 col-md-9">
+                            <input type="text" class="form-control" placeholder="Tên vai trò" name="default">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Vai trò cha</label>
+                        <div class="col-lg-10 col-md-9">
+                            <select class="form-control select2">
+
+                                <option value="AK">Quản trị</option>
+                                <option value="HI">Hawaii</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Mô tả về vai trò này</label>
+                        <div class="col-lg-10 col-md-9">
+                            <textarea placeholder="Mô tả về vai trò" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Các quyền hạn</label>
+                        <div class="col-lg-10 col-md-9">
+                            <select multiple="multiple" size="10" name="duallistbox" class="duallistbox">
+                                <optgroup label="Alaskan/Hawaiian Time Zone">
+                                    <option value="AK">Alaska</option>
+                                    <option value="HI">Hawaii</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- End .form-group  -->
+                </form>
             </div>
         </div>
         <!-- End .panel -->
@@ -109,7 +85,8 @@
         </div>
         <!-- End .panel -->
     </div>
-    <!-- col-lg-6 end here -->
+    <!-- col-lg-9 end here -->
+
     <div class="col-lg-3 col-md-4">
         <!-- col-lg-6 start here -->
         <div class="panel panel-default plain toggle panelRefresh">
@@ -200,6 +177,11 @@
     <!-- col-lg-6 end here -->
 </div>
 <!-- End .row -->
+
+
+<?php
+$this->js("/static/js/pages/forms-advanced.js");
+?>
 
 <script>
     var dataJSON = [
