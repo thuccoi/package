@@ -36,62 +36,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check4" class="check" type="checkbox" value="option2">
-                                    <label for="check4"></label>
-                                </div>
-                            </td>
-                            <td>Jacob Olsen</td>
-                            <td>Developer</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check5" class="check" type="checkbox" value="option3">
-                                    <label for="check5"></label>
-                                </div>
-                            </td>
-                            <td>Lara James</td>
-                            <td>SEO</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check6" class="check" type="checkbox" value="option4">
-                                    <label for="check6"></label>
-                                </div>
-                            </td>
-                            <td>Steve Sidwell</td>
-                            <td>Photographer</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox-custom">
-                                    <input id="check7" class="check" type="checkbox" value="option5">
-                                    <label for="check7"></label>
-                                </div>
-                            </td>
-                            <td>Elena Dobrev</td>
-                            <td>Project manger</td>
-                            <td>
-                                <i class="btn btn-link fa fa-edit"></i>
-                                <i class="btn btn-link fa fa-trash"></i>
-                            </td>
-                        </tr>
+                        <?php
+                        echo \system\Helper\ArrayCallback::render($roles, function($e) {
+
+                            return '<tr>
+                                        <td>
+                                            <div class="checkbox-custom">
+                                                <input id="check-' . $e->getId() . '" class="check" type="checkbox" value="option2">
+                                                <label for="check' . $e->getId() . '"></label>
+                                            </div>
+                                        </td>
+                                        <td>' . $e->getName() . '</td>
+                                        <td>' . ($e->getParent() ? $e->getParent()->getName() : '') . '</td>
+                                        <td>
+                                            <i class="btn btn-link fa fa-edit"></i>
+                                            <i class="btn btn-link fa fa-trash"></i>
+                                        </td>
+                                    </tr>';
+                        });
+                        ?>
+
+
                     </tbody>
                 </table>
             </div>
