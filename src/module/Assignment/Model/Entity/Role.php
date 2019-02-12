@@ -45,15 +45,15 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         }
 
         //parent
-        if (\system\Helper\Validate::isString($data->parnet)) {
+        if (\system\Helper\Validate::isEmpty($data->parent)) {
             $this->code->forbidden("parent is require");
         }
 
-        if (!\system\Helper\Validate::isString($data->parnet)) {
+        if (!\system\Helper\Validate::isString($data->parent)) {
             $this->code->forbidden("parnet was not string");
         }
 
-        $parent = $this->find($data->parnet);
+        $parent = $this->find($data->parent);
         if (!$parent) {
              $this->code->notfound("parent is notfound in this application");
         }
