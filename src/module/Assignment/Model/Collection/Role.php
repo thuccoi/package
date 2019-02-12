@@ -27,12 +27,12 @@ class Role extends \module\Share\Model\Common\AbsField {
     private $metatype;
 
     /**
-     * @ODM\ReferenceMany(targetDocument="module\Assignment\Model\Collection\Role", mappedBy="children")
+     * @ODM\ReferenceOne(targetDocument="module\Assignment\Model\Collection\Role", inversedBy="children")
      */
     private $parent;
 
     /**
-     * @ODM\ReferenceMany(targetDocument="module\Assignment\Model\Collection\Role", inversedBy="parent")
+     * @ODM\ReferenceMany(targetDocument="module\Assignment\Model\Collection\Role", mappedBy="parent")
      */
     private $children;
 
@@ -45,19 +45,28 @@ class Role extends \module\Share\Model\Common\AbsField {
     public function __construct() {
         $this->init();
 
-        $this->parent = new \Doctrine\Common\Collections\ArrayCollection();
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->members = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function addChildren(\module\Assignment\Model\Collection\Role $obj) {
-        $this->children[] = $obj;
-        $this->parent[] = $this;
+    //parent
+    public function setParent(\module\Assignment\Model\Collection\Role $obj) {
+        $this->children[] = $this;
+        $this->parent = $obj;
         return $this;
     }
+    
+    public function getParent(){
+        return $this->parent;
+    }
 
-    //romve children
+    
+    //children
+    public function getChildren(){
+        return $this->children;
+    }
+
     public function removeChildren($children_id) {
 
         unset($this->children[$children_id]);
@@ -65,6 +74,8 @@ class Role extends \module\Share\Model\Common\AbsField {
         return $this;
     }
 
+    
+    
     //permission
     public function getPermissions() {
         //get all children and sub children
