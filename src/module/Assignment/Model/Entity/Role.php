@@ -44,7 +44,20 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $this->code->forbidden("metatype is existed in system");
         }
 
+        //parent
+        if (\system\Helper\Validate::isString($data->parnet)) {
+            $this->code->forbidden("parent is require");
+        }
 
+        if (!\system\Helper\Validate::isString($data->parnet)) {
+            $this->code->forbidden("parnet was not string");
+        }
+
+        $parent = $this->find($data->parnet);
+        if (!$parent) {
+             $this->code->notfound("parent is notfound in this application");
+        }
+        
         try {
             //new obj
             $obj = new \module\Assignment\Model\Collection\Role();
@@ -52,8 +65,11 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             //set information
             $obj->setName($data->name)
                     ->setMetatype($data->metatype)
+                    ->setParent($parent)
                     ->setAppId($data->viewer->app->id)
                     ->setCreatorId($data->viewer->member->id);
+
+
 
             //save 
             $this->dm->persist($obj);
@@ -152,5 +168,4 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         return null;
     }
 
-    
 }

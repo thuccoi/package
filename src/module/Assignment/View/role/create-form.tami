@@ -22,11 +22,11 @@
             </div>
             <div class="panel-body pt0 pb0">
 
-                <form class="form-horizontal group-border stripped" role="form">
+                <form method="POST" action="<?= $this->urlInside('assignment', ['controller' => 'role', 'action' => 'create']) ?>" class="form-horizontal group-border stripped" role="form">
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Tên vai trò</label>
                         <div class="col-lg-10 col-md-9">
-                            <input type="text" class="form-control" placeholder="Tên vai trò" name="default">
+                            <input type="text" class="form-control" placeholder="Tên vai trò" name="name">
                         </div>
                     </div>
                     <!-- End .form-group  -->
@@ -34,10 +34,12 @@
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Vai trò cha</label>
                         <div class="col-lg-10 col-md-9">
-                            <select class="form-control select2">
-
-                                <option value="AK">Quản trị</option>
-                                <option value="HI">Quản lý</option>
+                            <select name="parent" class="form-control select2">
+                                <?php
+                                echo \system\Helper\ArrayCallback::render($roles, function($e) {
+                                    return '<option value="' . $e->getId() . '">' . $e->getName() . '</option>';
+                                });
+                                ?>
 
                             </select>
                         </div>
@@ -47,7 +49,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Mô tả về vai trò này</label>
                         <div class="col-lg-10 col-md-9">
-                            <textarea placeholder="Mô tả về vai trò" class="form-control" rows="3"></textarea>
+                            <textarea name="description" placeholder="Mô tả về vai trò" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
                     <!-- End .form-group  -->
@@ -55,7 +57,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Các quyền hạn thuộc vai trò này</label>
                         <div class="col-lg-10 col-md-9">
-                            <select multiple="multiple" size="10" name="duallistbox" class="duallistbox">
+                            <select name="permissions" multiple="multiple" size="10" name="duallistbox" class="duallistbox">
                                 <option value="AK">Tạo ứng dụng</option>
                                 <option value="HI">Chỉnh sửa ứng dụng</option>
                             </select>

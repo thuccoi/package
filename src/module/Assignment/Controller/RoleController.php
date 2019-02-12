@@ -23,14 +23,29 @@ class RoleController extends \system\Template\AbstractController {
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
 
+        //data json
+        $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($objs, function($e) {
+                    return ["id" => $e->getId(), "parentid" => ($e->getParent() ? $e->getParent()->getId() : ''), 'name' => $e->getName()];
+                }));
+
         return [
             "roles" => $objs
         ];
     }
 
     public function createFormAction() {
+
+        $objs = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\Role::class)
+                ->field('app_id')->equals($this->getViewer()->app->id)
+                ->getQuery()
+                ->execute();
+
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
+
+        return [
+            "roles" => $objs
+        ];
     }
 
     public function createAction() {
@@ -49,7 +64,7 @@ class RoleController extends \system\Template\AbstractController {
             $this->getCode()->success("Vai trò đã được tạo thành công.");
         }
 
-        $this->getCode()->success("Vai trò đã được tạo thành công.", [], $this->url('assignment', ['controller' => 'role', 'action' => 'view', 'id' => $obj->getId()]));
+        $this->getCode()->success("Vai trò đã được tạo thành công.", [], $this->url('assignment', ['controller' => 'role']));
     }
 
     public function editAction() {
@@ -71,7 +86,7 @@ class RoleController extends \system\Template\AbstractController {
             $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
         }
 
-        $this->getCode()->success("Vai trò đã được chỉnh sửa thành công.", [], $this->url('assignment', ['controller' => 'role', 'action' => 'view', 'id' => $obj->getId()]));
+        $this->getCode()->success("Vai trò đã được chỉnh sửa thành công.", [], $this->url('assignment', ['controller' => 'role']));
     }
 
     public function deleteAction() {
