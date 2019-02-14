@@ -59,7 +59,7 @@ class RoleController extends \system\Template\AbstractController {
                     "name"        => $this->getCode()->post("name"),
                     "description" => $this->getCode()->post("description"),
                     "parent"      => $this->getCode()->post("parent"),
-                    "permission" => $this->getCode()->arr("permission", "POST")
+                    "permission"  => $this->getCode()->arr("permission", "POST")
         ];
 
         //viewer
@@ -67,12 +67,41 @@ class RoleController extends \system\Template\AbstractController {
 
         //create new obj
         $obj = $this->entity->create($data);
-        
+
         if ($this->getCode()->post('fromajax')) {
             $this->getCode()->success("Vai trò đã được tạo thành công.");
         }
 
         $this->getCode()->success("Vai trò đã được tạo thành công.", [], $this->url('assignment', ['controller' => 'role']));
+    }
+
+    public function editFormAction() {
+
+        $id = $this->getRouter()->getId();
+
+        $obj = $this->entity->find($id);
+
+        if (!$obj || $obj->getAppId() != $this->getViewer()->app->id) {
+            $this->getCode()->notfound("Không tìm thấy vai trò này trong hệ thống.");
+        }
+
+
+        $objs = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\Role::class)
+                ->field('app_id')->equals($this->getViewer()->app->id)
+                ->getQuery()
+                ->execute();
+
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/View/');
+
+        //data json
+        $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($objs, function($e) {
+                    return ["id" => $e->getId(), "parentid" => ($e->getParent() ? $e->getParent()->getId() : ''), 'name' => $e->getName()];
+                }));
+        return [
+            "role"  => $obj,
+            "roles" => $objs
+        ];
     }
 
     public function editAction() {

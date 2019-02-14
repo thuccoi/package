@@ -16,6 +16,12 @@ trait FieldDefault {
      *
      * @ODM\Field(type="string")
      */
+    private $description;
+
+    /**
+     *
+     * @ODM\Field(type="string")
+     */
     private $app_id;
 
     /**
@@ -98,6 +104,16 @@ trait FieldDefault {
         return $this;
     }
 
+    //description 
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+        return $this;
+    }
+
     //app id
     public function getAppId() {
         return $this->app_id;
@@ -161,13 +177,14 @@ trait FieldDefault {
     //function export
     public function export() {
         return (object) [
-                    "id"         => $this->getId(),
-                    "app_id"     => $this->getAppId(),
-                    "creator_id" => $this->getCreatorId(),
-                    "create_at"  => $this->getCreateAt(),
-                    "update_at"  => $this->getUpdateAt(),
-                    "deleted_at" => $this->getDeletedAt(),
-                    "options"    => $this->getOptions()
+                    "id"          => $this->getId(),
+                    "description" => $this->getDescription(),
+                    "app_id"      => $this->getAppId(),
+                    "creator_id"  => $this->getCreatorId(),
+                    "create_at"   => $this->getCreateAt(),
+                    "update_at"   => $this->getUpdateAt(),
+                    "deleted_at"  => $this->getDeletedAt(),
+                    "options"     => $this->getOptions()
         ];
     }
 

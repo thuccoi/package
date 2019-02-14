@@ -1,0 +1,206 @@
+<!-- Start .page-content-inner -->
+<div id="page-header" class="clearfix">
+    <div class="page-header">
+        <h2>Chỉ sửa vai trò <?= $role->getName() ?></h2>
+        <span class="txt">
+            <a href="<?= $this->urlInside('assignment', ['controller' => 'role']) ?>">
+                <i class="fa  fa-arrow-circle-left"></i>
+                Quay lại danh sách vai trò
+            </a>
+        </span>
+    </div>
+</div>
+
+<!-- Start .row -->
+<div class="row">
+    <div class="col-lg-9 col-md-8">
+        <!-- col-lg-9 start here -->
+        <div class="panel panel-default toggle panelMove panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list-alt"></i> Mẫu tạo mới vai trò</h4>
+            </div>
+            <div class="panel-body pt0 pb0">
+
+                <form method="POST" action="<?= $this->urlInside('assignment', ['controller' => 'role', 'action' => 'create']) ?>" class="form-horizontal group-border stripped" role="form">
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Tên vai trò</label>
+                        <div class="col-lg-10 col-md-9">
+                            <input type="text" class="form-control" placeholder="Tên vai trò" name="name" value="<?= $role->getName() ?>">
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Vai trò cha</label>
+                        <div class="col-lg-10 col-md-9">
+                            <select name="parent" class="form-control select2">
+                                <?php
+                                echo \system\Helper\ArrayCallback::render($roles, function($e) {
+                                    return '<option value="' . $e->getId() . '">' . $e->getName() . '</option>';
+                                });
+                                ?>
+
+                            </select>
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Mô tả về vai trò này</label>
+                        <div class="col-lg-10 col-md-9">
+                            <textarea name="description" placeholder="Mô tả về vai trò" class="form-control" rows="3"><?= $role->getDescription() ?></textarea>
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-3 control-label" for="">Các quyền hạn thuộc vai trò này</label>
+                        <div class="col-lg-10 col-md-9">
+                            <select name="permission[]" multiple="multiple" size="10" >
+                                <?php
+                                echo \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
+                                    return '<option value="' . $e['value'] . '">' . $e['name'] . '</option>';
+                                });
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-md-offset-3">
+                            <button type="submit" class="btn btn-md btn-primary ml15">Tạo mới</button>
+                            <a type="button" href="<?= $this->urlInside('assignment', ['controller' => 'role']) ?>" class="btn text-dark btn-alt btn-link btn-xs ml15">Hủy bỏ</a>
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </form>
+            </div>
+        </div>
+        <!-- End .panel -->
+
+        <div class="panel panel-default plain toggle panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Sơ đồ quan hệ</h4>
+            </div>
+            <div class="panel-body">
+                <iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
+            </div>
+        </div>
+        <!-- End .panel -->
+    </div>
+    <!-- col-lg-9 end here -->
+
+    <div class="col-lg-3 col-md-4">
+        <!-- col-lg-6 start here -->
+        <div class="panel panel-default plain toggle panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Hoạt động gần đây</h4>
+            </div>
+            <div class="panel-body">
+                <ul class="timeline timeline-simple">
+                    <li>
+                        <p>
+                            <a href="#">Jonh Doe</a> attached new <a href="#">file</a>
+                            <span class="timeline-date">Dec 10, 22:00</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Admin</a> approved <a href="#">3 new comments</a>
+                            <span class="timeline-date">Dec 8, 13:35</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Jonh Smith</a> deposit 300$
+                            <span class="timeline-date">Dec 6, 10:17</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Serena Williams</a> purchase <a href="#">3 items</a>
+                            <span class="timeline-date">Dec 5, 04:36</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">3 invoices </a> are send to <a href="#">Klaudia Chambers</a>
+                            <span class="timeline-date">Dec 4, 18:40</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            You received 136 new likes for <a href="#">your page</a>
+                            <span class="timeline-date">Dec 4, 12:00</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">12 settings </a> are changed from <a href="#">Master Admin</a>
+                            <span class="timeline-date">Dec 3, 23:17</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Klaudia Chambers</a> change your photo
+                            <span class="timeline-date">Dec 2, 05:17</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Master server </a> is down for 10 min.
+                            <span class="timeline-date">Dec 2, 04:56</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">12 links </a> are broken
+                            <span class="timeline-date">Dec 1, 22:13</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="#">Last backup </a> is restored by <a href="#">Master admin</a>
+                            <span class="timeline-date">Dec 1, 17:42</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            You have <a href="#">3 missed calls </a> from <a href="#">Jonathan Santos</a>
+                            <span class="timeline-date">Dec 1, 12:00</span>
+                        </p>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+            </div>
+        </div>
+        <!-- End .panel -->
+    </div>
+    <!-- col-lg-6 end here -->
+</div>
+<!-- End .row -->
+
+
+<?php
+$this->js("/static/js/pages/forms-advanced.js");
+?>
+
+<script>
+
+    $('select[name="permission[]"]').bootstrapDualListbox({
+        nonSelectedListLabel: 'Chưa được chọn',
+        selectedListLabel: 'Đã được chọn',
+        preserveSelectionOnMove: 'moved',
+        moveOnSelect: false,
+        helperSelectNamePostfix: false
+    });
+
+    var dataJSON = TAMI.pagedata.dataJSON;
+
+    var urlAdd = 'http://userdata.com/add?id=';
+    var urlRemove = 'http://userdata.com/remove?id=';
+</script>
