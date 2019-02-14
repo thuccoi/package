@@ -46,7 +46,7 @@
                                 </div>
                             </th>
                             <th class="per40">Tên vai trò</th>
-                            <th class="per40">vai trò cha</th>
+                            <th class="per40">Vai trò cha</th>
                             <th class="per15"></th>
                         </tr>
                     </thead>
@@ -62,7 +62,7 @@
                                             </div>
                                         </td>
                                         <td>' . $e->getName() . '</td>
-                                        <td>' . ($e->getParent() ? $e->getParent()->getName() : '') . '</td>
+                                        <td> <i class="fa  fa-sitemap"></i>' . ($e->getParent() ? $e->getParent()->getName() : '') . '</td>
                                         <td>
                                             <a href="' . $this->urlInside('assignment', ['controller' => 'role', 'action' => 'edit-form', 'id' => $e->getId()]) . '" >  <i class="btn btn-link fa fa-edit"></i> </a>
                                             <i class="btn btn-link fa fa-trash"></i>
