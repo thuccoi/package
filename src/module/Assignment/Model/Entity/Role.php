@@ -252,6 +252,13 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         //check parent in loop
         do {
             $parent = $parent->getParent();
+            
+            //end
+            if(!$parent){
+                return false;
+            }
+            
+            //is spiderweb
             if ($obj->getId() == $parent->getId()) {
                 return true;
             }
