@@ -55,9 +55,9 @@ class Role extends \module\Share\Model\Common\AbsEntity {
 
         $parent = $this->find($data->parent);
         if (!$parent) {
-             $this->code->notfound("parent is notfound in this application");
+            $this->code->notfound("parent is notfound in this application");
         }
-        
+
         try {
             //new obj
             $obj = new \module\Assignment\Model\Collection\Role();
@@ -69,7 +69,10 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                     ->setAppId($data->viewer->app->id)
                     ->setCreatorId($data->viewer->member->id);
 
-
+            //description
+            if (\system\Helper\Validate::isString($data->description)) {
+                $obj->setDescription($data->description);
+            }
 
             //save 
             $this->dm->persist($obj);
@@ -82,6 +85,20 @@ class Role extends \module\Share\Model\Common\AbsEntity {
 //                        "metatype" => "create",
 //                        "message"  => "Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được tạo mới"
 //            ]);
+            //add permission
+            if (\system\Helper\Validate::isArray($data->permission)) {
+                foreach ($data->permission as $val) {
+                    $per = new \module\Assignment\Model\Collection\PermissionToRole();
+                    $per->setPermission($val)
+                            ->setRole($obj)
+                            ->setAppId($data->viewer->app->id)
+                            ->setCreatorId($data->viewer->member->id);
+
+                    $this->dm->persist($per);
+                    $this->dm->flush();
+                }
+            }
+
 
             return $obj;
         } catch (\MongoException $ex) {

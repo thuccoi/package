@@ -42,7 +42,7 @@ class RoleController extends \system\Template\AbstractController {
 
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
-        
+
         //data json
         $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($objs, function($e) {
                     return ["id" => $e->getId(), "parentid" => ($e->getParent() ? $e->getParent()->getId() : ''), 'name' => $e->getName()];
@@ -56,8 +56,10 @@ class RoleController extends \system\Template\AbstractController {
 
         //get data
         $data = (object) [
-                    "name"   => $this->getCode()->post("name"),
-                    "parent" => $this->getCode()->post("parent")
+                    "name"        => $this->getCode()->post("name"),
+                    "description" => $this->getCode()->post("description"),
+                    "parent"      => $this->getCode()->post("parent"),
+                    "permission" => $this->getCode()->arr("permission", "POST")
         ];
 
         //viewer
@@ -65,6 +67,7 @@ class RoleController extends \system\Template\AbstractController {
 
         //create new obj
         $obj = $this->entity->create($data);
+        
         if ($this->getCode()->post('fromajax')) {
             $this->getCode()->success("Vai trò đã được tạo thành công.");
         }

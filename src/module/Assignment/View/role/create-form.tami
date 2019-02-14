@@ -57,9 +57,12 @@
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Các quyền hạn thuộc vai trò này</label>
                         <div class="col-lg-10 col-md-9">
-                            <select name="permissions" multiple="multiple" size="10" name="duallistbox" class="duallistbox">
-                                <option value="AK">Tạo ứng dụng</option>
-                                <option value="HI">Chỉnh sửa ứng dụng</option>
+                            <select name="permission[]" multiple="multiple" size="10" >
+                                <?php
+                                echo \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
+                                    return '<option value="' . $e['value'] . '">' . $e['name'] . '</option>';
+                                });
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -187,7 +190,16 @@ $this->js("/static/js/pages/forms-advanced.js");
 ?>
 
 <script>
-     var dataJSON = TAMI.pagedata.dataJSON;
+
+    $('select[name="permission[]"]').bootstrapDualListbox({
+        nonSelectedListLabel: 'Chưa được chọn',
+        selectedListLabel: 'Đã được chọn',
+        preserveSelectionOnMove: 'moved',
+        moveOnSelect: false,
+        helperSelectNamePostfix: false
+    });
+
+    var dataJSON = TAMI.pagedata.dataJSON;
 
     var urlAdd = 'http://userdata.com/add?id=';
     var urlRemove = 'http://userdata.com/remove?id=';
