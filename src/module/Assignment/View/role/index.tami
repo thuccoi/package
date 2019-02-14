@@ -12,6 +12,21 @@
 </div>
 
 <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default plain toggle panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Sơ đồ quan hệ</h4>
+            </div>
+            <div class="panel-body">
+                <iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
+            </div>
+        </div>
+        <!-- End .panel -->
+    </div>
+</div>
+
+<div class="row">
     <!-- Start .row -->
     <div class="col-lg-9 col-md-8">
         <!-- col-lg-6 start here -->
@@ -63,16 +78,7 @@
         </div>
         <!-- End .panel -->
 
-        <div class="panel panel-default plain toggle panelRefresh">
-            <!-- Start .panel -->
-            <div class="panel-heading white-bg">
-                <h4 class="panel-title">Sơ đồ quan hệ</h4>
-            </div>
-            <div class="panel-body">
-                <iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
-            </div>
-        </div>
-        <!-- End .panel -->
+
     </div>
     <!-- col-lg-6 end here -->
     <div class="col-lg-3 col-md-4">
