@@ -118,6 +118,59 @@ class Role extends \module\Share\Model\Common\AbsEntity {
 //                $editinfo [] = "<div class='timeline-content'>Tên của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$data->name }</a></div>";
             }
 
+            //edit description
+            if (!\system\Helper\Validate::isEmpty($data->description) && $data->description != $obj->getDescription()) {
+                $obj->setDescription($data->description);
+//                $editinfo [] = "<div class='timeline-content'>Tên của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$data->name }</a></div>";
+            }
+
+            //edit parent
+            if (!\system\Helper\Validate::isEmpty($data->parent)) {
+                if (($obj->getParent() && $obj->getParent()->getId() != $data->parent) || !$obj->getParent()) {
+                    $parent = $this->find($data->parent);
+                    if (!$parent) {
+                        $this->code->notfound("parent is notfound in this application");
+                    }
+                    $obj->setParent($parent);
+                }
+
+//                $editinfo [] = "<div class='timeline-content'>Tên của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$data->name }</a></div>";
+            }
+
+            //edit permission
+            if (\system\Helper\Validate::isArray($data->permission)) {
+                $oldper = $obj->getPermissions();
+                //add new
+                foreach ($data->permission as $val) {
+                    if (!in_array($val, $oldper)) {
+                        $per = new \module\Assignment\Model\Collection\PermissionToRole();
+                        $per->setPermission($val)
+                                ->setRole($obj)
+                                ->setAppId($data->viewer->app->id)
+                                ->setCreatorId($data->viewer->member->id);
+
+                        $this->dm->persist($per);
+                        $this->dm->flush();
+                    }
+                }
+
+                //remove old
+                foreach ($oldper as $val) {
+                    if (!in_array($val, $data->permission)) {
+                        $this->dm->createQueryBuilder(\module\Assignment\Model\Collection\PermissionToRole::class)
+                                ->field('permission')->equals($val)
+                                ->field('app_id')->equals($data->viewer->app->id)
+                                ->remove()
+                                ->getQuery()
+                                ->execute()
+                        ;
+                    }
+                }
+
+
+//                 $editinfo [] = "<div class='timeline-content'>Tên của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$data->name }</a></div>";
+            }
+
             $this->dm->persist($obj);
             $this->dm->flush();
 

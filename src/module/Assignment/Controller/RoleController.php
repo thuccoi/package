@@ -111,9 +111,15 @@ class RoleController extends \system\Template\AbstractController {
         $id = $this->getRouter()->getId('id');
         //get data
         $data = (object) [
-                    "name" => $this->getCode()->post("name")
+                    "name"        => $this->getCode()->post("name"),
+                    "description" => $this->getCode()->post("description"),
+                    "parent"      => $this->getCode()->post("parent"),
+                    "permission"  => $this->getCode()->arr("permission", "POST")
         ];
-
+        
+        //viewer
+        $data->viewer = $this->getViewer();
+        
         //edit the obj
         $obj = $this->entity->edit($id, $data);
 
