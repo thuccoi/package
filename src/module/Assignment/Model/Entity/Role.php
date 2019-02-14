@@ -152,6 +152,13 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             //edit permission
             if (\system\Helper\Validate::isArray($data->permission)) {
                 $oldper = $obj->getPermissions();
+
+                //name array
+                $pername = [];
+                foreach ($this->getConfig()['account_member']['permissions'] as $val) {
+                    $pername[$val['value']] = $val['name'];
+                }
+
                 //add new
                 foreach ($data->permission as $val) {
                     if (!in_array($val, $oldper)) {
@@ -164,7 +171,9 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         $this->dm->persist($per);
                         $this->dm->flush();
 
-                        $editinfo [] = "<div class='timeline-content'>Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được thêm quyền <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$val }</a></div>";
+
+
+                        $editinfo [] = "<div class='timeline-content'>Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được thêm quyền <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$pername[$val] }</a></div>";
                     }
                 }
 
@@ -179,7 +188,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                                 ->execute()
                         ;
 
-                        $editinfo [] = "<div class='timeline-content'>Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được loại bỏ quyền quyền <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$val }</a></div>";
+                        $editinfo [] = "<div class='timeline-content'>Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được loại bỏ quyền quyền <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$pername[$val] }</a></div>";
                     }
                 }
             }
