@@ -131,12 +131,12 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                     if (!$parent) {
                         $this->code->notfound("parent is notfound in this application");
                     }
-                    
-                    //it's self
-                    if ($parent->getId() == $obj->getId()) {
-                        $this->code->forbidden("parent is not self");
+
+                    //check spiderweb
+                    if ($this->isSpiderweb($obj, $parent)) {
+                        $this->code->forbidden("parent and this role is spiderweb");
                     }
-                    
+
                     $obj->setParent($parent);
                 }
 
@@ -242,6 +242,22 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         }
 
         return null;
+    }
+
+    //check is spiderweb
+    public function isSpiderweb($obj, $parent) {
+        if ($obj->getId() == $parent->getId()) {
+            return true;
+        }
+        //check parent in loop
+        do {
+            $parent = $parent->getParent();
+            if ($obj->getId() == $parent->getId()) {
+                return true;
+            }
+        } while ($parent);
+        
+        return false;
     }
 
 }
