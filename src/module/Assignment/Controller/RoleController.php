@@ -87,6 +87,7 @@ class RoleController extends \system\Template\AbstractController {
 
 
         $objs = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\Role::class)
+                ->field('parent.id')->notEqual($obj->getId())
                 ->field('app_id')->equals($this->getViewer()->app->id)
                 ->getQuery()
                 ->execute();
@@ -116,10 +117,10 @@ class RoleController extends \system\Template\AbstractController {
                     "parent"      => $this->getCode()->post("parent"),
                     "permission"  => $this->getCode()->arr("permission", "POST")
         ];
-        
+
         //viewer
         $data->viewer = $this->getViewer();
-        
+
         //edit the obj
         $obj = $this->entity->edit($id, $data);
 

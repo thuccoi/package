@@ -131,6 +131,12 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                     if (!$parent) {
                         $this->code->notfound("parent is notfound in this application");
                     }
+                    
+                    //it's self
+                    if ($parent->getId() == $obj->getId()) {
+                        $this->code->forbidden("parent is not self");
+                    }
+                    
                     $obj->setParent($parent);
                 }
 
