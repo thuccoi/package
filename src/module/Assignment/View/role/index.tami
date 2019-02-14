@@ -105,8 +105,17 @@ $this->js("/tami/js/assignment/role.js");
 ?>
 
 <script>
-    var dataJSON = TAMI.pagedata.dataJSON;
+    
+    $(document).ready(function () {
 
-    var urlAdd = 'http://userdata.com/add?id=';
-    var urlRemove = 'http://userdata.com/remove?id=';
+        App.showAppLog('#js-role-activitys', TAMI.pagedata.appid);
+
+        var dataJSON = TAMI.pagedata.dataJSON;
+
+        var urlAdd = 'http://userdata.com/add?id=';
+        var urlRemove = 'http://userdata.com/remove?id=';
+
+    });
+
+
 </script>
