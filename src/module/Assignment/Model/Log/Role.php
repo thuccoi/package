@@ -13,6 +13,16 @@ class Role extends \module\Share\Model\Common\AbsLink {
 
     public function add($data) {
         //input app id 
+        if (\system\Helper\Validate::isEmpty($data->app_id)) {
+            $this->code->forbidden("app_id is require");
+        }
+
+        //input creator id 
+        if (\system\Helper\Validate::isEmpty($data->creator_id)) {
+            $this->code->forbidden("creator_id is require");
+        }
+
+        //input role id 
         if (\system\Helper\Validate::isEmpty($data->role_id)) {
             $this->code->forbidden("role_id is require");
         }
@@ -43,7 +53,7 @@ class Role extends \module\Share\Model\Common\AbsLink {
         try {
 
             //add new log
-            $log = new \module\Assignment\Model\Collection\RoleLog($data->role_id, $data->metatype, $data->message);
+            $log = new \module\Assignment\Model\Collection\RoleLog($data->role_id, $data->metatype, $data->message, $data->app_id, $data->creator_id);
 
             $this->dm->persist($log);
             $this->dm->flush();

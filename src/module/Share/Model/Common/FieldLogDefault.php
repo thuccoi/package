@@ -21,11 +21,19 @@ trait FieldLogDefault {
     private $message;
 
     //function construct
-    public function initLog($metatype = "", $message = "") {
+    public function initLog($metatype = "", $message = "", $app_id = "", $creator_id = "") {
         $this->init();
 
         $this->metatype = $metatype;
         $this->message = $message;
+
+        if ($app_id) {
+            $this->app_id = $app_id;
+        }
+
+        if ($creator_id) {
+            $this->creator_id = $creator_id;
+        }
     }
 
     //meta type

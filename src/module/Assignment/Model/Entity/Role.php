@@ -81,9 +81,11 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             //log create role
             $log = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config);
             $log->add((object) [
-                        "role_id"  => (string) $obj->getId(),
-                        "metatype" => "create",
-                        "message"  => "Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được tạo mới"
+                        "role_id"    => (string) $obj->getId(),
+                        "metatype"   => "create",
+                        "message"    => "Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được tạo mới",
+                        "app_id"     => $data->viewer->app->id,
+                        "creator_id" => $data->viewer->member->id
             ]);
 
             //add permission
@@ -189,9 +191,11 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             foreach ($editinfo as $message) {
                 $applog = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config);
                 $applog->add((object) [
-                            "role_id"  => (string) $obj->getId(),
-                            "metatype" => "edit",
-                            "message"  => $message
+                            "role_id"    => (string) $obj->getId(),
+                            "metatype"   => "edit",
+                            "message"    => $message,
+                            "app_id"     => $data->viewer->app->id,
+                            "creator_id" => $data->viewer->member->id
                 ]);
             }
 
