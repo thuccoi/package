@@ -115,14 +115,17 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $editinfo = [];
             //edit name
             if (!\system\Helper\Validate::isEmpty($data->name) && $data->name != $obj->getName()) {
-                $obj->setName($data->name);
+
                 $editinfo [] = "<div class='timeline-content'>Tên của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$data->name }</a></div>";
+
+                $obj->setName($data->name);
             }
 
             //edit description
             if (!\system\Helper\Validate::isEmpty($data->description) && $data->description != $obj->getDescription()) {
-                $obj->setDescription($data->description);
+
                 $editinfo [] = "<div class='timeline-content'>Mô tả của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$data->description }</a></div>";
+                $obj->setDescription($data->description);
             }
 
             //edit parent
@@ -177,7 +180,6 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         $editinfo [] = "<div class='timeline-content'>Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được loại bỏ quyền quyền <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$val }</a></div>";
                     }
                 }
-
             }
 
             $this->dm->persist($obj);
@@ -192,7 +194,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                             "message"  => $message
                 ]);
             }
-            
+
             return $obj;
         } else {
             $this->code->notfound("Role not exists in system");
