@@ -42,13 +42,13 @@ class User extends \module\Share\Model\Common\AbsLink {
 
         try {
 
-            //add new memeber log
-            $memberlog = new \module\Share\Model\Collection\UserLog($data->user_id, $data->metatype, $data->message);
+            //add new  log
+            $log = new \module\Share\Model\Collection\UserLog($data->user_id, $data->metatype, $data->message);
 
-            $this->dm->persist($memberlog);
+            $this->dm->persist($log);
             $this->dm->flush();
 
-            return $memberlog;
+            return $log;
         } catch (\MongoException $ex) {
             throw $ex;
         }
@@ -70,7 +70,7 @@ class User extends \module\Share\Model\Common\AbsLink {
 
     public function find($id, $type = '') {
         //find by id
-        return $this->dm->getRepository(\module\Share\Model\Collection\MemberLog::class)->find($id);
+        return $this->dm->getRepository(\module\Share\Model\Collection\UserLog::class)->find($id);
     }
 
 }
