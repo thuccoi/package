@@ -108,7 +108,7 @@ $this->js("/tami/js/assignment/role.js");
     
     $(document).ready(function () {
 
-        App.showAppLog('#js-role-activitys', TAMI.pagedata.appid);
+        Role.showLog('#js-role-activitys', TAMI.pagedata.appid);
 
         var dataJSON = TAMI.pagedata.dataJSON;
 
