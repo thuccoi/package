@@ -28,6 +28,8 @@ class RoleController extends \system\Template\AbstractController {
                     return ["id" => $e->getId(), "parentid" => ($e->getParent() ? $e->getParent()->getId() : ''), 'name' => $e->getName()];
                 }));
 
+        $this->toParamJs('appid', $this->getViewer()->app->id);
+        
         return [
             "roles" => $objs
         ];
