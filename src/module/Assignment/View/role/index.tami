@@ -99,6 +99,11 @@
 </div>
 <!-- End .row -->
 
+
+<?php
+$this->js("/tami/js/assignment/role.js");
+?>
+
 <script>
     var dataJSON = TAMI.pagedata.dataJSON;
 
