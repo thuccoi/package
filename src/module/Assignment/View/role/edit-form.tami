@@ -18,11 +18,11 @@
         <div class="panel panel-default toggle panelMove panelRefresh">
             <!-- Start .panel -->
             <div class="panel-heading">
-                <h4 class="panel-title"><i class="fa fa-list-alt"></i> Mẫu tạo mới vai trò</h4>
+                <h4 class="panel-title"><i class="fa fa-list-alt"></i> Mẫu chỉnh sửa vai trò</h4>
             </div>
             <div class="panel-body pt0 pb0">
 
-                <form method="POST" action="<?= $this->urlInside('assignment', ['controller' => 'role', 'action' => 'create']) ?>" class="form-horizontal group-border stripped" role="form">
+                <form method="POST" action="<?= $this->urlInside('assignment', ['controller' => 'role', 'action' => 'edit', 'id' => $role->getId()]) ?>" class="form-horizontal group-border stripped" role="form">
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Tên vai trò</label>
                         <div class="col-lg-10 col-md-9">
@@ -36,7 +36,12 @@
                         <div class="col-lg-10 col-md-9">
                             <select name="parent" class="form-control select2">
                                 <?php
-                                echo \system\Helper\ArrayCallback::render($roles, function($e) {
+                                echo \system\Helper\ArrayCallback::render($roles, function($e) use($role) {
+                                    if ($role->getParent()) {
+                                        if ($role->getParent()->getId() == $e->getId()) {
+                                            return '<option selected value="' . $e->getId() . '">' . $e->getName() . '</option>';
+                                        }
+                                    }
                                     return '<option value="' . $e->getId() . '">' . $e->getName() . '</option>';
                                 });
                                 ?>
@@ -59,8 +64,12 @@
                         <div class="col-lg-10 col-md-9">
                             <select name="permission[]" multiple="multiple" size="10" >
                                 <?php
-                                echo \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
-                                    return '<option value="' . $e['value'] . '">' . $e['name'] . '</option>';
+                                echo \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) use($role) {
+                                    if (in_array($e['value'], $role->getPermissions())) {
+                                        return '<option selected value="' . $e['value'] . '">' . $e['name'] . '</option>';
+                                    } else {
+                                        return '<option value="' . $e['value'] . '">' . $e['name'] . '</option>';
+                                    }
                                 });
                                 ?>
                             </select>
