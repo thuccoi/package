@@ -87,7 +87,6 @@ class RoleController extends \system\Template\AbstractController {
 
 
         $objs = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\Role::class)
-                ->field('parent.id')->notEqual($obj->getId())
                 ->field('app_id')->equals($this->getViewer()->app->id)
                 ->getQuery()
                 ->execute();
