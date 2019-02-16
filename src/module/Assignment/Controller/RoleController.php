@@ -51,7 +51,7 @@ class RoleController extends \system\Template\AbstractController {
                 }));
 
         $this->toParamJs('appid', $this->getViewer()->app->id);
-        
+
         return [
             "roles" => $objs
         ];
@@ -103,6 +103,10 @@ class RoleController extends \system\Template\AbstractController {
         $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($objs, function($e) {
                     return ["id" => $e->getId(), "parentid" => ($e->getParent() ? $e->getParent()->getId() : ''), 'name' => $e->getName()];
                 }));
+
+
+        $this->toParamJs('roleid', $obj->getId());
+
         return [
             "role"  => $obj,
             "roles" => $objs
@@ -195,6 +199,59 @@ class RoleController extends \system\Template\AbstractController {
         }
 
         $this->getCode()->success("Lịch sử của ứng dụng {$app->getName()}", ['logs' => $applogs, 'hideloadmore' => $hideloadmore]);
+    }
+
+    public function roleLogAction() {
+        $id = $this->getRouter()->getId();
+
+        $obj = $this->entity->find($id);
+
+        if (!$obj || $obj->getAppId() != $this->getViewer()->app->id) {
+            $this->getCode()->notfound("Không tìm thấy vai trò này trong hệ thống.");
+        }
+
+        $start = (int) $this->getCode()->post('start');
+
+        //get length load more in config
+        $lenghtloadmore = (int) $this->getConfig()['render']['lenghtloadmore'];
+
+        //list add logs 
+        $qb = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\RoleLog::class)
+                ->hydrate(false)
+                ->field("role_id")->equals($obj->getId())
+                ->sort('create_at', 'desc')
+                ->skip($start * $lenghtloadmore)
+                ->limit($lenghtloadmore)
+                ->getQuery()
+                ->execute();
+
+        $logs = [];
+
+        if ($qb) {
+            foreach ($qb as $val) {
+                $valrl = $val;
+                $valrl['create_at'] = \system\Helper\Str::toTimeString($val["create_at"]->toDateTime());
+                $logs[] = $valrl;
+            }
+        }
+
+        //numlogs
+        $numlogs = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\RoleLog::class)
+                ->hydrate(false)
+                ->field("role_id")->equals($obj->getId())
+                ->count()
+                ->getQuery()
+                ->execute();
+
+        //hide button load more
+        $hideloadmore = 0;
+        if (count($logs) < $lenghtloadmore) {//less $lenghtloadmore documents
+            $hideloadmore = 1;
+        } else if ($numlogs == $start * $lenghtloadmore + $lenghtloadmore) {//or end of logs
+            $hideloadmore = 1;
+        }
+
+        $this->getCode()->success("Lịch sử của ứng dụng {$app->getName()}", ['logs' => $logs, 'hideloadmore' => $hideloadmore]);
     }
 
 }

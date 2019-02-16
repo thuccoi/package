@@ -94,87 +94,14 @@
 
     <div class="col-lg-3 col-md-4">
         <!-- col-lg-6 start here -->
-        <div class="panel panel-default plain toggle panelRefresh">
+        <div style="height: 680px; overflow-y: auto;" class="panel panel-default plain toggle panelRefresh">
             <!-- Start .panel -->
             <div class="panel-heading white-bg">
                 <h4 class="panel-title">Hoạt động gần đây</h4>
             </div>
             <div class="panel-body">
-                <ul class="timeline timeline-simple">
-                    <li>
-                        <p>
-                            <a href="#">Jonh Doe</a> attached new <a href="#">file</a>
-                            <span class="timeline-date">Dec 10, 22:00</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">Admin</a> approved <a href="#">3 new comments</a>
-                            <span class="timeline-date">Dec 8, 13:35</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">Jonh Smith</a> deposit 300$
-                            <span class="timeline-date">Dec 6, 10:17</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">Serena Williams</a> purchase <a href="#">3 items</a>
-                            <span class="timeline-date">Dec 5, 04:36</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">3 invoices </a> are send to <a href="#">Klaudia Chambers</a>
-                            <span class="timeline-date">Dec 4, 18:40</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            You received 136 new likes for <a href="#">your page</a>
-                            <span class="timeline-date">Dec 4, 12:00</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">12 settings </a> are changed from <a href="#">Master Admin</a>
-                            <span class="timeline-date">Dec 3, 23:17</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">Klaudia Chambers</a> change your photo
-                            <span class="timeline-date">Dec 2, 05:17</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">Master server </a> is down for 10 min.
-                            <span class="timeline-date">Dec 2, 04:56</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">12 links </a> are broken
-                            <span class="timeline-date">Dec 1, 22:13</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="#">Last backup </a> is restored by <a href="#">Master admin</a>
-                            <span class="timeline-date">Dec 1, 17:42</span>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            You have <a href="#">3 missed calls </a> from <a href="#">Jonathan Santos</a>
-                            <span class="timeline-date">Dec 1, 12:00</span>
-                        </p>
-                    </li>
-                </ul>
-                <a href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+                <ul  id="js-role-activitys" class="timeline timeline-simple"></ul>
+                <a  id="js-role-loadmore" data-start="0" onclick="Role.showRoleLog('#js-role-activitys', TAMI.pagedata.roleid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
             </div>
         </div>
         <!-- End .panel -->
@@ -202,10 +129,15 @@
 <!-- End .row -->
 
 <?php
-$this->js("/static/js/pages/forms-advanced.js");
+$this->js("/static/js/pages/forms-advanced.js")
+        ->js("/tami/js/assignment/role.js");
 ?>
 
 <script>
+
+    $(document).ready(function () {
+        Role.showRoleLog('#js-role-activitys', TAMI.pagedata.roleid);
+    });
 
     $('select[name="permission[]"]').bootstrapDualListbox({
         nonSelectedListLabel: 'Chưa được chọn',
