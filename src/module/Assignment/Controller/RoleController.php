@@ -29,7 +29,7 @@ class RoleController extends \system\Template\AbstractController {
                 }));
 
         $this->toParamJs('appid', $this->getViewer()->app->id);
-        
+
         return [
             "roles" => $objs
         ];
@@ -49,6 +49,9 @@ class RoleController extends \system\Template\AbstractController {
         $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($objs, function($e) {
                     return ["id" => $e->getId(), "parentid" => ($e->getParent() ? $e->getParent()->getId() : ''), 'name' => $e->getName()];
                 }));
+
+        $this->toParamJs('appid', $this->getViewer()->app->id);
+        
         return [
             "roles" => $objs
         ];
@@ -142,8 +145,6 @@ class RoleController extends \system\Template\AbstractController {
         
     }
 
-    
-    
     public function appLogAction() {
         $id = $this->getRouter()->getId();
 
@@ -195,4 +196,5 @@ class RoleController extends \system\Template\AbstractController {
 
         $this->getCode()->success("Lịch sử của ứng dụng {$app->getName()}", ['logs' => $applogs, 'hideloadmore' => $hideloadmore]);
     }
+
 }
