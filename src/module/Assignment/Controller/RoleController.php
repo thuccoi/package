@@ -251,7 +251,7 @@ class RoleController extends \system\Template\AbstractController {
             $hideloadmore = 1;
         }
 
-        $this->getCode()->success("Lịch sử của ứng dụng {$app->getName()}", ['logs' => $logs, 'hideloadmore' => $hideloadmore]);
+        $this->getCode()->success("Lịch sử của vai trò {$obj->getName()}", ['logs' => $logs, 'hideloadmore' => $hideloadmore]);
     }
 
 }
