@@ -108,10 +108,12 @@
                                     <th  class="td-left"> <?= $e->getName() ?></th>
                                     <?=
                                     \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
-                                        return '<div class="checkbox-custom">
-                                                    <input type="checkbox" value="option2" checked="checked" id="' . $e['value'] . '">
-                                                    <label for="' . $e['value'] . '">' . $e['name'] . '</label>
-                                                </div>';
+                                        return '<td>
+                                                    <div class="checkbox-custom">
+                                                        <input type="checkbox" value="option2" checked="checked" id="' . $e['value'] . '">
+                                                        <label for="' . $e['value'] . '">' . $e['name'] . '</label>
+                                                    </div>
+                                                </td>';
                                     })
                                     ?>
                                 </tr>
