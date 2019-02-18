@@ -107,11 +107,12 @@
                                 <tr >
                                     <th  class="td-left"> <?= $e->getName() ?></th>
                                     <?=
-                                    \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
+                                    \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($per) use($e) {
+                                        $id = "{$per['value']}-{$e->getId()}";
                                         return '<td>
                                                     <div class="checkbox-custom">
-                                                        <input type="checkbox" value="option2" checked="checked" id="' . $e['value'] . '">
-                                                        <label for="' . $e['value'] . '">' . $e['name'] . '</label>
+                                                        <input type="checkbox" value="option2" checked="checked" id="' . $id . '">
+                                                        <label class="" for="' . $id . '">' . $per['name'] . '</label>
                                                     </div>
                                                 </td>';
                                     })
