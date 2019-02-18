@@ -110,7 +110,7 @@
                                     \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
                                         return '<div class="checkbox-custom">
                                                     <input type="checkbox" value="option2" checked="checked" id="' . $e['value'] . '">
-                                                    <label for="checkbox2">' . $e['name'] . '</label>
+                                                    <label for="' . $e['value'] . '">' . $e['name'] . '</label>
                                                 </div>';
                                     })
                                     ?>
