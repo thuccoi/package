@@ -33,7 +33,7 @@
         <div class="panel panel-default plain toggle panelRefresh">
             <!-- Start .panel -->
             <div class="panel-heading white-bg">
-                <h4 class="panel-title">Thông tin chi tiết</h4>
+                <h4 class="panel-title">Danh sách vai trò</h4>
             </div>
             <div class="panel-body">
                 <table class="table table-striped">
@@ -78,12 +78,96 @@
         </div>
         <!-- End .panel -->
 
+        <div class="panel panel-default plain toggle panelRefresh">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Va trò và quyền hạn</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="per5">
+                                <div class="checkbox-custom">
+                                    <input id="masterCheck1" class="check-all" type="checkbox" value="option1">
+                                    <label for="masterCheck1"></label>
+                                </div>
+                            </th>
+                            <?=
+                            \system\Helper\ArrayCallback::render($array, $callback)
+                            ?>
+                            <th class="per5">Tên vai trò</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel toggle">
+            <!--Start .panel-->
+            <div class="panel-heading">
+                <h4 class="panel-title">Phân chia quyền hạn</h4>
+            </div>
+            <div class="panel-body">
+
+                <div  class="table-fix-left">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th class="per10">
+                                    
+                                </th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                                <th> Quyền 1</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            for ($i = 0; $i < 10; $i++) {
+                                ?>
+                                <tr >
+                                    <th  class="td-left"> Vai trò 1</th>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--End .panel-->
     </div>
     <!-- col-lg-6 end here -->
     <div class="col-lg-3 col-md-4">
         <!-- col-lg-6 start here -->
-        <div style="height: 680px; overflow-y: auto;" class="panel panel-default plain toggle panelRefresh">
+        <div class="panel panel-activity panel-default plain toggle panelRefresh">
             <!-- Start .panel -->
             <div class="panel-heading white-bg">
                 <h4 class="panel-title">Hoạt động gần đây</h4>

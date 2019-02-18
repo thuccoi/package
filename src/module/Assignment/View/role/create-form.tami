@@ -88,7 +88,7 @@
 
     <div class="col-lg-3 col-md-4">
         <!-- col-lg-6 start here -->
-        <div style="height: 680px; overflow-y: auto;" class="panel panel-default plain toggle panelRefresh">
+        <div  class="panel panel-activity panel-default plain toggle panelRefresh">
             <!-- Start .panel -->
             <div class="panel-heading white-bg">
                 <h4 class="panel-title">Hoạt động gần đây</h4>

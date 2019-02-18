@@ -60,7 +60,6 @@ class Role extends \module\Share\Model\Common\AbsField {
     public function getParent(){
         return $this->parent;
     }
-
     
     //children
     public function getChildren(){
