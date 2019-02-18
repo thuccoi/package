@@ -133,7 +133,7 @@
             </div>
             <div class="panel-body">
                 <ul  id="js-role-activitys" class="timeline timeline-simple"></ul>
-                <a  id="js-role-loadmore" data-start="0" onclick="Role.showLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+                <a  id="js-role-loadmore" data-start="0" onclick="Role.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
             </div>
         </div>
         <!-- End .panel -->
@@ -151,7 +151,7 @@ $this->js("/tami/js/assignment/role.js");
 
     $(document).ready(function () {
 
-        Role.showLog('#js-role-activitys', TAMI.pagedata.appid);
+        Role.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);
 
 
 
