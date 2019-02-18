@@ -65,7 +65,7 @@
                                         <td> <i class="fa  fa-sitemap"></i> ' . ($e->getParent() ? $e->getParent()->getName() : '') . '</td>
                                         <td>
                                             <a href="' . $this->urlInside('assignment', ['controller' => 'role', 'action' => 'edit-form', 'id' => $e->getId()]) . '" >  <i class="btn btn-link fa fa-edit"></i> </a>
-                                            <i class="btn btn-link fa fa-trash"></i>
+                                            <i class="btn-link fa fa-trash"></i>
                                         </td>
                                     </tr>';
                         });
