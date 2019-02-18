@@ -78,34 +78,6 @@
         </div>
         <!-- End .panel -->
 
-        <div class="panel panel-default plain toggle panelRefresh">
-            <!-- Start .panel -->
-            <div class="panel-heading white-bg">
-                <h4 class="panel-title">Va trò và quyền hạn</h4>
-            </div>
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th class="per5">
-                                <div class="checkbox-custom">
-                                    <input id="masterCheck1" class="check-all" type="checkbox" value="option1">
-                                    <label for="masterCheck1"></label>
-                                </div>
-                            </th>
-                            <?=
-                            \system\Helper\ArrayCallback::render($array, $callback)
-                            ?>
-                            <th class="per5">Tên vai trò</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
         <div class="panel toggle">
             <!--Start .panel-->
             <div class="panel-heading">
@@ -118,20 +90,14 @@
                         <thead>
                             <tr>
                                 <th class="per10">
-                                    
+
                                 </th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
-                                <th> Quyền 1</th>
+
+                                <?=
+                                \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
+                                    return '<th>' . $e['name'] . '</th>';
+                                })
+                                ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -140,18 +106,11 @@
                                 ?>
                                 <tr >
                                     <th  class="td-left"> Vai trò 1</th>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td> </td>
+                                    <?=
+                                    \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
+                                        return '<td>' . $e['name'] . '</td>';
+                                    })
+                                    ?>
                                 </tr>
                                 <?php
                             }
