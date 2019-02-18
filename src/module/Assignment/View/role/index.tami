@@ -102,18 +102,21 @@
                         </thead>
                         <tbody>
                             <?php
-                            for ($i = 0; $i < 10; $i++) {
+                            echo \system\Helper\ArrayCallback::render($roles, function($e) {
                                 ?>
                                 <tr >
-                                    <th  class="td-left"> Vai trò 1</th>
+                                    <th  class="td-left"> <?= $e->getName() ?></th>
                                     <?=
                                     \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
-                                        return '<td>' . $e['name'] . '</td>';
+                                        return '<div class="checkbox-custom">
+                                                    <input type="checkbox" value="option2" checked="checked" id="' . $e['value'] . '">
+                                                    <label for="checkbox2">' . $e['name'] . '</label>
+                                                </div>';
                                     })
                                     ?>
                                 </tr>
                                 <?php
-                            }
+                            });
                             ?>
 
                         </tbody>
