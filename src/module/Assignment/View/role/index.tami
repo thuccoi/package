@@ -55,6 +55,20 @@
                         <?php
                         echo \system\Helper\ArrayCallback::render($roles, function($e) {
                             $percent_per = 100 * count($e->getAllPermissions()) / count($this->getConfig()['account_member']['permissions']);
+                            
+                            $stylecolor = "";
+                            if ($percent_per < 20) {
+                                $stylecolor = "danger";
+                            } else if ($percent_per < 40) {
+                                $stylecolor = "warning";
+                            } else if ($percent_per < 60) {
+                                $stylecolor = "info";
+                            } else if ($percent_per < 80) {
+                                $stylecolor = "primary";
+                            } else {
+                                $stylecolor = "success";
+                            }
+                            
                             return '<tr>
                                         <td>
                                             <div class="checkbox-custom">
@@ -66,7 +80,7 @@
                                         <td> <i class="fa  fa-sitemap"></i> ' . ($e->getParent() ? $e->getParent()->getName() : '') . '</td>
                                         <td>
                                             <div class="progress animated-bar">
-                                                <div class="progress-bar progress-bar-warning" role="progressbar" data-transitiongoal="' . $percent_per . '">
+                                                <div class="progress-bar progress-bar-' . $stylecolor . '" role="progressbar" data-transitiongoal="' . $percent_per . '">
                                                 </div>
                                             </div>
                                         </td>
