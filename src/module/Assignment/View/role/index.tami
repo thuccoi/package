@@ -118,7 +118,7 @@
 
                                         return '<td>
                                                     <div class="checkbox-custom">
-                                                        <input disabled="disabled type="checkbox" ' . $checked . ' value="' . $per['value'] . '" id="' . $id . '">
+                                                        <input disabled="disabled" type="checkbox" ' . $checked . ' value="' . $per['value'] . '" id="' . $id . '">
                                                         <label class="" for="' . $id . '">' . $per['name'] . '</label>
                                                     </div>
                                                 </td>';
