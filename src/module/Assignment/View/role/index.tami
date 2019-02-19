@@ -62,7 +62,7 @@
                                                 <label for="check' . $e->getId() . '"></label>
                                             </div>
                                         </td>
-                                        <td>' . $e->getName() . '</td>
+                                        <th>' . $e->getName() . '</th>
                                         <td> <i class="fa  fa-sitemap"></i> ' . ($e->getParent() ? $e->getParent()->getName() : '') . '</td>
                                         <td>
                                             <div class="progress animated-bar">
