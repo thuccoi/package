@@ -45,8 +45,8 @@
                                     <label for="masterCheck1"></label>
                                 </div>
                             </th>
-                            <th class="per40">Tên vai trò</th>
-                            <th class="per40">Vai trò cha</th>
+                            <th class="per20">Tên vai trò</th>
+                            <th class="per20">Vai trò cha</th>
                             <th class="per40">Độ quan trọng</th>
                             <th class="per15"></th>
                         </tr>
@@ -164,7 +164,8 @@
 
 
 <?php
-$this->js("/tami/js/assignment/role.js");
+$this->js("/static/js/pages/tables-basic.js")
+        ->js("/tami/js/assignment/role.js");
 ?>
 
 <script>
