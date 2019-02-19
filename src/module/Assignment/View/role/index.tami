@@ -47,13 +47,14 @@
                             </th>
                             <th class="per40">Tên vai trò</th>
                             <th class="per40">Vai trò cha</th>
+                            <th class="per40">Mức quyền hạn</th>
                             <th class="per15"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         echo \system\Helper\ArrayCallback::render($roles, function($e) {
-
+                            $percent_per = 100 * count($e->getAllPermissions()) / count($this->getConfig()['account_member']['permissions']);
                             return '<tr>
                                         <td>
                                             <div class="checkbox-custom">
@@ -63,6 +64,12 @@
                                         </td>
                                         <td>' . $e->getName() . '</td>
                                         <td> <i class="fa  fa-sitemap"></i> ' . ($e->getParent() ? $e->getParent()->getName() : '') . '</td>
+                                        <td>
+                                            <div class="progress animated-bar">
+                                                <div class="progress-bar progress-bar-warning" role="progressbar" data-transitiongoal="' . $percent_per . '">
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <a href="' . $this->urlInside('assignment', ['controller' => 'role', 'action' => 'edit-form', 'id' => $e->getId()]) . '" >  <i class="btn btn-link fa fa-edit"></i> </a>
                                             <i class="btn-link fa fa-trash"></i>

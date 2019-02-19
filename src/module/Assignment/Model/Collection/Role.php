@@ -56,13 +56,13 @@ class Role extends \module\Share\Model\Common\AbsField {
         $this->parent = $obj;
         return $this;
     }
-    
-    public function getParent(){
+
+    public function getParent() {
         return $this->parent;
     }
-    
+
     //children
-    public function getChildren(){
+    public function getChildren() {
         return $this->children;
     }
 
@@ -73,8 +73,6 @@ class Role extends \module\Share\Model\Common\AbsField {
         return $this;
     }
 
-    
-    
     //permission
     public function getPermissions() {
         //get all children and sub children
@@ -84,6 +82,22 @@ class Role extends \module\Share\Model\Common\AbsField {
         }
 
         return $arr;
+    }
+
+    public function getAllPermissions() {
+        $arr = $this->getPermissions();
+        if ($this->children) {
+            foreach ($this->children as $val) {
+                $pers = $val->getAllPermissions();
+                if ($pers) {
+                    foreach ($pers as $per) {
+                        $arr[] = $per;
+                    }
+                }
+            }
+        }
+        
+       return array_unique($arr);
     }
 
     //member
