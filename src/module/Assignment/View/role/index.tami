@@ -47,7 +47,7 @@
                             </th>
                             <th class="per40">Tên vai trò</th>
                             <th class="per40">Vai trò cha</th>
-                            <th class="per40">Mức quyền hạn</th>
+                            <th class="per40">Độ quan trọng</th>
                             <th class="per15"></th>
                         </tr>
                     </thead>
