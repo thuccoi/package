@@ -94,20 +94,20 @@
                                 </th>
 
                                 <?=
-                                \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($e) {
-                                    return '<th>' . $e['name'] . '</th>';
+                                \system\Helper\ArrayCallback::render($roles, function($e) {
+                                    return '<th>' . $e->getName() . '</th>';
                                 })
                                 ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            echo \system\Helper\ArrayCallback::render($roles, function($e) {
+                            echo \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($per) use($roles) {
                                 ?>
                                 <tr >
                                     <th  class="td-left"> <?= $e->getName() ?></th>
                                     <?=
-                                    \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($per) use($e) {
+                                    \system\Helper\ArrayCallback::render($roles, function($e) use($per) {
                                         $id = "{$per['value']}-{$e->getId()}";
 
                                         //checked
