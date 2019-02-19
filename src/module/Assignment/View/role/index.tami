@@ -109,9 +109,16 @@
                                     <?=
                                     \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($per) use($e) {
                                         $id = "{$per['value']}-{$e->getId()}";
+                  
+                                        //checked
+                                        $checked = '';
+                                        if(in_array($per['value'], $e->getPermissions())){
+                                            $checked = ' checked="checked"';
+                                        }
+                                        
                                         return '<td>
                                                     <div class="checkbox-custom">
-                                                        <input type="checkbox" value="option2" checked="checked" id="' . $id . '">
+                                                        <input type="checkbox" '.$checked.' value="option2" id="' . $id . '">
                                                         <label class="" for="' . $id . '">' . $per['name'] . '</label>
                                                     </div>
                                                 </td>';
