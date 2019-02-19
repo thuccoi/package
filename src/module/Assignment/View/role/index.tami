@@ -105,7 +105,7 @@
                             echo \system\Helper\ArrayCallback::render($this->getConfig()['account_member']['permissions'], function($per) use($roles) {
                                 ?>
                                 <tr >
-                                    <th  class="td-left"> <?= $e->getName() ?></th>
+                                    <th  class="td-left"> <?= $per['value'] ?></th>
                                     <?=
                                     \system\Helper\ArrayCallback::render($roles, function($e) use($per) {
                                         $id = "{$per['value']}-{$e->getId()}";
