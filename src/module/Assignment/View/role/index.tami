@@ -29,7 +29,72 @@
 <div class="row">
     <!-- Start .row -->
     <div class="col-lg-9 col-md-8">
-        <!-- col-lg-6 start here -->
+        <!-- col-lg-9 start here -->
+
+        <div class="panel toggle">
+            <!--Start .panel-->
+            <div class="panel-heading">
+                <h4 class="panel-title">Danh sách thành viên</h4>
+            </div>
+            <div class="panel-body">
+                <div  class="table-fix-left">
+                    <table class="members">
+                        <thead>
+                            <tr>
+                                <th class="per10">
+
+                                </th>
+
+                                <?=
+                                \system\Helper\ArrayCallback::render($roles, function($e) {
+                                    return '<th>' . $e->getName() . '</th>';
+                                })
+                                ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            echo \system\Helper\ArrayCallback::render($members, function($mem) use($roles) {
+                                ?>
+                                <tr >
+                                    <th  class="td-left"> 
+                                        <div class="avatar">
+                                            <img width="50px" class="email-inbox-avatar" src="/static/img/avatars/2.jpg" alt="avatar">   
+                                        </div>
+                                        <div class="txt">
+                                            <h4 class="name"> <?= $mem->getUser()->getName() ?> </h4>
+                                            <p class="email"> <?= $mem->getUser()->getEmail() ?> </p>
+                                        </div>
+
+                                    </th>
+                                    <?=
+                                    \system\Helper\ArrayCallback::render($roles, function($e) use($mem) {
+                                        $id = "{$mem->getId()}-{$e->getId()}";
+
+                                        //checked
+                                        $checked = '';
+
+
+                                        return '<td>
+                                                    <div class="checkbox-custom">
+                                                        <input type="checkbox" ' . $checked . ' value="' . $mem->getId() . '" id="' . $id . '">
+                                                        <label class="" for="' . $id . '">' . $e->getName() . '</label>
+                                                    </div>
+                                                </td>';
+                                    })
+                                    ?>
+                                </tr>
+                                <?php
+                            });
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--End .panel-->
+
         <div class="panel panel-default plain toggle ">
             <!-- Start .panel -->
             <div class="panel-heading white-bg">
@@ -157,60 +222,6 @@
         </div>
         <!--End .panel-->
 
-        <div class="panel toggle">
-            <!--Start .panel-->
-            <div class="panel-heading">
-                <h4 class="panel-title">Danh sách thành viên</h4>
-            </div>
-            <div class="panel-body">
-                <div  class="table-fix-left">
-                    <table >
-                        <thead>
-                            <tr>
-                                <th class="per10">
-
-                                </th>
-
-                                <?=
-                                \system\Helper\ArrayCallback::render($roles, function($e) {
-                                    return '<th>' . $e->getName() . '</th>';
-                                })
-                                ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            echo \system\Helper\ArrayCallback::render($members, function($mem) use($roles) {
-                                ?>
-                                <tr >
-                                    <th  class="td-left"> <?= $mem->getUser()->getName() ?></th>
-                                    <?=
-                                    \system\Helper\ArrayCallback::render($roles, function($e) use($mem) {
-                                        $id = "{$mem->getId()}-{$e->getId()}";
-
-                                        //checked
-                                        $checked = '';
-                                       
-
-                                        return '<td>
-                                                    <div class="checkbox-custom">
-                                                        <input disabled="disabled" type="checkbox" ' . $checked . ' value="' . $mem->getId() . '" id="' . $id . '">
-                                                        <label class="" for="' . $id . '">' . $mem->getUser()->getName() . '</label>
-                                                    </div>
-                                                </td>';
-                                    })
-                                    ?>
-                                </tr>
-                                <?php
-                            });
-                            ?>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!--End .panel-->
     </div>
     <!-- col-lg-6 end here -->
     <div class="col-lg-3 col-md-4">
