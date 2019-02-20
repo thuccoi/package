@@ -20,6 +20,14 @@ class RoleController extends \system\Template\AbstractController {
                 ->getQuery()
                 ->execute();
 
+        $members = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\Member::class)
+                ->field('app.id')->equals($this->getViewer()->app->id)
+                ->sort('create_at', 'desc')
+                ->getQuery()
+                ->execute();
+
+
+
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
 
@@ -31,7 +39,8 @@ class RoleController extends \system\Template\AbstractController {
         $this->toParamJs('appid', $this->getViewer()->app->id);
 
         return [
-            "roles" => $objs
+            "roles"   => $objs,
+            "members" => $members
         ];
     }
 

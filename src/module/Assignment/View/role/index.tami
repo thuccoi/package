@@ -55,7 +55,7 @@
                         <?php
                         echo \system\Helper\ArrayCallback::render($roles, function($e) {
                             $percent_per = 100 * count($e->getAllPermissions()) / count($this->getConfig()['account_member']['permissions']);
-                            
+
                             $stylecolor = "";
                             if ($percent_per < 20) {
                                 $stylecolor = "danger";
@@ -68,7 +68,7 @@
                             } else {
                                 $stylecolor = "success";
                             }
-                            
+
                             return '<tr>
                                         <td>
                                             <div class="checkbox-custom">
@@ -141,6 +141,61 @@
                                                     <div class="checkbox-custom">
                                                         <input disabled="disabled" type="checkbox" ' . $checked . ' value="' . $per['value'] . '" id="' . $id . '">
                                                         <label class="" for="' . $id . '">' . $per['name'] . '</label>
+                                                    </div>
+                                                </td>';
+                                    })
+                                    ?>
+                                </tr>
+                                <?php
+                            });
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--End .panel-->
+
+        <div class="panel toggle">
+            <!--Start .panel-->
+            <div class="panel-heading">
+                <h4 class="panel-title">Danh sách thành viên</h4>
+            </div>
+            <div class="panel-body">
+                <div  class="table-fix-left">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th class="per10">
+
+                                </th>
+
+                                <?=
+                                \system\Helper\ArrayCallback::render($roles, function($e) {
+                                    return '<th>' . $e->getName() . '</th>';
+                                })
+                                ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            echo \system\Helper\ArrayCallback::render($members, function($mem) use($roles) {
+                                ?>
+                                <tr >
+                                    <th  class="td-left"> <?= $mem->getUser()->getName() ?></th>
+                                    <?=
+                                    \system\Helper\ArrayCallback::render($roles, function($e) use($mem) {
+                                        $id = "{$mem->getId()}-{$e->getId()}";
+
+                                        //checked
+                                        $checked = '';
+                                       
+
+                                        return '<td>
+                                                    <div class="checkbox-custom">
+                                                        <input disabled="disabled" type="checkbox" ' . $checked . ' value="' . $mem->getId() . '" id="' . $id . '">
+                                                        <label class="" for="' . $id . '">' . $mem->getUser()->getName() . '</label>
                                                     </div>
                                                 </td>';
                                     })
