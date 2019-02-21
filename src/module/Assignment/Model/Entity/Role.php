@@ -7,15 +7,11 @@ class Role extends \module\Share\Model\Common\AbsEntity {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
-    private $permissiontorole_entity;
-
     //set properties code
     public function __construct($connect, \system\Helper\Code $code, $config) {
 
         // $dm is a DocumentManager instance we should already have
         $this->init($connect, $code, $config);
-
-        $this->permissiontorole_entity = new \module\Assignment\Model\Link\PermissionToRole($connect, $code, $config);
     }
 
     public function create($data) {
@@ -92,12 +88,15 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         "creator_id" => $data->viewer->member->id
             ]);
 
+            //permission to role entity
+            $perentity = new \module\Assignment\Model\Link\PermissionToRole($this->getConnect(), $this->getCode(), $this->getConfig());
+
             //add permission
             if (\system\Helper\Validate::isArray($data->permission)) {
                 foreach ($data->permission as $val) {
 
                     //add permission
-                    $this->permissiontorole_entity->add((object) [
+                    $perentity->add((object) [
                                 "permission" => $val,
                                 "role_id"    => $obj->getId(),
                                 "app_id"     => $data->viewer->app->id,
@@ -157,14 +156,15 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             if (\system\Helper\Validate::isArray($data->permission)) {
                 $oldper = $obj->getPermissions();
 
-               
+                //permission to role entity
+                $perentity = new \module\Assignment\Model\Link\PermissionToRole($this->getConnect(), $this->getCode(), $this->getConfig());
 
                 //add new
                 foreach ($data->permission as $val) {
                     if (!in_array($val, $oldper)) {
 
                         //add permission
-                        $this->permissiontorole_entity->add((object) [
+                        $perentity->add((object) [
                                     "permission" => $val,
                                     "role_id"    => $obj->getId(),
                                     "app_id"     => $data->viewer->app->id,
@@ -177,7 +177,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                 foreach ($oldper as $val) {
                     if (!in_array($val, $data->permission)) {
                         //add permission
-                        $this->permissiontorole_entity->remove((object) [
+                        $perentity->remove((object) [
                                     "permission" => $val,
                                     "role_id"    => $obj->getId(),
                                     "app_id"     => $data->viewer->app->id,
