@@ -2,7 +2,7 @@
 
 namespace module\Assignment\Model\Log;
 
-class PermissionToRole extends \module\Share\Model\Common\AbsLink {
+class RoleToMember extends \module\Share\Model\Common\AbsLink {
 
     //entity default
     use \module\Share\Model\Common\EntityDefault;

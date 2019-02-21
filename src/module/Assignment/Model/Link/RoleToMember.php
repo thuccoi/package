@@ -84,7 +84,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
             $this->getConnect()->flush();
 
             //add new member log
-            $log = new \module\Assignment\Model\Log\PermissionToRole($this->dm, $this->code, $this->config);
+            $log = new \module\Assignment\Model\Log\RoleToMember($this->dm, $this->code, $this->config);
 
             $log->add((object) [
                         'role_id'    => (string) $role->getId(),
@@ -153,7 +153,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
                 ->execute();
 
         //add new log
-        $log = new \module\Assignment\Model\Log\PermissionToRole($this->dm, $this->code, $this->config);
+        $log = new \module\Assignment\Model\Log\RoleToMember($this->dm, $this->code, $this->config);
 
         $log->add((object) [
                     'role_id'    => $data->role_id,
