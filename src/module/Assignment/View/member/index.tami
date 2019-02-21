@@ -60,17 +60,21 @@
                                     <?=
                                     \system\Helper\ArrayCallback::render($roles, function($e) use($mem) {
 
-
+                                        $roleids = \system\Helper\ArrayCallback::select($mem->getRoles(), function($e) {
+                                                    return $e->getRole()->getId();
+                                                });
 
                                         $id = "{$mem->getId()}-{$e->getId()}";
 
                                         //checked
                                         $checked = '';
-
+                                        if (in_array($e->getId(), $roleids)) {
+                                            $checked = 'checked="checked"';
+                                        }
 
                                         return '<td>
                                                     <div class="checkbox-custom">
-                                                        <input type="checkbox" ' . $checked . ' value="' . $e->getId() . '" id="' . $id . '">
+                                                        <input onclick="AssignmentMember.toggleRole(\'' . $mem->getId() . '\',\'' . $e->getId() . '\');" type="checkbox" ' . $checked . ' value="' . $e->getId() . '" id="' . $id . '">
                                                         <label class="" for="' . $id . '">' . $e->getName() . '</label>
                                                     </div>
                                                 </td>';
@@ -110,7 +114,8 @@
 <!-- End .row -->
 
 <?php
-$this->css('/tami/css/assignment/member.css');
+$this->css('/tami/css/assignment/member.css')
+        ->js('/tami/js/assignment/member.js');
 ?>
 
 <script>
