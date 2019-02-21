@@ -119,8 +119,10 @@ class System {
                 $obj = $objfactory($connect, $config['controller'], $router, $code, $session, $sysconfig, []);
 
                 //checkpermisison
-                if (!self::checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
-                    $code->forbidden("You don't have permission to access");
+                if (!self::checkOutsideRouter($module, $controller, $action, $sysconfig)) {
+                    if (!self::checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
+                        $code->forbidden("You don't have permission to access");
+                    }
                 }
 
 
@@ -258,6 +260,11 @@ class System {
             return true;
         }
 
+        return false;
+    }
+
+    //check outside router
+    public static function checkOutsideRouter($module, $controller, $action, $config) {
         //check outside router
         $outsideRouter = $config['outsideRouter'];
         foreach ($outsideRouter as $val) {
