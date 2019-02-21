@@ -263,7 +263,7 @@ class System {
                 return true;
             }
 
-            if ($val == "*") {
+            if ($val == "*" || $val == "*/") {
                 return true;
             }
 
