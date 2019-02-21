@@ -70,6 +70,20 @@ class Member extends \module\Share\Model\Common\AbsField {
         $session->set("user", $this->getUser()->release());
         $session->set("member", $this->release());
 
+        //set permission
+        $permissions = [];
+        if ($this->roles) {
+            foreach ($this->roles as $val) {
+
+                foreach ($val->getRole()->getAllPermissions() as $per) {
+
+                    $permissions[] = $per;
+                }
+            }
+        }
+
+        $session->set("permissions", array_unique($permissions));
+
         return $this;
     }
 
