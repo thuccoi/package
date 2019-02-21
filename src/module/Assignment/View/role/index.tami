@@ -159,19 +159,40 @@
         <!--End .panel-->
 
     </div>
-    <!-- col-lg-6 end here -->
+    <!-- col-lg-9 end here -->
+
     <div class="col-lg-3 col-md-4">
-        <!-- col-lg-6 start here -->
-        <div class="panel panel-activity panel-default plain toggle ">
-            <!-- Start .panel -->
-            <div class="panel-heading white-bg">
-                <h4 class="panel-title">Hoạt động gần đây</h4>
-            </div>
-            <div class="panel-body">
-                <ul  id="js-role-activitys" class="timeline timeline-simple"></ul>
-                <a  id="js-role-loadmore" data-start="0" onclick="Role.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+        <div class="tabs mb20">
+            <ul id="profileTab" class="nav nav-tabs">
+                <li class="active"><a href="#role" data-toggle="tab">HĐ Vai trò</a>
+                </li>
+                <li><a href="#permission" data-toggle="tab">HĐ Phân Quyền</a>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="role">
+
+                    <div>
+                        <h5>Hoạt động gần đây </h5>
+                        <ul  id="js-role-activitys" class="timeline timeline-simple"></ul>
+                        <a  id="js-role-loadmore" data-start="0" onclick="Role.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade pb15" id="permission">
+                    <div>
+                        <h5>Hoạt động gần đây</h5>
+                        <ul id="js-permission-activitys" class="timeline timeline-icons"></ul>
+                        <a id="js-permission-loadmore" data-start="0" onclick="Role.showPermissionLog('#js-permission-activitys', TAMI.pagedata.appid);" class=" btn btn-default timeline-load-more-btn">
+                            <i class="fa fa-refresh"></i> Xem thêm 
+                        </a>
+                    </div>
+
+                </div>
+
             </div>
         </div>
+
         <!-- End .panel -->
     </div>
     <!-- col-lg-6 end here -->
@@ -189,8 +210,7 @@ $this->js("/static/js/pages/tables-basic.js")
     $(document).ready(function () {
 
         Role.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);
-
-
+        Role.showPermissionLog('#js-permission-activitys', TAMI.pagedata.appid);
 
     });
 
