@@ -23,8 +23,8 @@ class RoleToMemberLog extends \module\Share\Model\Common\AbsField {
      */
     private $member_id;
 
-    public function __construct($role_id = "", $member_id = "", $metatype = "", $message = "") {
-        $this->initLog($metatype, $message);
+    public function __construct($role_id = "", $member_id = "", $metatype = "", $message = "", $app_id = "", $creator_id = "") {
+        $this->initLog($metatype, $message, $app_id, $creator_id);
         $this->role_id = $role_id;
         $this->member_id = $member_id;
     }
