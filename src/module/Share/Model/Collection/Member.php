@@ -82,7 +82,23 @@ class Member extends \module\Share\Model\Common\AbsField {
             }
         }
 
-        $session->set("permissions", array_unique($permissions));
+        //set allowed
+        //action array
+        $peraction = [];
+        foreach ($this->getConfig()['account_member']['permissions'] as $val) {
+            $peraction[$val['value']] = $val['action'];
+        }
+
+        $allowed = [];
+        foreach (array_unique($permissions) as $per) {
+            if (isset($peraction[$per])) {
+                foreach ($peraction[$per] as $val) {
+                    $allowed[] = $val;
+                }
+            }
+        }
+
+        $session->set("allowed", array_unique($allowed));
 
         return $this;
     }
