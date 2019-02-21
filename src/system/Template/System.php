@@ -123,6 +123,13 @@ class System {
                 //init controller
                 $obj = $objfactory($connect, $config['controller'], $router, $code, $session, $sysconfig, []);
 
+                //checkpermisison
+                if ($this->checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
+                    echo "You don't have permission to access";
+                    exit;
+                }
+
+
                 $naction = "";
                 for ($i = 0; $i < strlen($action); $i++) {
                     if ($action[$i] == "-") {
@@ -132,6 +139,8 @@ class System {
                         $naction = $naction . $action[$i];
                     }
                 }
+
+
 
                 //echo method exists
                 if (!method_exists($obj, $naction . "Action")) {
@@ -165,13 +174,13 @@ class System {
 
                 return [
                     "parameters" => $parameters,
-                    "paramjs" => $paramjs,
-                    "view_file" => $view_dir . $controller . '/' . $action . '.tami',
-                    "layout" => $layout,
-                    "view_dir" => $view_dir,
-                    "sysconfig" => $sysconfig,
-                    "viewer" => $obj->getViewer(),
-                    "code" => $obj->getCode()
+                    "paramjs"    => $paramjs,
+                    "view_file"  => $view_dir . $controller . '/' . $action . '.tami',
+                    "layout"     => $layout,
+                    "view_dir"   => $view_dir,
+                    "sysconfig"  => $sysconfig,
+                    "viewer"     => $obj->getViewer(),
+                    "code"       => $obj->getCode()
                 ];
             } else {
                 echo "Not found controller config";
@@ -241,9 +250,9 @@ class System {
 
                         return [
                             "controller" => $config['router'][$module][$controller],
-                            "factory" => $factory,
-                            "view_dir" => DIR_ROOT . 'module/' . $val . '/view/',
-                            "layout" => $config['view_manager']['layout'],
+                            "factory"    => $factory,
+                            "view_dir"   => DIR_ROOT . 'module/' . $val . '/view/',
+                            "layout"     => $config['view_manager']['layout'],
                         ];
                     } else {
                         echo 'Controller Not found';
@@ -255,6 +264,39 @@ class System {
                 exit;
             }
         }
+    }
+
+    //check permission
+    public function checkPermission($allowed_actions, $module, $controller, $action, $config) {
+
+        //if allowed
+        if (in_array("$module/$controller/$action", $allowed_actions)) {
+            return true;
+        }
+
+        //check outside router
+        $outsideRouter = $config['outsideRouter'];
+        foreach ($outsideRouter as $val) {
+            if (isset($val['module'])) {
+                if ($val['module'] == $module) {//module
+                    if (isset($val['controller'])) {
+                        if ($val['controller'] == $controller) {//controller
+                            if (isset($val['action'])) {
+                                if ($val['action'] == $action) {//action
+                                    return true;
+                                }
+                            } else {
+                                return true;
+                            }
+                        }
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 }
