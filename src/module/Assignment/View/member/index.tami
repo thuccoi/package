@@ -103,8 +103,8 @@
                 <h4 class="panel-title">Hoạt động gần đây</h4>
             </div>
             <div class="panel-body">
-                <ul  id="js-role-activitys" class="timeline timeline-simple"></ul>
-                <a  id="js-role-loadmore" data-start="0" onclick="Role.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+                <ul  id="js-member-activitys" class="timeline timeline-simple"></ul>
+                <a  id="js-member-loadmore" data-start="0" onclick="Member.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
             </div>
         </div>
         <!-- End .panel -->
@@ -119,5 +119,10 @@ $this->css('/tami/css/assignment/member.css')
 ?>
 
 <script>
+    $(document).ready(function () {
 
+        Member.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);
+
+
+    });
 </script>
