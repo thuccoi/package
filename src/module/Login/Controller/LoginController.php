@@ -58,7 +58,7 @@ class LoginController extends \system\Template\AbstractController {
                     if ($val->isActivate()) {
 
                         //setViewer session
-                        $val->setViewer($this->getSession());
+                        $val->setViewer($this->getSession(), $this->getConfig());
 
                         $this->getCode()->success("Đăng nhập thành công", [], $this->urlInside("application"));
                     }

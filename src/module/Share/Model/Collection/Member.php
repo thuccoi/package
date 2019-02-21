@@ -62,7 +62,7 @@ class Member extends \module\Share\Model\Common\AbsField {
     }
 
     //set viewer session
-    public function setViewer($session) {
+    public function setViewer($session, $config) {
         //set session
         $session->set("auth", 1);
 
@@ -85,7 +85,7 @@ class Member extends \module\Share\Model\Common\AbsField {
         //set allowed_actions
         //action array
         $peraction = [];
-        foreach ($this->getConfig()['account_member']['permissions'] as $val) {
+        foreach ($config['account_member']['permissions'] as $val) {
             $peraction[$val['value']] = $val['action'];
         }
 
