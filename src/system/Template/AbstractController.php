@@ -46,7 +46,7 @@ abstract class AbstractController {
                         "app"         => $session->get("app"),
                         "user"        => $session->get("user"),
                         "member"      => $session->get("member"),
-                        "permissions" => $session->get("permissions")
+                        "allowed" => $session->get("allowed")
             ];
 
             //make tami code
