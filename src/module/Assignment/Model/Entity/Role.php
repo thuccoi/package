@@ -7,11 +7,15 @@ class Role extends \module\Share\Model\Common\AbsEntity {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
+    private $permissiontorole_entity;
+
     //set properties code
     public function __construct($connect, \system\Helper\Code $code, $config) {
 
         // $dm is a DocumentManager instance we should already have
         $this->init($connect, $code, $config);
+
+        $this->permissiontorole_entity = new \module\Assignment\Model\Link\PermissionToRole($connect, $code, $config);
     }
 
     public function create($data) {
@@ -91,14 +95,14 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             //add permission
             if (\system\Helper\Validate::isArray($data->permission)) {
                 foreach ($data->permission as $val) {
-                    $per = new \module\Assignment\Model\Collection\PermissionToRole();
-                    $per->setPermission($val)
-                            ->setRole($obj)
-                            ->setAppId($data->viewer->app->id)
-                            ->setCreatorId($data->viewer->member->id);
 
-                    $this->dm->persist($per);
-                    $this->dm->flush();
+                    //add permission
+                    $this->permissiontorole_entity->add((object) [
+                                "permission" => $val,
+                                "role_id"    => $obj->getId(),
+                                "app_id"     => $data->viewer->app->id,
+                                "creator_id" => $data->viewer->member->id
+                    ]);
                 }
             }
 
@@ -153,45 +157,32 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             if (\system\Helper\Validate::isArray($data->permission)) {
                 $oldper = $obj->getPermissions();
 
-                //name array
-                $pername = [];
-                foreach ($this->getConfig()['account_member']['permissions'] as $val) {
-                    $pername[$val['value']] = $val['name'];
-                }
+               
 
                 //add new
                 foreach ($data->permission as $val) {
                     if (!in_array($val, $oldper)) {
-                        $per = new \module\Assignment\Model\Collection\PermissionToRole();
-                        $per->setPermission($val)
-                                ->setRole($obj)
-                                ->setAppId($data->viewer->app->id)
-                                ->setCreatorId($data->viewer->member->id);
 
-                        $this->dm->persist($per);
-                        $this->dm->flush();
-
-
-                        if (isset($pername[$val])) {
-                            $editinfo [] = "<div class='timeline-content'>Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được thêm quyền <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$pername[$val] }</a></div>";
-                        }
+                        //add permission
+                        $this->permissiontorole_entity->add((object) [
+                                    "permission" => $val,
+                                    "role_id"    => $obj->getId(),
+                                    "app_id"     => $data->viewer->app->id,
+                                    "creator_id" => $data->viewer->member->id
+                        ]);
                     }
                 }
 
                 //remove old
                 foreach ($oldper as $val) {
                     if (!in_array($val, $data->permission)) {
-                        $this->dm->createQueryBuilder(\module\Assignment\Model\Collection\PermissionToRole::class)
-                                ->field('permission')->equals($val)
-                                ->field('app_id')->equals($data->viewer->app->id)
-                                ->remove()
-                                ->getQuery()
-                                ->execute()
-                        ;
-
-                        if (isset($pername[$val])) {
-                            $editinfo [] = "<div class='timeline-content'>Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được loại bỏ quyền quyền <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$pername[$val] }</a></div>";
-                        }
+                        //add permission
+                        $this->permissiontorole_entity->remove((object) [
+                                    "permission" => $val,
+                                    "role_id"    => $obj->getId(),
+                                    "app_id"     => $data->viewer->app->id,
+                                    "creator_id" => $data->viewer->member->id
+                        ]);
                     }
                 }
             }

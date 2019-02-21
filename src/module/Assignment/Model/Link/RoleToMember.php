@@ -67,7 +67,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
                 ->execute();
 
         if ($count) {
-            $this->code->forbidden("Member has existed in this App");
+            $this->code->forbidden("Role has existed in this Member");
         }
 
         try {
@@ -96,7 +96,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
             ]);
 
 
-            return $member;
+            return $obj;
         } catch (\MongoException $ex) {
             throw $ex;
         }
