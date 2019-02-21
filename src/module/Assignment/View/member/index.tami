@@ -1,7 +1,7 @@
 <!-- Start .page-content-inner -->
 <div id="page-header" class="clearfix">
     <div class="page-header">
-        <h2>Danh sách các thành viên</h2>
+        <h2>Bổ nhiệm</h2>
         <span class="txt">Danh sách các thành viên trong ứng dụng.</span>
     </div>
     <div class="header-stats">
@@ -9,3 +9,110 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <!-- Start .row -->
+    <div class="col-lg-9 col-md-8">
+        <!-- col-lg-9 start here -->
+
+        <div class="panel toggle">
+            <!--Start .panel-->
+            <div class="panel-heading">
+                <h4 class="panel-title">Bảng thành viên với các vai trò</h4>
+            </div>
+            <div class="panel-body">
+
+                <div  class="table-fix-left assignment">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th class="per10">
+
+                                </th>
+
+                                <?=
+                                \system\Helper\ArrayCallback::render($roles, function($e) {
+                                    return '<th>' . $e->getName() . '</th>';
+                                })
+                                ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            echo \system\Helper\ArrayCallback::render($members, function($mem) use($roles) {
+                                ?>
+                                <tr >
+                                    <th  class="td-left user">
+
+                                        <div class="avatar">
+                                            <img src="/static/img/avatars/<?= rand(1, 10) ?>.jpg">
+                                        </div>
+                                        <div class="txt">
+                                            <h4 class="name">
+                                                <?= $mem->getUser()->getName() ?>
+                                            </h4>
+                                            <p class="email">
+                                                <?= $mem->getUser()->getEmail() ?>
+                                            </p>
+                                        </div>
+
+                                    </th>
+                                    <?=
+                                    \system\Helper\ArrayCallback::render($roles, function($e) use($mem) {
+
+
+
+                                        $id = "{$mem->getId()}-{$e->getId()}";
+
+                                        //checked
+                                        $checked = '';
+
+
+                                        return '<td>
+                                                    <div class="checkbox-custom">
+                                                        <input type="checkbox" ' . $checked . ' value="' . $e->getId() . '" id="' . $id . '">
+                                                        <label class="" for="' . $id . '">' . $e->getName() . '</label>
+                                                    </div>
+                                                </td>';
+                                    })
+                                    ?>
+                                </tr>
+                                <?php
+                            });
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--End .panel-->
+
+
+    </div>
+    <!-- col-lg-6 end here -->
+    <div class="col-lg-3 col-md-4">
+        <!-- col-lg-6 start here -->
+        <div class="panel panel-activity panel-default plain toggle ">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Hoạt động gần đây</h4>
+            </div>
+            <div class="panel-body">
+                <ul  id="js-role-activitys" class="timeline timeline-simple"></ul>
+                <a  id="js-role-loadmore" data-start="0" onclick="Role.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+            </div>
+        </div>
+        <!-- End .panel -->
+    </div>
+    <!-- col-lg-6 end here -->
+</div>
+<!-- End .row -->
+
+<?php
+$this->css('/tami/css/assignment/member.css');
+?>
+
+<script>
+
+</script>

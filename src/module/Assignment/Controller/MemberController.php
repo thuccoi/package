@@ -15,6 +15,8 @@ class MemberController extends \system\Template\AbstractController {
     }
 
     public function indexAction() {
+        
+        
         $roles = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\Role::class)
                 ->field('app_id')->equals($this->getViewer()->app->id)
                 ->getQuery()
