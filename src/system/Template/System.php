@@ -255,10 +255,37 @@ class System {
     //check permission
     public static function checkPermission($allowed_actions, $module, $controller, $action, $config) {
 
-        //if allowed
-        if (in_array("$module/$controller/$action", $allowed_actions)) {
-            return true;
+
+        foreach ($allowed_actions as $val) {
+
+
+            if ("$module/$controller/$action" == $val) {
+                return true;
+            }
+
+            if ($val == "*") {
+                return true;
+            }
+
+
+            if (strpos($val, "*") !== false) {
+                $rr = explode("/", $val);
+
+                switch (count($rr)) {
+                    case 2:
+                        if ($module == $rr[0]) {
+                            return true;
+                        }
+                        break;
+                    case 3:
+                        if ($module == $rr[0] && $controller == $rr[1]) {
+                            return true;
+                        }
+                        break;
+                }
+            }
         }
+
 
         return false;
     }

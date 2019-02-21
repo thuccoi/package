@@ -113,6 +113,15 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
         }
 
 
+        //input permission
+        if (\system\Helper\Validate::isEmpty($data->permission)) {
+            $this->code->forbidden("permission is require");
+        }
+
+        if (!\system\Helper\Validate::isString($data->permission)) {
+            $this->code->forbidden("type input permission is not string");
+        }
+
         //input role id 
         if (\system\Helper\Validate::isEmpty($data->role_id)) {
             $this->code->forbidden("role_id is require");
@@ -128,6 +137,7 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
         }
 
         $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\PermissionToRole::class)
+                ->field('permission')->equals($data->permission)
                 ->field('role.id')->equals($data->role_id)
                 ->field('app_id')->equals($data->app_id)
                 ->remove()
