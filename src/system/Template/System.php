@@ -124,7 +124,7 @@ class System {
                 $obj = $objfactory($connect, $config['controller'], $router, $code, $session, $sysconfig, []);
 
                 //checkpermisison
-                if (self::checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
+                if (!self::checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
                     echo "You don't have permission to access";
                     exit;
                 }
