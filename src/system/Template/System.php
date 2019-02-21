@@ -28,8 +28,7 @@ class System {
 
 
                 if (!file_exists($init["view_file"])) {
-                    echo "View file: {$init["view_file"]} not exists";
-                    exit;
+                    $init["code"]->notfound("View file: {$init["view_file"]} not exists");
                 }
 
                 //set view dir
@@ -46,8 +45,7 @@ class System {
 
                     //check file layout exists
                     if (!file_exists($init["layout"])) {
-                        echo "Layout: {$init["layout"]} not exists";
-                        exit;
+                        $init["code"]->notfound("Layout: {$init["layout"]} not exists");
                     }
 
                     $layout->showLayout();
@@ -55,12 +53,10 @@ class System {
                     $layout->showViewFile();
                 }
             } else {
-                echo "Not exists view file";
-                exit;
+                $init["code"]->notfound("Not exists view file");
             }
         } else {
-            echo "system not initialize";
-            exit;
+            $init["code"]->notfound("system not initialize");
         }
     }
 
@@ -106,14 +102,13 @@ class System {
         $session->working();
 
         //config of module
-        $config = self::getModuleConfig($module, $controller, $session, $sysconfig);
+        $config = self::getModuleConfig($module, $controller, $session, $sysconfig, $code);
 
         if ($config) {
             if (isset($config['controller'])) {
 
                 if (!isset($config['factory'])) {
-                    echo "Not found factory in module config";
-                    exit;
+                    $code->notfound("Not found factory in module config");
                 }
 
                 $factory = $config['factory'];
@@ -125,8 +120,7 @@ class System {
 
                 //checkpermisison
                 if (!self::checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
-                    echo "You don't have permission to access";
-                    exit;
+                    $code->forbidden("You don't have permission to access");
                 }
 
 
@@ -144,8 +138,7 @@ class System {
 
                 //echo method exists
                 if (!method_exists($obj, $naction . "Action")) {
-                    echo "Method " . $naction . "Action(){...} not exists in {$config['controller']}";
-                    exit;
+                    $code->notfound("Method " . $naction . "Action(){...} not exists in {$config['controller']}");
                 }
 
                 //get parameters 
@@ -183,16 +176,14 @@ class System {
                     "code"       => $obj->getCode()
                 ];
             } else {
-                echo "Not found controller config";
-                exit;
+                $code->notfound("Not found controller config");
             }
         } else {
-            echo "Not get module config";
-            exit;
+            $code->notfound("Not get module config");
         }
     }
 
-    public static function getModuleConfig($module, $controller, $session, $sysconfig) {
+    public static function getModuleConfig($module, $controller, $session, $sysconfig, $code) {
         //load config of module
         foreach (TAMI_MODULE as $val) {
             $classname = $val . '\\Module';
@@ -213,13 +204,11 @@ class System {
 
                 //check view manager
                 if (!isset($config['view_manager'])) {
-                    echo "Not config view manager";
-                    exit;
+                    $code->notfound("Not config view manager");
                 }
 
                 if (!isset($config['view_manager']['layout'])) {
-                    echo "Not config layout of view manager";
-                    exit;
+                    $code->notfound("Not config layout of view manager");
                 }
 
 
@@ -228,21 +217,18 @@ class System {
 
                     //get factory
                     if (!isset($config['controller']) || !$config['controller']) {
-                        echo "Not found config controller in module config: {$val}";
-                        exit;
+                        $code->notfound("Not found config controller in module config: {$val}");
                     }
 
                     if (!isset($config['controller']['factories'])) {
-                        echo "Not found config factories in module config: {$val}";
-                        exit;
+                        $code->notfound("Not found config factories in module config: {$val}");
                     }
 
                     //accept controller
                     if (isset($config['router'][$module][$controller])) {
 
                         if (!isset($config['controller']['factories'][$config['router'][$module][$controller]])) {
-                            echo "{$config['router'][$module][$controller]} has not factory";
-                            exit;
+                            $code->notfound("{$config['router'][$module][$controller]} has not factory");
                         }
 
                         //factory of controller
@@ -255,13 +241,11 @@ class System {
                             "layout"     => $config['view_manager']['layout'],
                         ];
                     } else {
-                        echo 'Controller Not found';
-                        exit;
+                        $code->notfound('Controller Not found');
                     }
                 }
             } else {
-                echo "Module not config router";
-                exit;
+                $code->notfound("Module not config router");
             }
         }
     }
