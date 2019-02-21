@@ -6,12 +6,14 @@ class RoleController extends \system\Template\AbstractController {
 
     //entity user
     protected $entity;
+    protected $entity_pertorole;
 
     public function __construct($connect, \system\Router $router, \system\Helper\Code $code, \system\Session $session, array $config = null, array $options = null) {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity
         $this->entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config);
+        $this->entity_pertorole = new \module\Assignment\Model\Link\PermissionToRole($connect, $code, $config);
     }
 
     public function indexAction() {
@@ -42,6 +44,52 @@ class RoleController extends \system\Template\AbstractController {
             "roles"   => $objs,
             "members" => $members
         ];
+    }
+
+    public function hasPermissionAction() {
+
+        $permission = $this->getCode()->post('permission');
+        $roleid = $this->getCode()->post('role_id');
+
+        $count = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\PermissionToRole::class)
+                ->field('permission')->equals($permission)
+                ->field('role.id')->equals($roleid)
+                ->field('app_id')->equals($this->getViewer()->app->id)
+                ->count()
+                ->getQuery()
+                ->execute();
+
+        $this->getCode()->success("ok", ["status" => ($count > 0)]);
+    }
+
+    public function removePermissionAction() {
+
+        $data = (object) [
+                    "permission" => $this->getCode()->post('permission'),
+                    "role_id"    => $this->getCode()->post('role_id')
+        ];
+
+        $data->app_id = $this->getViewer()->app->id;
+        $data->creator_id = $this->getViewer()->member->id;
+
+        $this->entity_pertorole->remove($data);
+
+        $this->getCode()->success("ok");
+    }
+
+    public function addPermissionAction() {
+
+        $data = (object) [
+                    "permission" => $this->getCode()->post('permission'),
+                    "role_id"    => $this->getCode()->post('role_id')
+        ];
+
+        $data->app_id = $this->getViewer()->app->id;
+        $data->creator_id = $this->getViewer()->member->id;
+
+        $this->entity_pertorole->add($data);
+
+        $this->getCode()->success("ok");
     }
 
     public function createFormAction() {

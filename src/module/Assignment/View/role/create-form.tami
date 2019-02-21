@@ -95,7 +95,7 @@
             </div>
             <div class="panel-body">
                 <ul  id="js-role-activitys" class="timeline timeline-simple"></ul>
-                <a  id="js-role-loadmore" data-start="0" onclick="Role.showCreateLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+                <a  id="js-role-loadmore" data-start="0" onclick="AssignmentRole.showCreateLog('#js-role-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
             </div>
         </div>
         <!-- End .panel -->
@@ -129,7 +129,7 @@ $this->js("/static/js/pages/forms-advanced.js")
 <script>
     
     $(document).ready(function () {
-        Role.showCreateLog('#js-role-activitys', TAMI.pagedata.appid);
+        AssignmentRole.showCreateLog('#js-role-activitys', TAMI.pagedata.appid);
     });
     
     $('select[name="permission[]"]').bootstrapDualListbox({
