@@ -139,6 +139,11 @@ trait FieldDefault {
         return $this->token;
     }
 
+    public function setToken($token) {
+        $this->token = $token;
+        return $this;
+    }
+
     public function getCreateAt() {
         if ($this->create_at) {
             return \system\Helper\Str::toTimeString($this->create_at);

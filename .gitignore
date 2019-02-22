@@ -1,4 +1,5 @@
 nbproject
+/nbproject/private/
 vendor/*
 !vendor/autoload.php
 composer.lock

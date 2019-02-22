@@ -14,6 +14,11 @@
             "module\\": "src/module/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require": {
         "doctrine/mongodb": "dev-master",
         "alcaeus/mongo-php-adapter": "dev-master",
@@ -25,5 +30,8 @@
         "platform": {
             "ext-mongo": "1.6.16"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
     }
 }

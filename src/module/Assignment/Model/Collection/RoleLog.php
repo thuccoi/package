@@ -20,7 +20,7 @@ class RoleLog extends \module\Share\Model\Common\AbsField {
      */
     private $role_id;
 
-    public function __construct($role_id, $metatype = "", $message = "", $app_id = "", $creator_id = "") {
+    public function __construct($role_id = "", $metatype = "", $message = "", $app_id = "", $creator_id = "") {
         $this->initLog($metatype, $message, $app_id, $creator_id);
         $this->role_id = $role_id;
     }
