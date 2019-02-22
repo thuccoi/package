@@ -4,6 +4,8 @@ namespace Tests\module\Assignment\Model\Log;
 
 use PHPUnit\Framework\TestCase;
 use module\Assignment\Model\Log\Role;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 class RoleLog extends TestCase {
 
@@ -68,8 +70,37 @@ class RoleLog extends TestCase {
     }
 
     public function testFind() {
-        $foo = true;
-        $this->assertTrue($foo);
+        
+        $id = new \MongoId();
+        $documentexperted = new \module\Assignment\Model\Collection\RoleLog();
+        $documentexperted->setId($id);
+        
+        //mockup
+        $configMock = [];
+
+        // Now, mock the repository so it returns the mock of the employee
+        $logRepository = $this->createMock(ObjectRepository::class);
+      
+ 
+        $logRepository->expects($this->any())
+                ->method('find')
+                ->willReturn($documentexperted);
+
+        // Last, mock the EntityManager to return the mock of the repository
+        $connectMock = $this->createMock(ObjectManager::class);
+        
+        $connectMock->expects($this->any())
+                ->method('getRepository')
+                ->willReturn($logRepository);
+
+
+        //test
+        $codeMock = new \system\Helper\Code($configMock, $connectMock);
+
+        $entityMock = new Role($connectMock, $codeMock, $configMock);
+
+
+        $this->assertEquals($documentexperted, $entityMock->find($id));
     }
 
 }
