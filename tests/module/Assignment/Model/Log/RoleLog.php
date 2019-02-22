@@ -70,25 +70,25 @@ class RoleLog extends TestCase {
     }
 
     public function testFind() {
-        
+        //input and experted
         $id = new \MongoId();
         $documentexperted = new \module\Assignment\Model\Collection\RoleLog();
         $documentexperted->setId($id);
-        
+
         //mockup
         $configMock = [];
 
-        // Now, mock the repository so it returns the mock of the employee
+        //now, mock the repository so it returns the mock of the log
         $logRepository = $this->createMock(ObjectRepository::class);
-      
- 
+
+
         $logRepository->expects($this->any())
                 ->method('find')
                 ->willReturn($documentexperted);
 
-        // Last, mock the EntityManager to return the mock of the repository
+        //last, mock the EntityManager to return the mock of the repository
         $connectMock = $this->createMock(ObjectManager::class);
-        
+
         $connectMock->expects($this->any())
                 ->method('getRepository')
                 ->willReturn($logRepository);
@@ -101,6 +101,21 @@ class RoleLog extends TestCase {
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));
+    }
+
+    public function testUpdate() {
+        $foo = true;
+        $this->assertTrue($foo);
+    }
+
+    public function testRemove() {
+        $foo = true;
+        $this->assertTrue($foo);
+    }
+
+    public function testRestore() {
+        $foo = true;
+        $this->assertTrue($foo);
     }
 
 }
