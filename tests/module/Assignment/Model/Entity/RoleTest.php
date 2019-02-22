@@ -131,7 +131,6 @@ class RoleTest extends TestCase {
         $name = "test";
         $description = "test";
 
-
         $app_id = "123";
         $creator_id = "123";
         $token = "123";
@@ -172,14 +171,18 @@ class RoleTest extends TestCase {
 
         //now, mock the repository so it returns the mock of the log
         $roleRepository = $this->createMock(ObjectRepository::class);
-        $roleRepository->expects($this->at(0))
+
+        $roleRepository->expects($this->any())
                 ->method('find')
-                ->with($id)
-                ->willReturn($olddocument);
-        $roleRepository->expects($this->at(1))
-                ->method('find')
-                ->with($parent)
-                ->willReturn($parentdocument);
+                ->will($this->returnCallback(function($e) use($id, $parent, $olddocument, $parentdocument ) {
+                            if ($e == (string) $id) {
+                                return $olddocument;
+                            } else if ($e == (string) $parent) {
+                                return $parentdocument;
+                            }
+                            return null;
+                        }));
+
 
         $connectMock->expects($this->any())
                 ->method('getRepository')
