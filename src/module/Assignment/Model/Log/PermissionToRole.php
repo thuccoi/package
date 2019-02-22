@@ -54,7 +54,10 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
 
             //add new log
             $log = new \module\Assignment\Model\Collection\PermissionToRoleLog($data->role_id, $data->metatype, $data->message, $data->app_id, $data->creator_id);
-
+            
+            //for test
+            $this->inputTest($log, $data);
+            
             $this->dm->persist($log);
             $this->dm->flush();
 
@@ -80,7 +83,7 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
 
     public function find($id, $type = '') {
         //find by id
-        return $this->dm->getRepository(\module\Assignment\Model\Collection\RoleLog::class)->find($id);
+        return $this->dm->getRepository(\module\Assignment\Model\Collection\PermissionToRoleLog::class)->find($id);
     }
 
 }

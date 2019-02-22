@@ -3,11 +3,11 @@
 namespace Tests\module\Assignment\Model\Log;
 
 use PHPUnit\Framework\TestCase;
-use module\Assignment\Model\Log\Role;
+use module\Assignment\Model\Log\PermissionToRole;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 
-class RoleLog extends TestCase {
+class PermissionToRoleTest extends TestCase {
 
     public function testAdd() {
         //input
@@ -21,7 +21,7 @@ class RoleLog extends TestCase {
         $create_at = new \DateTime();
 
         //expeted
-        $documentexperted = new \module\Assignment\Model\Collection\RoleLog();
+        $documentexperted = new \module\Assignment\Model\Collection\PermissionToRoleLog();
         $documentexperted->setId($id);
         $documentexperted->setToken($token);
         $documentexperted->setAppId($app_id);
@@ -50,7 +50,7 @@ class RoleLog extends TestCase {
 
         $codeMock = new \system\Helper\Code($configMock, $connectMock);
 
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock);
 
         //input
         $data = (object) [
@@ -72,7 +72,7 @@ class RoleLog extends TestCase {
     public function testFind() {
         //input and experted
         $id = new \MongoId();
-        $documentexperted = new \module\Assignment\Model\Collection\RoleLog();
+        $documentexperted = new \module\Assignment\Model\Collection\PermissionToRoleLog();
         $documentexperted->setId($id);
 
         //mockup
@@ -97,7 +97,7 @@ class RoleLog extends TestCase {
         //test
         $codeMock = new \system\Helper\Code($configMock, $connectMock);
 
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock);
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));
