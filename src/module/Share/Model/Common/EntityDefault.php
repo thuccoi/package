@@ -51,4 +51,26 @@ trait EntityDefault {
         return $this->dm;
     }
 
+    public function inputTest(&$obj, $data) {
+        //token
+        if (!\system\Helper\Validate::isEmpty($data->token)) {
+            $obj->setToken($data->token);
+        }
+
+        //id
+        if (!\system\Helper\Validate::isEmpty($data->id)) {
+            $obj->setId($data->id);
+        }
+
+        //create_at
+        if (!\system\Helper\Validate::isEmpty($data->create_at)) {
+            $obj->setCreateAt($data->create_at);
+        }
+
+        //update_at
+        if (!\system\Helper\Validate::isEmpty($data->update_at)) {
+            $obj->setUpdateAt($data->update_at);
+        }
+    }
+
 }

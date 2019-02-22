@@ -55,25 +55,8 @@ class Role extends \module\Share\Model\Common\AbsLink {
             //add new log
             $log = new \module\Assignment\Model\Collection\RoleLog($data->role_id, $data->metatype, $data->message, $data->app_id, $data->creator_id);
 
-            //token
-            if (!\system\Helper\Validate::isEmpty($data->token)) {
-                $log->setToken($data->token);
-            }
-
-            //id
-            if (!\system\Helper\Validate::isEmpty($data->id)) {
-                $log->setId($data->id);
-            }
-
-            //create_at
-            if (!\system\Helper\Validate::isEmpty($data->create_at)) {
-                $log->setCreateAt($data->create_at);
-            }
-
-            //update_at
-            if (!\system\Helper\Validate::isEmpty($data->update_at)) {
-                $log->setUpdateAt($data->update_at);
-            }
+            //for test
+            $this->inputTest($log, $data);
 
             $this->dm->persist($log);
             $this->dm->flush();
