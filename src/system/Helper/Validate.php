@@ -146,6 +146,16 @@ class Validate {
             return false;
         }
         
+
+        //allowed_actions
+        if (!static::isObject($obj->allowed_actions)) {
+            return false;
+        }
+
+        if (static::isEmpty($obj->allowed_actions)) {
+            return false;
+        }
+        
         return true;
     }
 

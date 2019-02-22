@@ -3,9 +3,11 @@
 namespace Tests\module\Assignment\Model\Log;
 
 use PHPUnit\Framework\TestCase;
-use module\Assignment\Model\Log\Role;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
+
+
+use module\Assignment\Model\Log\Role;
 
 class RoleTest extends TestCase {
 

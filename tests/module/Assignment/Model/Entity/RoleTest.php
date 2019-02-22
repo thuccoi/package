@@ -1,80 +1,97 @@
 <?php
 
-namespace Tests\module\Assignment\Model\Log;
+namespace Tests\module\Assignment\Model\Entity;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
+//entity
+use module\Assignment\Model\Entity\Role;
 
+class RoleTest extends TestCase {
 
-use module\Assignment\Model\Log\PermissionToRole;
-
-class PermissionToRoleTest extends TestCase {
-
-    public function testAdd() {
+    public function testCreate() {
         //input
         $id = new \MongoId();
         $token = "123";
         $app_id = "123";
-        $role_id = "123";
+        $parentid = new \MongoId();
+        $name = "123";
         $creator_id = "123";
         $metatype = "123";
-        $message = "123";
         $create_at = new \DateTime();
 
         //expeted
-        $documentexperted = new \module\Assignment\Model\Collection\PermissionToRoleLog();
+        $parentexpected = new \module\Assignment\Model\Collection\Role();
+        $parentexpected->setId($parentid);
+
+
+        $documentexperted = new \module\Assignment\Model\Collection\Role();
         $documentexperted->setId($id);
         $documentexperted->setToken($token);
         $documentexperted->setAppId($app_id);
-        $documentexperted->setRoleId($role_id);
+        $documentexperted->setName($name);
         $documentexperted->setCreatorId($creator_id);
         $documentexperted->setMetatype($metatype);
-        $documentexperted->setMessage($message);
         $documentexperted->setCreateAt($create_at);
         $documentexperted->setUpdateAt($create_at);
+        $documentexperted->setParent($parentexpected);
 
         //mockup
-        $configMock = [];
+        $configMock = [
+            'URL_ROOT' => 'test'
+        ];
 
         $connectMock = $this->getMockBuilder('DocumentManager')
-                ->setMethods(array('persist', 'flush'))
+                ->setMethods(array('persist', 'flush', 'getRepository', 'findOneBy'))
                 ->disableOriginalConstructor()
                 ->getMock();
 
-        $connectMock->expects($this->once())
-                ->method('persist')
-                ->with($this->equalTo($documentexperted));
-        $connectMock->expects($this->once())
+        $connectMock->expects($this->any())
+                ->method('persist');
+        $connectMock->expects($this->any())
                 ->method('flush');
 
+        //now, mock the repository so it returns the mock of the log
+        $roleRepository = $this->createMock(ObjectRepository::class);
+        $roleRepository->expects($this->once())
+                ->method('findOneBy')
+                ->willReturn(null);
+
+        $roleRepository->expects($this->once())
+                ->method('find')
+                ->willReturn($parentexpected);
+
+        $connectMock->expects($this->any())
+                ->method('getRepository')
+                ->willReturn($roleRepository);
 
 
         $codeMock = new \system\Helper\Code($configMock, $connectMock);
 
-        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock);
+        $entityMock = new Role($connectMock, $codeMock, $configMock);
 
         //input
         $data = (object) [
                     "app_id"     => $app_id,
                     "creator_id" => $creator_id,
-                    "role_id"    => $role_id,
+                    "name"       => $name,
                     "metatype"   => $metatype,
-                    "message"    => $message,
                     "token"      => $token,
                     "id"         => $id,
+                    "parent"     => (string) $parentid,
                     "create_at"  => $create_at,
                     "update_at"  => $create_at,
         ];
 
         //test
-        $entityMock->add($data);
+        $entityMock->create($data);
     }
 
     public function testFind() {
         //input and experted
         $id = new \MongoId();
-        $documentexperted = new \module\Assignment\Model\Collection\PermissionToRoleLog();
+        $documentexperted = new \module\Assignment\Model\Collection\Role();
         $documentexperted->setId($id);
 
         //mockup
@@ -99,23 +116,28 @@ class PermissionToRoleTest extends TestCase {
         //test
         $codeMock = new \system\Helper\Code($configMock, $connectMock);
 
-        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock);
+        $entityMock = new Role($connectMock, $codeMock, $configMock);
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));
     }
 
-    public function testUpdate() {
+    public function testEdit() {
         $foo = true;
         $this->assertTrue($foo);
     }
 
-    public function testRemove() {
+    public function testDelete() {
         $foo = true;
         $this->assertTrue($foo);
     }
 
     public function testRestore() {
+        $foo = true;
+        $this->assertTrue($foo);
+    }
+
+    public function testIsSpiderweb() {
         $foo = true;
         $this->assertTrue($foo);
     }

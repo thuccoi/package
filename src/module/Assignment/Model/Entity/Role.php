@@ -15,15 +15,16 @@ class Role extends \module\Share\Model\Common\AbsEntity {
     }
 
     public function create($data) {
-
+        
         //field required
-        //viewer
-        if (\system\Helper\Validate::isEmpty($data->viewer)) {
-            $this->code->forbidden("viewer is require");
+        //app_id
+        if (\system\Helper\Validate::isEmpty($data->app_id)) {
+            $this->code->forbidden("app_id is require");
         }
 
-        if (!\system\Helper\Validate::isViewer($data->viewer)) {
-            $this->code->forbidden("viewer invalid");
+        //creator_id
+        if (\system\Helper\Validate::isEmpty($data->creator_id)) {
+            $this->code->forbidden("creator_id is require");
         }
 
         //name
@@ -66,13 +67,16 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $obj->setName($data->name)
                     ->setMetatype($data->metatype)
                     ->setParent($parent)
-                    ->setAppId($data->viewer->app->id)
-                    ->setCreatorId($data->viewer->member->id);
+                    ->setAppId($data->app_id)
+                    ->setCreatorId($data->creator_id);
 
             //description
             if (\system\Helper\Validate::isString($data->description)) {
                 $obj->setDescription($data->description);
             }
+
+            //for test
+            $this->inputTest($obj, $data);
 
             //save 
             $this->dm->persist($obj);
@@ -84,8 +88,8 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         "role_id"    => (string) $obj->getId(),
                         "metatype"   => "create",
                         "message"    => "Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được tạo mới",
-                        "app_id"     => $data->viewer->app->id,
-                        "creator_id" => $data->viewer->member->id
+                        "app_id"     => $data->app_id,
+                        "creator_id" => $data->creator_id
             ]);
 
             //permission to role entity
@@ -99,8 +103,8 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                     $perentity->add((object) [
                                 "permission" => $val,
                                 "role_id"    => $obj->getId(),
-                                "app_id"     => $data->viewer->app->id,
-                                "creator_id" => $data->viewer->member->id
+                                "app_id"     => $data->app_id,
+                                "creator_id" => $data->creator_id
                     ]);
                 }
             }
@@ -167,8 +171,8 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         $perentity->add((object) [
                                     "permission" => $val,
                                     "role_id"    => $obj->getId(),
-                                    "app_id"     => $data->viewer->app->id,
-                                    "creator_id" => $data->viewer->member->id
+                                    "app_id"     => $data->app_id,
+                                    "creator_id" => $data->creator_id
                         ]);
                     }
                 }
@@ -180,8 +184,8 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         $perentity->remove((object) [
                                     "permission" => $val,
                                     "role_id"    => $obj->getId(),
-                                    "app_id"     => $data->viewer->app->id,
-                                    "creator_id" => $data->viewer->member->id
+                                    "app_id"     => $data->app_id,
+                                    "creator_id" => $data->creator_id
                         ]);
                     }
                 }
@@ -197,8 +201,8 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                             "role_id"    => (string) $obj->getId(),
                             "metatype"   => "edit",
                             "message"    => $message,
-                            "app_id"     => $data->viewer->app->id,
-                            "creator_id" => $data->viewer->member->id
+                            "app_id"     => $data->app_id,
+                            "creator_id" => $data->creator_id
                 ]);
             }
 
@@ -240,18 +244,10 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         switch ($type) {
             case 'metatype':
                 return $this->dm->getRepository(\module\Assignment\Model\Collection\Role::class)->findOneBy(['metatype' => $id]);
-                break;
             default :
                 //find by id
                 $find = $this->dm->getRepository(\module\Assignment\Model\Collection\Role::class)->find($id);
-
-                //find by metatype
-                if (!$find) {
-                    $find = $this->dm->getRepository(\module\Assignment\Model\Collection\Role::class)->findOneBy(['metatype' => $id]);
-                }
-
                 return $find;
-                break;
         }
 
         return null;

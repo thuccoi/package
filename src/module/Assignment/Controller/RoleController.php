@@ -125,7 +125,8 @@ class RoleController extends \system\Template\AbstractController {
         ];
 
         //viewer
-        $data->viewer = $this->getViewer();
+        $data->app_id = $this->getViewer()->app->id;
+        $data->creator_id = $this->getViewer()->member->id;
 
         //create new obj
         $obj = $this->entity->create($data);
@@ -184,7 +185,8 @@ class RoleController extends \system\Template\AbstractController {
         ];
 
         //viewer
-        $data->viewer = $this->getViewer();
+        $data->app_id = $this->getViewer()->app->id;
+        $data->creator_id = $this->getViewer()->member->id;
 
         //edit the obj
         $obj = $this->entity->edit($id, $data);
