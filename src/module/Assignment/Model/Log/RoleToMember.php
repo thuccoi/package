@@ -64,6 +64,9 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
             //add new log
             $log = new \module\Assignment\Model\Collection\RoleToMemberLog($data->role_id, $data->member_id, $data->metatype, $data->message, $data->app_id, $data->creator_id);
 
+            //for test
+            $this->inputTest($log, $data);
+            
             $this->dm->persist($log);
             $this->dm->flush();
 
