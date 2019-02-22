@@ -54,6 +54,7 @@ class RoleTest extends TestCase {
 
         //now, mock the repository so it returns the mock of the log
         $roleRepository = $this->createMock(ObjectRepository::class);
+
         $roleRepository->expects($this->once())
                 ->method('findOneBy')
                 ->willReturn(null);
@@ -123,8 +124,82 @@ class RoleTest extends TestCase {
     }
 
     public function testEdit() {
-        $foo = true;
-        $this->assertTrue($foo);
+        //input 
+        $id = new \MongoId();
+        $parent = new \MongoId();
+
+        $name = "test";
+        $description = "test";
+
+
+        $app_id = "123";
+        $creator_id = "123";
+        $token = "123";
+        $create_at = new \DateTime();
+
+        $parentdocument = new \module\Assignment\Model\Collection\Role();
+        $parentdocument->setId($parent);
+
+        $olddocument = new \module\Assignment\Model\Collection\Role();
+        $olddocument->setId($id);
+        $olddocument->setToken($token);
+        $olddocument->setCreateAt($create_at);
+        $olddocument->setUpdateAt($create_at);
+
+        $documentexperted = new \module\Assignment\Model\Collection\Role();
+        $documentexperted->setId($id);
+        $documentexperted->setName($name);
+        $documentexperted->setDescription($description);
+        $documentexperted->setToken($token);
+        $documentexperted->setCreateAt($create_at);
+        $documentexperted->setUpdateAt($create_at);
+        $documentexperted->setParent($parentdocument);
+
+        //mockup
+        $configMock = [
+            'URL_ROOT' => 'test'
+        ];
+
+        $connectMock = $this->getMockBuilder('DocumentManager')
+                ->setMethods(array('persist', 'flush', 'getRepository'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $connectMock->expects($this->any())
+                ->method('persist');
+        $connectMock->expects($this->any())
+                ->method('flush');
+
+        //now, mock the repository so it returns the mock of the log
+        $roleRepository = $this->createMock(ObjectRepository::class);
+        $roleRepository->expects($this->at(0))
+                ->method('find')
+                ->with($id)
+                ->willReturn($olddocument);
+        $roleRepository->expects($this->at(1))
+                ->method('find')
+                ->with($parent)
+                ->willReturn($parentdocument);
+
+        $connectMock->expects($this->any())
+                ->method('getRepository')
+                ->willReturn($roleRepository);
+
+        $codeMock = new \system\Helper\Code($configMock, $connectMock);
+
+        $entityMock = new Role($connectMock, $codeMock, $configMock);
+
+        //input
+        $data = (object) [
+                    "name"        => $name,
+                    "description" => $description,
+                    "parent"      => (string) $parent,
+                    "app_id"      => $app_id,
+                    "creator_id"  => $creator_id
+        ];
+
+        //test
+        $this->assertEquals($documentexperted, $entityMock->edit($id, $data));
     }
 
     public function testDelete() {
