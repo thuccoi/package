@@ -15,7 +15,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
     }
 
     public function create($data) {
-        
+
         //field required
         //app_id
         if (\system\Helper\Validate::isEmpty($data->app_id)) {
@@ -102,7 +102,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                     //add permission
                     $perentity->add((object) [
                                 "permission" => $val,
-                                "role_id"    => $obj->getId(),
+                                "role_id"    => (string) $obj->getId(),
                                 "app_id"     => $data->app_id,
                                 "creator_id" => $data->creator_id
                     ]);
@@ -170,7 +170,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         //add permission
                         $perentity->add((object) [
                                     "permission" => $val,
-                                    "role_id"    => $obj->getId(),
+                                    "role_id"    => (string) $obj->getId(),
                                     "app_id"     => $data->app_id,
                                     "creator_id" => $data->creator_id
                         ]);
@@ -183,7 +183,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                         //add permission
                         $perentity->remove((object) [
                                     "permission" => $val,
-                                    "role_id"    => $obj->getId(),
+                                    "role_id"    => (string) $obj->getId(),
                                     "app_id"     => $data->app_id,
                                     "creator_id" => $data->creator_id
                         ]);
