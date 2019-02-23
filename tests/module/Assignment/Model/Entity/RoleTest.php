@@ -313,18 +313,192 @@ class RoleTest extends TestCase {
     }
 
     public function testDelete() {
-        $foo = true;
-        $this->assertTrue($foo);
+        //create mock
+        $connectMock = $this->getMockBuilder('DocumentManager')
+                ->setMethods(array('persist', 'flush', 'getRepository'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $connectMock->expects($this->any())
+                ->method('persist');
+        $connectMock->expects($this->any())
+                ->method('flush');
+
+        $codeMock = $this->getMockBuilder(\system\Helper\Code::class)
+                ->setMethods(array('forbidden', 'notfound', 'error'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $codeMock->expects($this->any())
+                ->method('forbidden')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('notfound')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('error')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+
+        //input
+        $id = new \MongoId();
+        $documentexperted = new \module\Assignment\Model\Collection\Role();
+        $documentexperted->setId($id);
+
+
+        $roleRepository = $this->createMock(ObjectRepository::class);
+        $roleRepository->expects($this->any())
+                ->method('find')
+                ->willReturn($documentexperted);
+
+        $connectMock->expects($this->any())
+                ->method('getRepository')
+                ->willReturn($roleRepository);
+
+        $configMock = [];
+        $entityMock = new Role($connectMock, $codeMock, $configMock);
+
+        //assert true
+        $this->assertTrue($entityMock->delete($id));
     }
 
     public function testRestore() {
-        $foo = true;
-        $this->assertTrue($foo);
+        //create mock
+        $connectMock = $this->getMockBuilder('DocumentManager')
+                ->setMethods(array('persist', 'flush', 'getRepository'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $connectMock->expects($this->any())
+                ->method('persist');
+        $connectMock->expects($this->any())
+                ->method('flush');
+
+        $codeMock = $this->getMockBuilder(\system\Helper\Code::class)
+                ->setMethods(array('forbidden', 'notfound', 'error'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $codeMock->expects($this->any())
+                ->method('forbidden')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('notfound')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('error')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+
+        //input
+        $id = new \MongoId();
+        $documentexperted = new \module\Assignment\Model\Collection\Role();
+        $documentexperted->setId($id);
+
+
+        $roleRepository = $this->createMock(ObjectRepository::class);
+        $roleRepository->expects($this->any())
+                ->method('find')
+                ->willReturn($documentexperted);
+
+        $connectMock->expects($this->any())
+                ->method('getRepository')
+                ->willReturn($roleRepository);
+
+        $configMock = [];
+        $entityMock = new Role($connectMock, $codeMock, $configMock);
+
+        //assert
+        $this->assertTrue($entityMock->restore($id));
     }
 
     public function testIsSpiderweb() {
-        $foo = true;
-        $this->assertTrue($foo);
+        //input
+        $rootid = new \MongoId();
+        $root = new \module\Assignment\Model\Collection\Role();
+        $root->setId($rootid);
+
+        $node1id = new \MongoId();
+        $node1 = clone $root;
+        $node1->setId($node1id);
+        $node1->setParent($root);
+
+
+        $node2id = new \MongoId();
+        $node2 = clone $root;
+        $node2->setId($node2id);
+        $node2->setParent($node1);
+
+
+
+        //create mock
+        $connectMock = $this->getMockBuilder('DocumentManager')
+                ->setMethods(array('persist', 'flush', 'getRepository'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $connectMock->expects($this->any())
+                ->method('persist');
+        $connectMock->expects($this->any())
+                ->method('flush');
+
+        $codeMock = $this->getMockBuilder(\system\Helper\Code::class)
+                ->setMethods(array('forbidden', 'notfound', 'error'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $codeMock->expects($this->any())
+                ->method('forbidden')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('notfound')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('error')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $configMock = [];
+
+        $entityMock = new Role($connectMock, $codeMock, $configMock);
+
+        //check false
+        $this->assertFalse($entityMock->isSpiderweb($node1, $root));
+
+        $this->assertFalse($entityMock->isSpiderweb($node2, $node1));
+
+        $this->assertFalse($entityMock->isSpiderweb($node2, $root));
+
+        //check true
+        $this->assertTrue($entityMock->isSpiderweb($node1, $node1));
+        $this->assertTrue($entityMock->isSpiderweb($node2, $node2));
+        $this->assertTrue($entityMock->isSpiderweb($root, $root));
+        $this->assertTrue($entityMock->isSpiderweb($root, $node1));
+        $this->assertTrue($entityMock->isSpiderweb($root, $node2)); 
+        $this->assertTrue($entityMock->isSpiderweb($node1, $node2));
     }
 
 }

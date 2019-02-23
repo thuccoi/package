@@ -223,6 +223,9 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $obj->delete();
             $this->dm->persist($obj);
             $this->dm->flush();
+            return true;
+        } else {
+            $this->code->notfound("Role not exists in system");
         }
     }
 
@@ -237,6 +240,9 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $obj->restore();
             $this->dm->persist($obj);
             $this->dm->flush();
+            return true;
+        } else {
+            $this->code->notfound("Role not exists in system");
         }
     }
 
