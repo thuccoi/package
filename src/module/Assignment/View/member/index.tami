@@ -96,8 +96,8 @@
                     <table class="members" >
                         <thead>
                             <tr>
-                                <th class="per10">
-
+                                <th class="td-left pl10 pt0">
+                                    Thành viên
                                 </th>
 
                                 <?=
@@ -122,7 +122,7 @@
                                                 <?= $mem->getUser()->getName() ?>
                                             </h4>
                                             <p class="email">
-                                                <?= $mem->getUser()->getEmail() ?>
+                                                <?= $mem->getAlias() ?>
                                             </p>
                                         </div>
 
