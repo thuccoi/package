@@ -5,8 +5,6 @@ namespace Tests\module\Assignment\Model\Log;
 use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
-
-
 use module\Assignment\Model\Log\Role;
 
 class RoleTest extends TestCase {
@@ -50,7 +48,29 @@ class RoleTest extends TestCase {
 
 
 
-        $codeMock = new \system\Helper\Code($configMock, $connectMock);
+        $codeMock = $this->getMockBuilder(\system\Helper\Code::class)
+                ->setMethods(array('forbidden', 'notfound', 'error'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $codeMock->expects($this->any())
+                ->method('forbidden')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('notfound')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('error')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
 
         $entityMock = new Role($connectMock, $codeMock, $configMock);
 
@@ -97,7 +117,29 @@ class RoleTest extends TestCase {
 
 
         //test
-        $codeMock = new \system\Helper\Code($configMock, $connectMock);
+        $codeMock = $this->getMockBuilder(\system\Helper\Code::class)
+                ->setMethods(array('forbidden', 'notfound', 'error'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $codeMock->expects($this->any())
+                ->method('forbidden')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('notfound')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
+        $codeMock->expects($this->any())
+                ->method('error')
+                ->will($this->returnCallback(function($e) {
+                            throw new \Exception($e);
+                        }));
+
 
         $entityMock = new Role($connectMock, $codeMock, $configMock);
 
