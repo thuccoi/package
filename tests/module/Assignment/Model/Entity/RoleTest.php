@@ -136,6 +136,11 @@ class RoleTest extends TestCase {
         $token = "123";
         $create_at = new \DateTime();
 
+        $permission = [
+            "abc",
+            "edf"
+        ];
+
         $parentdocument = new \module\Assignment\Model\Collection\Role();
         $parentdocument->setId($parent);
 
@@ -156,11 +161,30 @@ class RoleTest extends TestCase {
 
         //mockup
         $configMock = [
-            'URL_ROOT' => 'test'
+            'URL_ROOT'       => 'test',
+            'account_member' => [
+                'permissions' => [
+                    [
+                        "name"   => "abc",
+                        "value"  => "abc",
+                        "action" => [
+                            "abc",
+                            "abc"
+                        ]
+                    ],
+                    [
+                        "name"   => "edf",
+                        "value"  => "edf",
+                        "action" => [
+                            "edf"
+                        ]
+                    ]
+                ]
+            ]
         ];
 
         $connectMock = $this->getMockBuilder('DocumentManager')
-                ->setMethods(array('persist', 'flush', 'getRepository'))
+                ->setMethods(array('persist', 'flush', 'getRepository', 'createQueryBuilder'))
                 ->disableOriginalConstructor()
                 ->getMock();
 
@@ -183,10 +207,26 @@ class RoleTest extends TestCase {
                             return null;
                         }));
 
-
         $connectMock->expects($this->any())
                 ->method('getRepository')
                 ->willReturn($roleRepository);
+
+
+        //query builder
+        $mockCollection = $this->getMockBuilder(\Doctrine\MongoDB\Collection::class)
+                ->setMethods(array('createQueryBuilder', 'doCount'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $mockCollection->expects($this->any())
+                ->method('doCount')
+                ->willReturn(0);
+
+        $queryBuilder = new \Doctrine\MongoDB\Query\Builder($mockCollection);
+
+        $connectMock->expects($this->any())
+                ->method('createQueryBuilder')
+                ->willReturn($queryBuilder);
 
         $codeMock = new \system\Helper\Code($configMock, $connectMock);
 
@@ -196,6 +236,7 @@ class RoleTest extends TestCase {
         $data = (object) [
                     "name"        => $name,
                     "description" => $description,
+                    "permission"  => $permission,
                     "parent"      => (string) $parent,
                     "app_id"      => $app_id,
                     "creator_id"  => $creator_id
