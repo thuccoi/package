@@ -185,6 +185,7 @@
 
 <?php
 $this->css('/tami/css/assignment/member.css')
+        ->js("/static/js/pages/tables-basic.js")
         ->js('/tami/js/assignment/member.js');
 ?>
 
