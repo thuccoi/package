@@ -67,7 +67,9 @@ class MemberController extends \system\Template\AbstractController {
                 ->execute();
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
-
+        
+        $this->toParamJs('memberid', $id);
+        
         return [
             "member"  => $obj,
             "roles"   => $roles,
@@ -196,6 +198,60 @@ class MemberController extends \system\Template\AbstractController {
         }
 
         $this->getCode()->success("Lịch sử của ứng dụng {$app->getName()}", ['logs' => $applogs, 'hideloadmore' => $hideloadmore]);
+    }
+
+    public function editLogAction() {
+        $id = $this->getRouter()->getId();
+
+        $member = $this->getConnect()->getRepository(\module\Share\Model\Collection\Member::class)->find($id);
+        if (!$member) {
+            $this->getCode()->error("Not found member");
+        }
+
+        $start = (int) $this->getCode()->post('start');
+
+        //get length load more in config
+        $lenghtloadmore = (int) $this->getConfig()['render']['lenghtloadmore'];
+
+        //list add logs 
+        $qb = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\MemberLog::class)
+                ->hydrate(false)
+                ->field("user_id")->equals($member->getUser()->getId())
+                ->field("app_id")->equals($member->getApp()->getId())
+                ->sort('create_at', 'desc')
+                ->skip($start * $lenghtloadmore)
+                ->limit($lenghtloadmore)
+                ->getQuery()
+                ->execute();
+
+        $logs = [];
+
+        if ($qb) {
+            foreach ($qb as $val) {
+                $valrl = $val;
+                $valrl['create_at'] = \system\Helper\Str::toTimeString($val["create_at"]->toDateTime());
+                $logs[] = $valrl;
+            }
+        }
+
+        //numlogs
+        $numlogs = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\MemberLog::class)
+                ->hydrate(false)
+                ->field("user_id")->equals($member->getUser()->getId())
+                ->field("app_id")->equals($member->getApp()->getId())
+                ->count()
+                ->getQuery()
+                ->execute();
+
+        //hide button load more
+        $hideloadmore = 0;
+        if (count($logs) < $lenghtloadmore) {//less $lenghtloadmore documents
+            $hideloadmore = 1;
+        } else if ($numlogs == $start * $lenghtloadmore + $lenghtloadmore) {//or end of logs
+            $hideloadmore = 1;
+        }
+
+        $this->getCode()->success("Lịch sử của thành viên {$member->getUser()->getName()}", ['logs' => $logs, 'hideloadmore' => $hideloadmore]);
     }
 
 }
