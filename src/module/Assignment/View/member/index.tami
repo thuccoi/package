@@ -54,7 +54,7 @@
                                             <?= $mem->getUser()->getName() ?>
                                         </h4>
                                         <p class="email">
-                                            <?= $mem->getAlias() ?>
+                                            <?= $mem->getAlias() ? $mem->getAlias() : $mem->getUser()->getEmail() ?>
                                         </p>
                                     </div>
 
@@ -122,7 +122,7 @@
                                                 <?= $mem->getUser()->getName() ?>
                                             </h4>
                                             <p class="email">
-                                                <?= $mem->getAlias() ?>
+                                                <?= $mem->getAlias() ? $mem->getAlias() : $mem->getUser()->getEmail() ?>
                                             </p>
                                         </div>
 
