@@ -75,6 +75,31 @@ class MemberController extends \system\Template\AbstractController {
         ];
     }
 
+    public function editAction() {
+
+        //get id on router
+        $id = $this->getRouter()->getId('id');
+        //get data
+        $data = (object) [
+                    "alias"       => $this->getCode()->post("alias"),
+                    "title"       => $this->getCode()->post("title"),
+                    "description" => $this->getCode()->post("description"),
+                    "role"        => $this->getCode()->arr("role", "POST")
+        ];
+
+
+        //update the obj
+        $obj = $this->entity_member->update($id, $data);
+
+        //check redirect
+        if ($this->getCode()->post('fromajax')) {
+
+            $this->getCode()->success("Thành viên đã được chỉnh sửa thành công.");
+        }
+
+        $this->getCode()->success("Thành viên đã được chỉnh sửa thành công.", [], $this->url('assignment', ['controller' => 'member']));
+    }
+
     public function hasRoleAction() {
 
         $memid = $this->getCode()->post('member_id');

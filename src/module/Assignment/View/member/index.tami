@@ -21,15 +21,18 @@
             </div>
             <div class="panel-body">
 
-                <table class="table" >
+                <table class="table members" >
                     <thead>
                         <tr>
-                            <th class="per10">
+                            <th class="per30">
                                 Thành viên
                             </th>
 
-                            <th>
+                            <th class="per15">
                                 Chức danh
+                            </th>
+                            <th >
+                                Mức độ nắm quyền
                             </th>
                             <th class="per5">
 
@@ -51,7 +54,7 @@
                                             <?= $mem->getUser()->getName() ?>
                                         </h4>
                                         <p class="email">
-                                            <?= $mem->getUser()->getEmail() ?>
+                                            <?= $mem->getAlias() ?>
                                         </p>
                                     </div>
 
@@ -59,8 +62,16 @@
                                 <td>
                                     <?= $mem->getTitle() ?>
                                 </td>
-                                <td>
 
+                                <td>
+                                    <div class="progress animated-bar">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" data-transitiongoal="50">
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <a href="<?= $this->urlInside('assignment', ['controller' => 'member', 'action' => 'edit-form', 'id' => $mem->getId()]) ?>" >  <i class="btn btn-link fa fa-edit"></i> </a>
                                 </td>
                             </tr>
 
@@ -82,7 +93,7 @@
             <div class="panel-body">
 
                 <div  class="table-fix-left assignment">
-                    <table >
+                    <table class="members" >
                         <thead>
                             <tr>
                                 <th class="per10">

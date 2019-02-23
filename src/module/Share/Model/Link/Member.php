@@ -70,6 +70,9 @@ class Member extends \module\Share\Model\Common\AbsLink {
                 $member->setAlias($data->alias);
             }
 
+            //for test 
+            $this->inputTest($member, $data);
+
             $this->dm->persist($member);
             $this->dm->flush();
 
@@ -77,10 +80,10 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
             $memberlog->add((object) [
-                        'user_id' => (string) $user->getId(),
-                        'app_id' => (string) $app->getId(),
+                        'user_id'  => (string) $user->getId(),
+                        'app_id'   => (string) $app->getId(),
                         "metatype" => "add",
-                        'message' => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
+                        'message'  => "<a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được thêm vào ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
             ]);
 
 
@@ -93,7 +96,52 @@ class Member extends \module\Share\Model\Common\AbsLink {
     }
 
     public function update($id, $data) {
-        
+        $obj = $this->find($id);
+        if (!$obj) {
+            $this->code->notfound("Member not exist");
+        }
+
+        $editinfo = [];
+        //edit alias
+        if (!\system\Helper\Validate::isEmpty($data->alias) && $data->alias != $obj->getAlias()) {
+            $obj->setAlias($data->alias);
+            $editinfo [] = "<div class='timeline-content'>Biệt danh của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->alias }</b></div>";
+        }
+
+
+        //edit title
+        if (!\system\Helper\Validate::isEmpty($data->title) && $data->title != $obj->getTitle()) {
+            $obj->setTitle($data->title);
+            $editinfo [] = "<div class='timeline-content'>Chức danh của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->title }</b></div>";
+        }
+
+        //edit description
+        if (!\system\Helper\Validate::isEmpty($data->description) && $data->description != $obj->getDescription()) {
+            $obj->setDescription($data->description);
+            $editinfo [] = "<div class='timeline-content'>Mổ ta về thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->description }</b></div>";
+        }
+
+        try {
+            //save and send email
+            $this->dm->persist($obj);
+            $this->dm->flush();
+
+            //log create app
+            foreach ($editinfo as $message) {
+                $applog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
+                $applog->add((object) [
+                            "app_id"   => (string) $obj->getApp()->getId(),
+                            "user_id"  => (string) $obj->getUser()->getId(),
+                            "metatype" => "edit",
+                            "message"  => $message
+                ]);
+            }
+            return $obj;
+        } catch (\MongoException $ex) {
+            throw $ex;
+        }
+
+        $this->code->error("Error database");
     }
 
     public function remove($id) {
@@ -114,10 +162,10 @@ class Member extends \module\Share\Model\Common\AbsLink {
         $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
         $memberlog->add((object) [
-                    'user_id' => (string) $user->getId(),
-                    'app_id' => (string) $app->getId(),
+                    'user_id'  => (string) $user->getId(),
+                    'app_id'   => (string) $app->getId(),
                     "metatype" => "remove",
-                    'message' => "Thành viên <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được loại bỏ khỏi ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
+                    'message'  => "Thành viên <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được loại bỏ khỏi ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
         ]);
 
         $this->getCode()->success("remove is successfully");
@@ -132,7 +180,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
 
         $user = $obj->getUser();
         $app = $obj->getApp();
-        
+
         //restore
         $obj->restore();
 
@@ -142,10 +190,10 @@ class Member extends \module\Share\Model\Common\AbsLink {
         $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
 
         $memberlog->add((object) [
-                    'user_id' => (string) $user->getId(),
-                    'app_id' => (string) $app->getId(),
+                    'user_id'  => (string) $user->getId(),
+                    'app_id'   => (string) $app->getId(),
                     "metatype" => "restore",
-                    'message' => "Thành viên <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được khôi phục lại trong ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
+                    'message'  => "Thành viên <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được khôi phục lại trong ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>"
         ]);
 
         $this->getCode()->success("restore is successfully");
@@ -155,6 +203,5 @@ class Member extends \module\Share\Model\Common\AbsLink {
         //find by id
         return $this->dm->getRepository(\module\Share\Model\Collection\Member::class)->find($id);
     }
-
 
 }
