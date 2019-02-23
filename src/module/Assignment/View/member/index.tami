@@ -57,13 +57,13 @@
 
                                 </th>
                                 <td>
-                                    <?=$mem->getTitle()?>
+                                    <?= $mem->getTitle() ?>
                                 </td>
                                 <td>
-                                    
+
                                 </td>
                             </tr>
-                            
+
                             <?php
                         });
                         ?>
@@ -71,116 +71,117 @@
                     </tbody>
                 </table>
             </div>
-            <!--End .panel-->
+        </div>
+        <!--End .panel-->
 
-            <div class="panel toggle">
-                <!--Start .panel-->
-                <div class="panel-heading">
-                    <h4 class="panel-title">Bảng thành viên với các vai trò</h4>
-                </div>
-                <div class="panel-body">
+        <div class="panel toggle">
+            <!--Start .panel-->
+            <div class="panel-heading">
+                <h4 class="panel-title">Bảng thành viên với các vai trò</h4>
+            </div>
+            <div class="panel-body">
 
-                    <div  class="table-fix-left assignment">
-                        <table >
-                            <thead>
-                                <tr>
-                                    <th class="per10">
+                <div  class="table-fix-left assignment">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th class="per10">
+
+                                </th>
+
+                                <?=
+                                \system\Helper\ArrayCallback::render($roles, function($e) {
+                                    return '<th>' . $e->getName() . '</th>';
+                                })
+                                ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            echo \system\Helper\ArrayCallback::render($members, function($mem) use($roles) {
+                                ?>
+                                <tr >
+                                    <th  class="td-left user">
+
+                                        <div class="avatar">
+                                            <img src="/static/img/avatars/<?= rand(1, 10) ?>.jpg">
+                                        </div>
+                                        <div class="txt">
+                                            <h4 class="name">
+                                                <?= $mem->getUser()->getName() ?>
+                                            </h4>
+                                            <p class="email">
+                                                <?= $mem->getUser()->getEmail() ?>
+                                            </p>
+                                        </div>
 
                                     </th>
-
                                     <?=
-                                    \system\Helper\ArrayCallback::render($roles, function($e) {
-                                        return '<th>' . $e->getName() . '</th>';
-                                    })
-                                    ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                echo \system\Helper\ArrayCallback::render($members, function($mem) use($roles) {
-                                    ?>
-                                    <tr >
-                                        <th  class="td-left user">
+                                    \system\Helper\ArrayCallback::render($roles, function($e) use($mem) {
 
-                                            <div class="avatar">
-                                                <img src="/static/img/avatars/<?= rand(1, 10) ?>.jpg">
-                                            </div>
-                                            <div class="txt">
-                                                <h4 class="name">
-                                                    <?= $mem->getUser()->getName() ?>
-                                                </h4>
-                                                <p class="email">
-                                                    <?= $mem->getUser()->getEmail() ?>
-                                                </p>
-                                            </div>
+                                        $roleids = \system\Helper\ArrayCallback::select($mem->getRoles(), function($e) {
+                                                    return $e->getRole()->getId();
+                                                });
 
-                                        </th>
-                                        <?=
-                                        \system\Helper\ArrayCallback::render($roles, function($e) use($mem) {
+                                        $id = "{$mem->getId()}-{$e->getId()}";
 
-                                            $roleids = \system\Helper\ArrayCallback::select($mem->getRoles(), function($e) {
-                                                        return $e->getRole()->getId();
-                                                    });
+                                        //checked
+                                        $checked = '';
+                                        if (in_array($e->getId(), $roleids)) {
+                                            $checked = 'checked="checked"';
+                                        }
 
-                                            $id = "{$mem->getId()}-{$e->getId()}";
-
-                                            //checked
-                                            $checked = '';
-                                            if (in_array($e->getId(), $roleids)) {
-                                                $checked = 'checked="checked"';
-                                            }
-
-                                            return '<td>
+                                        return '<td>
                                                     <div class="checkbox-custom">
                                                         <input onclick="AssignmentMember.toggleRole(\'' . $mem->getId() . '\',\'' . $e->getId() . '\');" type="checkbox" ' . $checked . ' value="' . $e->getId() . '" id="' . $id . '">
                                                         <label class="" for="' . $id . '">' . $e->getName() . '</label>
                                                     </div>
                                                 </td>';
-                                        })
-                                        ?>
-                                    </tr>
-                                    <?php
-                                });
-                                ?>
+                                    })
+                                    ?>
+                                </tr>
+                                <?php
+                            });
+                            ?>
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!--End .panel-->
+        </div>
+        <!--End .panel-->
 
 
-        </div>
-        <!-- col-lg-6 end here -->
-        <div class="col-lg-3 col-md-4">
-            <!-- col-lg-6 start here -->
-            <div class="panel panel-activity panel-default plain toggle ">
-                <!-- Start .panel -->
-                <div class="panel-heading white-bg">
-                    <h4 class="panel-title">Hoạt động gần đây</h4>
-                </div>
-                <div class="panel-body">
-                    <ul  id="js-member-activitys" class="timeline timeline-simple"></ul>
-                    <a  id="js-member-loadmore" data-start="0" onclick="AssignmentMember.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
-                </div>
-            </div>
-            <!-- End .panel -->
-        </div>
-        <!-- col-lg-6 end here -->
     </div>
-    <!-- End .row -->
+    <!-- col-lg-6 end here -->
+    <div class="col-lg-3 col-md-4">
+        <!-- col-lg-6 start here -->
+        <div class="panel panel-activity panel-default plain toggle ">
+            <!-- Start .panel -->
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Hoạt động gần đây</h4>
+            </div>
+            <div class="panel-body">
+                <ul  id="js-member-activitys" class="timeline timeline-simple"></ul>
+                <a  id="js-member-loadmore" data-start="0" onclick="AssignmentMember.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+            </div>
+        </div>
+        <!-- End .panel -->
+    </div>
+    <!-- col-lg-6 end here -->
+</div>
+<!-- End .row -->
 
-    <?php
-    $this->css('/tami/css/assignment/member.css')
-            ->js('/tami/js/assignment/member.js');
-    ?>
+<?php
+$this->css('/tami/css/assignment/member.css')
+        ->js('/tami/js/assignment/member.js');
+?>
 
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
 
-            AssignmentMember.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);
+        AssignmentMember.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);
 
 
-        });
-    </script>
+    });
+</script>

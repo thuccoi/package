@@ -37,8 +37,39 @@ class MemberController extends \system\Template\AbstractController {
         $this->setViewDir(dirname(__DIR__) . '/View/');
 
         $this->toParamJs('appid', $this->getViewer()->app->id);
-        
+
         return [
+            "roles"   => $roles,
+            "members" => $members
+        ];
+    }
+
+    public function editFormAction() {
+
+        $id = $this->getRouter()->getId();
+
+        $obj = $this->entity_member->find($id);
+
+        if (!$obj || $obj->getApp()->getId() != $this->getViewer()->app->id) {
+            $this->getCode()->notfound("Không tìm thấy thành viên này trong hệ thống.");
+        }
+
+        $members = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\Member::class)
+                ->field('id')->notEqual($id)
+                ->field('app.id')->equals($this->getViewer()->app->id)
+                ->sort('create_at', 'desc')
+                ->getQuery()
+                ->execute();
+
+        $roles = $this->getConnect()->createQueryBuilder(\module\Assignment\Model\Collection\Role::class)
+                ->field('app_id')->equals($this->getViewer()->app->id)
+                ->getQuery()
+                ->execute();
+        //view dir
+        $this->setViewDir(dirname(__DIR__) . '/View/');
+
+        return [
+            "member"  => $obj,
             "roles"   => $roles,
             "members" => $members
         ];

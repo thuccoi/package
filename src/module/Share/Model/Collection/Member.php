@@ -47,6 +47,16 @@ class Member extends \module\Share\Model\Common\AbsField {
      */
     private $status;
 
+    /**
+     * @ODM\ReferenceOne(targetDocument="module\Share\Model\Collection\Member", inversedBy="employees")
+     */
+    private $manager;
+
+    /**
+     * @ODM\ReferenceMany(targetDocument="module\Share\Model\Collection\Member", mappedBy="manager")
+     */
+    private $employees;
+
     //status
     const STATUS_ACTIVATE = 1;
     const STATUS_DEACTIVE = -1;
@@ -59,6 +69,32 @@ class Member extends \module\Share\Model\Common\AbsField {
 
         //activate status
         $this->status = self::STATUS_ACTIVATE;
+
+
+        $this->employees = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    //manager
+    public function setManager(\module\Share\Model\Collection\Member $obj) {
+        $this->employees[] = $this;
+        $this->manager = $obj;
+        return $this;
+    }
+
+    public function getManager() {
+        return $this->manager;
+    }
+
+    //employees
+    public function getEmployees() {
+        return $this->employees;
+    }
+
+    public function removeEmployee($employee_id) {
+
+        unset($this->employees[$employee_id]);
+
+        return $this;
     }
 
     //set viewer session
