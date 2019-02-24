@@ -107,7 +107,7 @@ class AppController extends \system\Template\AbstractController {
             $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
         }
 
-        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], '#');
+        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", []);
     }
 
     public function deleteAction() {

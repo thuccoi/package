@@ -1,0 +1,332 @@
+<?php
+$metatype = \system\Helper\ArrayCallback::find($this->getConfig()['account_app']['metatype'], $app->getMetatype(), function($e, $id) {
+            if ($e['value'] == $id) {
+                return true;
+            }
+        });
+?>
+<!-- Start .page-content-inner -->
+<div id="page-header" class="clearfix">
+    <div class="page-header">
+        <h2>Ứng dụng</h2>
+        <span class="txt">
+            Chi tiết ứng dụng
+        </span>
+    </div>
+    <div class="header-stats">
+        <div class="spark clearfix">
+            <div class="spark-info"><span class="number"><?= count($members) ?></span>Thành viên</div>
+            <div id="spark-visitors" class="sparkline"></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Start .row -->
+<div class="row members">
+    <div class="col-lg-7 col-md-7 col-xs-12">
+        <!-- col-lg-4 start here -->
+        <div class="panel panel-default plain">
+            <!-- Start .panel -->
+            <div class="panel-heading">
+                <h4 class="panel-title bb">Chi tiết ứng dụng</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row profile">
+                    <!-- Start .row -->
+                    <div class="col-md-4">
+                        <div class="profile-avatar">
+                            <img src="<?= $app->getImage() ?>" alt="Avatar">
+                            <p class="mt10">
+                                <?= $app->getDomain() ?> 
+                                <span class="device">
+                                    <i class="fa fa-firefox  s16"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="profile-name">
+                            <h3><?= $app->getName() ?></h3>
+                            <p class="job-title mb0"><i class="glyphicon glyphicon-fire"></i> <?= $metatype ? $metatype['name'] : '' ?></p>
+                            <p class="balance">
+                                Số thành viên: <span><?= count($members) ?></span>
+                            </p>
+                            <a href="#" class="btn btn-primary btn-large mr10"> <i class="fa fa-sign-in"></i> Truy cập ứng dụng</a>
+                            <a href="#" class="btn btn-default btn-alt btn-large"> Xem thống kê</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End .row -->
+            </div>
+        </div>
+
+        <div class="tabs mb20">
+
+            <ul  class="nav nav-tabs">
+                <li class="active"><a href="#member-activate" data-toggle="tab">Thành viên (<?= count($members) ?>)</a>
+                </li>
+                <li><a href="#member-deactivate" data-toggle="tab">Bị loại bỏ (<?= count($memdels) ?>)</a>
+                </li>
+            </ul>
+            <div  class="tab-content">
+                <div class="tab-pane fade active in" id="member-activate">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="per5">
+                                    <div class="checkbox-custom">
+                                        <input class="check-all" type="checkbox" id="masterCheck" value="option1">
+                                        <label for="masterCheck"></label>
+                                    </div>
+                                </th>
+                                <th class="per90">
+                                    <input id="js-add-member-email" class="form-control" placeholder="Tên tài khoản hoặc email">
+                                </th>
+                                <th class="per5">
+                                    <span class="input-group-btn">
+                                        <div onclick="Member.add('<?= $app->getId() ?>')" class="btn btn-primary bootstrap-touchspin-up" >Thêm</div>
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <?php
+                            foreach ($members as $val) {
+                                ?>
+                                <tr class="form-horizontal">
+                                    <td>
+                                        <div class="checkbox-custom">
+                                            <input id="check-<?= $val->id ?>" class="check" type="checkbox" value="option2">
+                                            <label for="check-<?= $val->id ?>"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="avatar">
+                                            <img width="50px" class="email-inbox-avatar" src="/static/img/avatars/<?= rand(1, 10) ?>.jpg" alt="avatar">   
+                                        </div>
+                                        <div class="txt">
+                                            <h4 class="name">
+                                                <?= $val->user->first_name . " " . $val->user->last_name ?>
+                                            </h4>
+                                            <p class="email">
+                                                <?= $val->user->email ?>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <i onclick="Member.remove('<?= $val->id ?>')" class="btn-remove btn  l-arrows-circle-remove"></i>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade in" id="member-deactivate">
+                    <div class="tab-pane fade active in" id="member-activate">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="per5">
+                                        <div class="checkbox-custom">
+                                            <input class="check-all" type="checkbox" id="masterCheck" value="option1">
+                                            <label for="masterCheck"></label>
+                                        </div>
+                                    </th>
+                                    <th class="per25">
+                                        Thành viên
+                                    </th>
+                                    <th class="per25">
+                                        Bị loại bỏ lúc
+                                    </th>
+                                    <th class="per5">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <?php
+                                foreach ($memdels as $val) {
+                                    ?>
+                                    <tr class="form-horizontal">
+                                        <td>
+                                            <div class="checkbox-custom">
+                                                <input id="check-<?= $val->id ?>" class="check" type="checkbox" value="option2">
+                                                <label for="check-<?= $val->id ?>"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="avatar">
+                                                <img width="50px" class="email-inbox-avatar" src="/static/img/avatars/<?= rand(1, 10) ?>.jpg" alt="avatar">   
+                                            </div>
+                                            <div class="txt">
+                                                <h4 class="name">
+                                                    <?= $val->user->first_name . " " . $val->user->last_name ?>
+                                                </h4>
+                                                <p class="email">
+                                                    <?= $val->user->email ?>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="form-group has-error">
+                                            <?= $val->deleted_at ?>
+                                        </td>
+                                        <td>
+                                            <i onclick="Member.restore('<?= $val->id ?>')" class="btn-remove btn fa fa-refresh"></i>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- col-lg-8 end here -->
+
+
+    <!-- col-lg-4 start here -->
+    <div class="col-lg-5 col-md-5 col-sm-12">
+        <div class="tabs mb20">
+            <ul id="profileTab" class="nav nav-tabs">
+                <li class="active"><a href="#application" data-toggle="tab">HĐ Ứng dụng</a>
+                </li>
+                <li><a href="#member" data-toggle="tab">HĐ Thành viên</a>
+                </li>
+                <li class="">
+                    <a href="#edit-profile" data-toggle="tab">Chỉnh sửa</a>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="application">
+
+                    <div>
+                        <h5>Hoạt động gần đây </h5>
+                        <ul id="js-app-activitys" class="timeline timeline-icons timeline-advanced"></ul>
+                        <a id="js-app-loadmore" data-start="0" onclick=" App.showAppLog('#js-app-activitys', TAMI.pagedata.appid);" class=" btn btn-default timeline-load-more-btn">
+                            <i class="fa fa-refresh"></i> Xem thêm 
+                        </a>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade pb15" id="member">
+                    <div>
+                        <h5>Hoạt động gần đây</h5>
+                        <ul id="js-member-activitys" class="timeline timeline-icons"></ul>
+                        <a id="js-member-loadmore" data-start="0" onclick="App.showMemeberLog('#js-member-activitys', TAMI.pagedata.appid);" class=" btn btn-default timeline-load-more-btn">
+                            <i class="fa fa-refresh"></i> Xem thêm 
+                        </a>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade pb1" id="edit-profile">
+                    <form class="form-horizontal group-border stripped" method="POST" action="<?= $this->url('a', ['controller' => 'app', 'action' => 'edit', 'id' => $app->getId()]) ?>">
+                        <div class="form-group "> <!--has-error-->
+                            <label class="col-lg-2 col-md-3 control-label" for="">Tên*</label>
+                            <div class="col-lg-10 col-md-9">
+                                <input type="text" class="form-control" name="name" placeholder="Tên ứng dụng" value="<?= $app->getName() ?>">
+                                <!--<label id="text-error" class="help-block" for="text">This field is required.</label>-->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-3 control-label">Lĩnh vực*</label>
+                            <div class="col-lg-10 col-md-9">
+                                <?php
+                                foreach ($this->getConfig()['account_app']['metatype'] as $val) {
+                                    $checked = '';
+                                    if ($app->getMetatype() == $val['value']) {
+                                        $checked = 'checked="checked"';
+                                    }
+                                    ?>
+                                    <div class="radio-custom">
+                                        <input <?= $checked ?> type="radio" name="metatype" value="<?= $val['value'] ?>" id="<?= $val['value'] ?>">
+                                        <label for="<?= $val['value'] ?>"><?= $val['name'] ?></label>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-3 control-label" for="">Tên miền *</label>
+                            <div class="col-lg-10 col-md-9">
+                                <input type="text" class="form-control" name="domain" placeholder="abc.com"  value="<?= $app->getDomain() ?>">
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-3 control-label" for="">Biểu tượng * </label>
+                            <div class="col-lg-10 col-md-9">
+                                <input type="text" class="form-control" name="image" placeholder="Đường dẫn ảnh"  value="<?= $app->getImage() ?>">
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+
+
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-md-offset-3">
+                                <button type="submit" class="btn btn-md btn-primary ml15">Thực hiện</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$this->js("/static/js/pages/tables-basic.js")
+        ->js('/js/application/app.js')
+        ->js('/js/application/member.js')
+        ->css('/css/application/view.css');
+?>
+
+<script>
+    $('.select2').select2({placeholder: 'Tên tài khoản hoặc là email'});
+
+
+
+    $(document).ready(function () {
+        App.showAppLog('#js-app-activitys', TAMI.pagedata.appid);
+        App.showMemeberLog('#js-member-activitys', TAMI.pagedata.appid);
+
+
+        TAMI.helper.autoComplete("#js-add-member-email", "/application/user/auto-complete", {
+            focus: function (event, ui) {
+                $("#js-add-member-email").val(ui.item.email);
+                return false;
+            },
+            select: function (event, ui) {
+                $("#js-add-member-email").val(ui.item.email);
+                return false;
+            },
+            render: function (item) {
+                return `<a class="a-autocomplete"> 
+                        <img class="image" src="/static/img/avatars/` + (Math.floor(Math.random() * 10) + 1) + `.jpg"> 
+                        <div class="txt">
+                            <div class="name">
+                                ` + item.first_name + ' ' + item.last_name + ` (` + item.username + `)
+                            </div>     
+                            <div class="email">
+                                ` + item.email + `
+                            </div>
+                        </div>
+                    </a>`;
+            }
+        });
+
+
+    });
+</script>
