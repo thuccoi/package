@@ -81,8 +81,32 @@
 
                                 </td>
                                 <td>
+                                    <?php
+                                    $pers = [];
+                                    foreach ($mem->getRoles() as $val) {
+                                        foreach ($val->getRole()->getAllPermissions() as $per) {
+                                            $pers[] = $per;
+                                        }
+                                    }
+                                    $pers = array_unique($pers);
+
+                                    $percent_per = 100 * count($pers) / count($this->getConfig()['account_member']['permissions']);
+
+                                    $stylecolor = "";
+                                    if ($percent_per < 20) {
+                                        $stylecolor = "danger";
+                                    } else if ($percent_per < 40) {
+                                        $stylecolor = "warning";
+                                    } else if ($percent_per < 60) {
+                                        $stylecolor = "info";
+                                    } else if ($percent_per < 80) {
+                                        $stylecolor = "primary";
+                                    } else {
+                                        $stylecolor = "success";
+                                    }
+                                    ?>
                                     <div class="progress animated-bar">
-                                        <div class="progress-bar progress-bar-primary" role="progressbar" data-transitiongoal="50">
+                                        <div class="progress-bar progress-bar-<?= $stylecolor ?>" role="progressbar" data-transitiongoal="<?= $percent_per ?>">
                                         </div>
                                     </div>
                                 </td>
