@@ -15,8 +15,7 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function indexAction() {
-        //layout
-        $this->setLayout('TAMI_NOLAYOUT');
+        
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
         
