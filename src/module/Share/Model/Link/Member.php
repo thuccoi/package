@@ -136,8 +136,51 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $editinfo [] = "<div class='timeline-content'><b>Quản lý trực tiếp</b> của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$manager->getId()}'>{$manager->getUser()->getName()}</a></div>";
         }
 
-        //edit role
-        
+        //edit role to member
+        if (!\system\Helper\Validate::isEmpty($data->role)) {
+
+            if (!\system\Helper\Validate::isArray($data->role)) {
+                $this->code->forbidden("role is not array");
+            }
+
+            //old roles
+            $arr = $obj->getRoles();
+
+            $oldroleids = [];
+            if ($arr) {
+                foreach ($arr as $val) {
+                    $oldroleids[] = (string) $val->getRole()->getId();
+                }
+            }
+
+            //entity link role to member
+            $roletomem_link = new \module\Assignment\Model\Link\RoleToMember($this->getConnect(), $this->getCode(), $this->getConfig());
+
+            //add new role to member
+            foreach ($data->role as $val) {
+                if (!in_array($val, $oldroleids)) {
+                    $roletomem_link->add((object) [
+                                "app_id"     => (string) $data->app_id,
+                                "creator_id" => (string) $data->creator_id,
+                                "member_id"  => $obj->getId(),
+                                "role_id"    => $val
+                    ]);
+                }
+            }
+
+            //remove old role not in input
+            foreach ($oldroleids as $val) {
+                if (!in_array($val, $data->role)) {
+                    $roletomem_link->remove((object) [
+                                "app_id"     => (string) $data->app_id,
+                                "creator_id" => (string) $data->creator_id,
+                                "member_id"  => $obj->getId(),
+                                "role_id"    => $val
+                    ]);
+                }
+            }
+        }
+
         try {
             //save and send email
             $this->dm->persist($obj);

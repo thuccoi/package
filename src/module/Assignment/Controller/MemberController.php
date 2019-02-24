@@ -90,6 +90,8 @@ class MemberController extends \system\Template\AbstractController {
                     "role"        => $this->getCode()->arr("role", "POST")
         ];
 
+        $data->app_id = $this->getViewer()->app->id;
+        $data->creator_id = $this->getViewer()->member->id;
 
         //update the obj
         $obj = $this->entity_member->update($id, $data);
