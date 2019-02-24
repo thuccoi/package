@@ -188,7 +188,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default plain toggle ">
-             <!--Start .panel--> 
+            <!--Start .panel--> 
             <div class="panel-heading white-bg">
                 <h4 class="panel-title">Sơ đồ quan hệ</h4>
             </div>
@@ -196,7 +196,7 @@
                 <iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
             </div>
         </div>
-         <!--End .panel--> 
+        <!--End .panel--> 
     </div>
 </div>
 
@@ -214,7 +214,9 @@ $this->js("/static/js/pages/tables-basic.js")
 
     });
 
-    var dataJSON = TAMI.pagedata.dataJSON;
-    var urlAdd = 'http://userdata.com/add?id=';
-    var urlRemove = 'http://userdata.com/remove?id=';
+    $(function () {
+        dataJSON = TAMI.pagedata.dataJSON;
+        urlAdd = 'http://userdata.com/add?id=';
+        urlRemove = 'http://userdata.com/remove?id=';
+    });
 </script>

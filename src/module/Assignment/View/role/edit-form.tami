@@ -147,8 +147,9 @@ $this->js("/static/js/pages/forms-advanced.js")
         helperSelectNamePostfix: false
     });
 
-    var dataJSON = TAMI.pagedata.dataJSON;
-
-    var urlAdd = 'http://userdata.com/add?id=';
-    var urlRemove = 'http://userdata.com/remove?id=';
+    $(function () {
+        dataJSON = TAMI.pagedata.dataJSON;
+        urlAdd = 'http://userdata.com/add?id=';
+        urlRemove = 'http://userdata.com/remove?id=';
+    });
 </script>
