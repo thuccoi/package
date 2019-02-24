@@ -207,8 +207,8 @@
     </div>
     <!-- col-lg-6 end here -->
     <div class="col-lg-3 col-md-4">
-        
-         <div class="tabs mb20">
+
+        <div class="tabs mb20">
             <ul id="profileTab" class="nav nav-tabs">
                 <li class="active"><a href="#member" data-toggle="tab">HĐ Thành viên</a>
                 </li>
@@ -269,6 +269,7 @@ $this->css('/tami/css/assignment/member.css')
 <script>
     $(document).ready(function () {
 
+        AssignmentMember.showIndexMemberLog('#js-member-activitys', TAMI.pagedata.appid);
         AssignmentMember.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);
 
 
