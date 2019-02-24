@@ -40,7 +40,7 @@ class MemberController extends \system\Template\AbstractController {
 
         //data json
         $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($members, function($e) {
-                    return ["id" => $e->getId(), "parentid" => ($e->getManager() ? $e->getManager()->getId() : ''), 'name' => $e->User()->getName()];
+                    return ["id" => $e->getId(), "parentid" => ($e->getManager() ? $e->getManager()->getId() : ''), 'name' => $e->getUser()->getName()];
                 }));
 
         return [
