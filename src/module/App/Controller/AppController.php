@@ -15,21 +15,65 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function indexAction() {
-        
+
+        $id = $this->getViewer()->app->id;
+
+        $app = $this->getConnect()->getRepository(\module\Share\Model\Collection\App::class)->find($id);
+        if (!$app) {
+            $this->getCode()->error("Not found app");
+        }
+
+        //member
+        $members = [];
+        if ($app->getMembers()) {
+            foreach ($app->getMembers() as $val) {
+                $member = $val->release();
+                $member->user = $val->getUser()->release();
+                $members [] = $member;
+            }
+        }
+
+        //memde delete
+        $memdels = [];
+        if ($app->getMembersWD()) {
+            foreach ($app->getMembersWD() as $val) {
+                $member = $val->release();
+                $member->user = $val->getUser()->release();
+                $memdels [] = $member;
+            }
+        }
+
+        $memberlogs = [];
+
+        $applogs = [];
+
+
         //view dir
-        $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
-        
+        $this->setViewDir(dirname(__DIR__) . '/View/');
+
+        //to js
+        $this->toParamJs("appid", (string) $app->getId());
+        $this->toParamJs('members', $members);
+        $this->toParamJs('memdels', $memdels);
+
+        return [
+            'app'        => $app,
+            'members'    => $members,
+            'memberlogs' => $memberlogs,
+            'applogs'    => $applogs,
+            'memdels'    => $memdels
+        ];
     }
 
     public function createAction() {
-      
+
 
         //get data
         $data = (object) [
-                    "name" => $this->getCode()->post("name"),
-                    "image" => $this->getCode()->post("image"),
+                    "name"     => $this->getCode()->post("name"),
+                    "image"    => $this->getCode()->post("image"),
                     "metatype" => $this->getCode()->post("metatype"),
-                    "domain" => $this->getCode()->post("domain")
+                    "domain"   => $this->getCode()->post("domain")
         ];
 
         //create new app
@@ -42,16 +86,16 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function editAction() {
-       
+
 
         //get id on router
         $id = $this->getRouter()->getId('id');
         //get data
         $data = (object) [
-                    "name" => $this->getCode()->post("name"),
-                    "image" => $this->getCode()->post("image"),
+                    "name"     => $this->getCode()->post("name"),
+                    "image"    => $this->getCode()->post("image"),
                     "metatype" => $this->getCode()->post("metatype"),
-                    "domain" => $this->getCode()->post("domain")
+                    "domain"   => $this->getCode()->post("domain")
         ];
 
         //edit the app
@@ -63,7 +107,7 @@ class AppController extends \system\Template\AbstractController {
             $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.");
         }
 
-        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], $this->url('application', ['controller' => 'index', 'action' => 'view', 'id' => $app->getId()]));
+        $this->getCode()->success("Ứng dụng đã được chỉnh sửa thành công.", [], '#');
     }
 
     public function deleteAction() {
@@ -71,7 +115,7 @@ class AppController extends \system\Template\AbstractController {
     }
 
     public function restoreAction() {
-       
+        
     }
 
 }
