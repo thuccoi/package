@@ -288,9 +288,9 @@ $metatype = \system\Helper\ArrayCallback::find($this->getConfig()['account_app']
 
 <?php
 $this->js("/static/js/pages/tables-basic.js")
-        ->js('/js/application/app.js')
-        ->js('/js/application/member.js')
-        ->css('/css/application/view.css');
+        ->js('/tami/js/application/app.js')
+        ->js('/tami/js/application/member.js')
+        ->css('/tami/css/application/view.css');
 ?>
 
 <script>
