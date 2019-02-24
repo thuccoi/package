@@ -224,6 +224,21 @@
 </div>
 <!--End .row -->
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default plain toggle ">
+            <!--Start .panel--> 
+            <div class="panel-heading white-bg">
+                <h4 class="panel-title">Cơ cấu tổ chức</h4>
+            </div>
+            <div class="panel-body">
+                <iframe width="100%" src="/tami/iframe/tree/index.html"></iframe>
+            </div>
+        </div>
+        <!--End .panel--> 
+    </div>
+</div>
+
 <?php
 $this->css('/tami/css/assignment/member.css')
         ->js("/static/js/pages/tables-basic.js")
@@ -237,4 +252,9 @@ $this->css('/tami/css/assignment/member.css')
 
 
     });
+
+
+    var dataJSON = TAMI.pagedata.dataJSON;
+    var urlAdd = 'http://userdata.com/add?id=';
+    var urlRemove = 'http://userdata.com/remove?id=';
 </script>

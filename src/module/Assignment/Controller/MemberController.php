@@ -38,6 +38,11 @@ class MemberController extends \system\Template\AbstractController {
 
         $this->toParamJs('appid', $this->getViewer()->app->id);
 
+        //data json
+        $this->toParamJs('dataJSON', \system\Helper\ArrayCallback::select($members, function($e) {
+                    return ["id" => $e->getId(), "parentid" => ($e->getManager() ? $e->getManager()->getId() : ''), 'name' => $e->User()->getName()];
+                }));
+
         return [
             "roles"   => $roles,
             "members" => $members
