@@ -31,6 +31,9 @@
                             <th class="per15">
                                 Chức danh
                             </th>
+                            <th class="per25">
+                                Quản lý trực tiếp
+                            </th>
                             <th >
                                 Mức độ nắm quyền
                             </th>
@@ -62,7 +65,21 @@
                                 <td>
                                     <?= $mem->getTitle() ?>
                                 </td>
+                                <td class="user">
+                                    <div class="avatar">
+                                        <?= $mem->getManager() ? '<img src="/static/img/avatars/' . rand(1, 10) . '.jpg" />' : '' ?>
+                                    </div>
+                                    <div class="txt">
+                                        <h4 class="name">
+                                            <?= $mem->getManager() ? $mem->getManager()->getUser()->getName() : '' ?>
+                                        </h4>
+                                        <p class="email">
+                                            <?= $mem->getManager() ? ($mem->getManager()->getAlias() ? $mem->getManager()->getAlias() : $mem->getManager()->getUser()->getEmail()) : '' ?>
+                                        </p>
+                                    </div>
 
+
+                                </td>
                                 <td>
                                     <div class="progress animated-bar">
                                         <div class="progress-bar progress-bar-primary" role="progressbar" data-transitiongoal="50">
@@ -139,15 +156,15 @@
                                         //checked
                                         $checked = '';
                                         if (in_array($e->getId(), $roleids)) {
-                                            $checked = 'checked="checked"';
+                                            $checked = 'checked = "checked"';
                                         }
 
                                         return '<td>
-                                                    <div class="checkbox-custom">
-                                                        <input onclick="AssignmentMember.toggleRole(\'' . $mem->getId() . '\',\'' . $e->getId() . '\');" type="checkbox" ' . $checked . ' value="' . $e->getId() . '" id="' . $id . '">
-                                                        <label class="" for="' . $id . '">' . $e->getName() . '</label>
-                                                    </div>
-                                                </td>';
+                                    <div class = "checkbox-custom">
+                                    <input onclick = "AssignmentMember.toggleRole(\'' . $mem->getId() . '\',\'' . $e->getId() . '\');" type = "checkbox" ' . $checked . ' value = "' . $e->getId() . '" id = "' . $id . '">
+                                    <label class = "" for = "' . $id . '">' . $e->getName() . '</label>
+                                    </div>
+                                    </td>';
                                     })
                                     ?>
                                 </tr>
@@ -177,11 +194,11 @@
                 <a  id="js-member-loadmore" data-start="0" onclick="AssignmentMember.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
             </div>
         </div>
-        <!-- End .panel -->
+        <!--End .panel -->
     </div>
-    <!-- col-lg-6 end here -->
+    <!--col-lg-6 end here -->
 </div>
-<!-- End .row -->
+<!--End .row -->
 
 <?php
 $this->css('/tami/css/assignment/member.css')
