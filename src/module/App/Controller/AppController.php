@@ -19,6 +19,7 @@ class AppController extends \system\Template\AbstractController {
         $this->setLayout('TAMI_NOLAYOUT');
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
+        
     }
 
     public function createAction() {
