@@ -67,9 +67,9 @@ class MemberController extends \system\Template\AbstractController {
                 ->execute();
         //view dir
         $this->setViewDir(dirname(__DIR__) . '/View/');
-        
+
         $this->toParamJs('memberid', $id);
-        
+
         return [
             "member"  => $obj,
             "roles"   => $roles,
@@ -86,6 +86,7 @@ class MemberController extends \system\Template\AbstractController {
                     "alias"       => $this->getCode()->post("alias"),
                     "title"       => $this->getCode()->post("title"),
                     "description" => $this->getCode()->post("description"),
+                    "manager"     => $this->getCode()->post("manager"),
                     "role"        => $this->getCode()->arr("role", "POST")
         ];
 

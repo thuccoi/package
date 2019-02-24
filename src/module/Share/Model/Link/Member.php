@@ -105,20 +105,20 @@ class Member extends \module\Share\Model\Common\AbsLink {
         //edit alias
         if (!\system\Helper\Validate::isEmpty($data->alias) && $data->alias != $obj->getAlias()) {
             $obj->setAlias($data->alias);
-            $editinfo [] = "<div class='timeline-content'>Biệt danh của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->alias }</b></div>";
+            $editinfo [] = "<div class='timeline-content'><b>Biệt danh</b> của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->alias }</b></div>";
         }
 
 
         //edit title
         if (!\system\Helper\Validate::isEmpty($data->title) && $data->title != $obj->getTitle()) {
             $obj->setTitle($data->title);
-            $editinfo [] = "<div class='timeline-content'>Chức danh của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->title }</b></div>";
+            $editinfo [] = "<div class='timeline-content'><b>Chức danh</b> của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->title }</b></div>";
         }
 
         //edit description
         if (!\system\Helper\Validate::isEmpty($data->description) && $data->description != $obj->getDescription()) {
             $obj->setDescription($data->description);
-            $editinfo [] = "<div class='timeline-content'>Mổ ta về thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->description }</b></div>";
+            $editinfo [] = "<div class='timeline-content'><b>Mô tả</b> về thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->description }</b></div>";
         }
 
         //edit manager
@@ -133,9 +133,11 @@ class Member extends \module\Share\Model\Common\AbsLink {
             }
 
             $obj->setManager($manager);
-            $editinfo [] = "<div class='timeline-content'>Quản lý của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$manager->getId()}'>{$manager->getUser()->getName()}</a></div>";
+            $editinfo [] = "<div class='timeline-content'><b>Quản lý trực tiếp</b> của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$manager->getId()}'>{$manager->getUser()->getName()}</a></div>";
         }
 
+        //edit role
+        
         try {
             //save and send email
             $this->dm->persist($obj);
