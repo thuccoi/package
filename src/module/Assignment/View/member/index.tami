@@ -207,17 +207,38 @@
     </div>
     <!-- col-lg-6 end here -->
     <div class="col-lg-3 col-md-4">
-        <!-- col-lg-6 start here -->
-        <div class="panel panel-activity panel-default plain toggle ">
-            <!-- Start .panel -->
-            <div class="panel-heading white-bg">
-                <h4 class="panel-title">Hoạt động gần đây</h4>
-            </div>
-            <div class="panel-body">
-                <ul  id="js-member-activitys" class="timeline timeline-simple"></ul>
-                <a  id="js-member-loadmore" data-start="0" onclick="AssignmentMember.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+        
+         <div class="tabs mb20">
+            <ul id="profileTab" class="nav nav-tabs">
+                <li class="active"><a href="#member" data-toggle="tab">HĐ Thành viên</a>
+                </li>
+                <li><a href="#role" data-toggle="tab">HĐ Vai trò</a>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="member">
+
+                    <div>
+                        <h5>Hoạt động gần đây </h5>
+                        <ul  id="js-member-activitys" class="timeline timeline-simple"></ul>
+                        <a  id="js-member-loadmore" data-start="0" onclick="AssignmentMember.showIndexMemberLog('#js-member-activitys', TAMI.pagedata.appid);" href="#" class="btn btn-default timeline-load-more-btn"> <i class="fa fa-refresh"></i> Xem thêm</a>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade pb15" id="role">
+                    <div>
+                        <h5>Hoạt động gần đây</h5>
+                        <ul id="js-role-activitys" class="timeline timeline-icons"></ul>
+                        <a id="js-role-loadmore" data-start="0" onclick="AssignmentMember.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);" class=" btn btn-default timeline-load-more-btn">
+                            <i class="fa fa-refresh"></i> Xem thêm 
+                        </a>
+                    </div>
+
+                </div>
+
             </div>
         </div>
+
         <!--End .panel -->
     </div>
     <!--col-lg-6 end here -->
@@ -248,7 +269,7 @@ $this->css('/tami/css/assignment/member.css')
 <script>
     $(document).ready(function () {
 
-        AssignmentMember.showIndexLog('#js-member-activitys', TAMI.pagedata.appid);
+        AssignmentMember.showIndexLog('#js-role-activitys', TAMI.pagedata.appid);
 
 
     });
