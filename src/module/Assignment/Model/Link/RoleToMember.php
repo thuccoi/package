@@ -80,6 +80,9 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
             $obj->setMember($member);
             $obj->setRole($role);
 
+            //for test
+            $this->inputTest($obj, $data);
+            
             $this->getConnect()->persist($obj);
             $this->getConnect()->flush();
 
@@ -163,6 +166,8 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
                     "metatype"   => "remove",
                     'message'    => "Thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$member->getId()}'>{$member->getUser()->getName()}</a> đã bị lấy đi vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$role->getId()}'>{$role->getName()}</a>"
         ]);
+
+        return true;
     }
 
     public function restore($id) {

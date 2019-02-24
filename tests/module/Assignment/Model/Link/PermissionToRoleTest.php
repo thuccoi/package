@@ -18,6 +18,8 @@ class PermissionToRoleTest extends TestCase {
         $permisison = "123";
         $roleid = "123";
 
+        $role = new \module\Assignment\Model\Collection\Role();
+        
         $creator_id = "123";
         $create_at = new \DateTime();
 
@@ -25,6 +27,7 @@ class PermissionToRoleTest extends TestCase {
         $documentexperted = new \module\Assignment\Model\Collection\PermissionToRole();
         $documentexperted->setId($id);
         $documentexperted->setToken($token);
+        $documentexperted->setRole($role);
         $documentexperted->setAppId($app_id);
         $documentexperted->setPermission($permisison);
         $documentexperted->setCreatorId($creator_id);
@@ -68,7 +71,6 @@ class PermissionToRoleTest extends TestCase {
         //now, mock the repository so it returns the mock of the log
         $roleRepository = $this->createMock(ObjectRepository::class);
 
-        $role = new \module\Assignment\Model\Collection\Role();
         $roleRepository->expects($this->once())
                 ->method('find')
                 ->willReturn($role);
@@ -132,7 +134,7 @@ class PermissionToRoleTest extends TestCase {
                     "update_at"  => $create_at,
         ];
 
-        $entityMock->add($data);
+        $this->assertEquals($documentexperted, $entityMock->add($data));
     }
 
     public function testFind() {
