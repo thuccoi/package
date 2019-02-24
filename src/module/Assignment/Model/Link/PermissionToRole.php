@@ -70,6 +70,8 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
                     ->setAppId($data->app_id)
                     ->setCreatorId($data->creator_id);
 
+            //for test
+            $this->inputTest($obj, $data);
 
             $this->dm->persist($obj);
             $this->dm->flush();
@@ -164,6 +166,8 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
                         'message'    => "Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$role->getId()}'>{$role->getName()}</a> đã bị lấy đi quyền <b>{$pername[$data->permission]}</b>"
             ]);
         }
+        
+        return true;
     }
 
     public function restore($id) {
