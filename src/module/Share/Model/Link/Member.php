@@ -121,6 +121,21 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $editinfo [] = "<div class='timeline-content'>Mổ ta về thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <b>{$data->description }</b></div>";
         }
 
+        //edit manager
+        if (!\system\Helper\Validate::isEmpty($data->manager) && (!$obj->getManager() || $data->manager != $obj->getManager()->getId() )) {
+            $manager = $this->find($data->manager);
+            if (!$manager) {
+                $this->code->notfound("not found manager");
+            }
+
+            if ($this->isSpiderWeb($obj, $manager)) {
+                $this->code->forbidden("manager is spider web width this member");
+            }
+
+            $obj->setManager($manager);
+            $editinfo [] = "<div class='timeline-content'>Quản lý của thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$obj->getId()}'>{$obj->getUser()->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$manager->getId()}'>{$manager->getUser()->getName()}</a></div>";
+        }
+
         try {
             //save and send email
             $this->dm->persist($obj);
@@ -202,6 +217,28 @@ class Member extends \module\Share\Model\Common\AbsLink {
     public function find($id, $type = '') {
         //find by id
         return $this->dm->getRepository(\module\Share\Model\Collection\Member::class)->find($id);
+    }
+
+    public function isSpiderWeb($employee, $manager) {
+        if ($employee->getId() == $manager->getId()) {
+            return true;
+        }
+        //check parent in loop
+        do {
+            $manager = $manager->getManager();
+
+            //end
+            if (!$manager) {
+                return false;
+            }
+
+            //is spiderweb
+            if ($employee->getId() == $manager->getId()) {
+                return true;
+            }
+        } while ($manager);
+
+        return false;
     }
 
 }
