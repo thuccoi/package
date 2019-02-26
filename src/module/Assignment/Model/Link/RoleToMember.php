@@ -9,6 +9,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
 
     private $role_entity;
     private $member_entity;
+    private $app_entity;
 
     public function __construct($connect, \system\Helper\Code $code, $config) {
         $this->init($connect, $code, $config);
@@ -16,12 +17,21 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
         $this->role_entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config);
         //init entity user
         $this->member_entity = new \module\Share\Model\Link\Member($connect, $code, $config);
+
+
+        //init entity app
+        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config);
     }
 
     public function add($data) {
         //input app id 
         if (\system\Helper\Validate::isEmpty($data->app_id)) {
             $this->code->forbidden("app_id is require");
+        }
+
+        $app = $this->app_entity->find($data->app_id);
+        if (!$app) {
+            $this->code->notfound("app notfound in system");
         }
 
         //input creator id 
@@ -82,7 +92,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
 
             //for test
             $this->inputTest($obj, $data);
-            
+
             $this->getConnect()->persist($obj);
             $this->getConnect()->flush();
 
@@ -97,6 +107,25 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
                         "metatype"   => "add",
                         'message'    => "Thành viên <a href='{$this->config['URL_ROOT']}/assignment/member/view/{$member->getId()}'>{$member->getUser()->getName()}</a> đã được giao cho vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$role->getId()}'>{$role->getName()}</a>"
             ]);
+
+
+            //onboarding
+            $flat = FALSE;
+            $onboarding = $app->getOnboarding('assginment');
+            if ($onboarding && isset($onboarding['status'])) {
+                if ($onboarding['status'] == 0) {
+                    $flat = TRUE;
+                }
+            } else {
+                $flat = TRUE;
+            }
+
+            if ($flat === TRUE) {
+                $app->onboarding('assginment', 1);
+                $this->dm->persist($app);
+                $this->dm->flush();
+            }
+
 
 
             return $obj;
