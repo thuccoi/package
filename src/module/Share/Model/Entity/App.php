@@ -109,24 +109,34 @@ class App extends \module\Share\Model\Common\AbsEntity {
 
                 //flat onboarding
                 $flat = false;
+                $fo = false;
                 foreach ($app->getOnboarding() as $val) {
                     if ($val['metatype'] == $data->onboarding) {
-
                         $flat = true;
-
                         if ($val['status'] == 0) {
-                            $app->onboarding($data->onboarding, 1);
-                            $editinfo [] = "<div class='timeline-content'>Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>  đã được thiết lập thông tin</div>";
+                            $fo = true;
                         }
-
                         break;
                     }
                 }
 
                 //if not searched
                 if ($flat === false) {
+                    $fo = true;
+                }
+
+                if ($fo === true) {
                     $app->onboarding($data->onboarding, 1);
                     $editinfo [] = "<div class='timeline-content'>Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>  đã được thiết lập thông tin</div>";
+
+                    //change session app onboarding
+                    $this->session->set("app_onboarding", \system\Helper\ArrayCallback::select($this->session->get('app_onboarding'), function($e)use($data) {
+                                if ($e['metatype'] == $data->onboarding) {
+                                    $e['status'] = 1;
+                                }
+
+                                return $e;
+                            }));
                 }
             }
 
