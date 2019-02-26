@@ -138,12 +138,20 @@ class App extends \module\Share\Model\Common\AbsField {
         return $this->onboarding;
     }
 
-    public function getOnboarding() {
+    public function getOnboarding($metatype = '') {
         if ($this->onboarding) {
-            return $this->onboarding;
-        } else {
-            return [];
+            if (!$metatype) {
+                return $this->onboarding;
+            } else {
+                foreach ($this->onboarding as $val) {
+                    if ($val['metatype'] == $metatype) {
+                        return $val;
+                    }
+                }
+            }
         }
+
+        return [];
     }
 
     public function setOnboarding($onboarding) {

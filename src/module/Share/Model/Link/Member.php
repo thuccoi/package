@@ -87,6 +87,25 @@ class Member extends \module\Share\Model\Common\AbsLink {
             ]);
 
 
+
+            //onboarding
+            if (count($app->getMembers()) > 1) {
+                $flat = FALSE;
+                $onboarding = $app->getOnboarding('add_member');
+                if ($onboarding && isset($onboarding['status'])) {
+                    if ($onboarding['status'] == 0) {
+                        $flat = TRUE;
+                    }
+                } else {
+                    $flat = TRUE;
+                }
+
+                if ($flat === TRUE) {
+                    $app->onboarding('add_member', 1);
+                }
+            }
+
+
             return $member;
         } catch (\MongoException $ex) {
             throw $ex;
