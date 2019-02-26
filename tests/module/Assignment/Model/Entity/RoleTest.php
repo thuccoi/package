@@ -26,6 +26,7 @@ class RoleTest extends TestCase {
 
         $parentexpected = new \module\Assignment\Model\Collection\Role();
         $parentexpected->setId($parentid);
+        $parentexpected->setAppId($app_id);
 
         //this document
         $documentexperted = new \module\Assignment\Model\Collection\Role();

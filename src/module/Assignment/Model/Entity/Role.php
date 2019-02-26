@@ -51,8 +51,11 @@ class Role extends \module\Share\Model\Common\AbsEntity {
 
 
         //check existed
-        if ($this->find($data->metatype, 'metatype')) {
-            $this->code->forbidden("metatype is existed in system");
+        $fmetatype = $this->find($data->metatype, 'metatype');
+        if ($fmetatype) {
+            if ($fmetatype->getAppId() == $data->app_id) {
+                $this->code->forbidden("metatype is existed in system");
+            }
         }
 
         //parent
@@ -65,7 +68,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         }
 
         $parent = $this->find($data->parent);
-        if (!$parent) {
+        if (!$parent || $parent->getAppId() != $data->app_id) {
             $this->code->notfound("parent is notfound in this application");
         }
 
