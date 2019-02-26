@@ -124,10 +124,15 @@ class Validate {
             return false;
         }
 
+
         if (static::isEmpty($obj->app->id)) {
             return false;
         }
 
+        if (!static::isObject($obj->app_onboarding)) {
+            return false;
+        }
+        
         //user
         if (!static::isObject($obj->user)) {
             return false;

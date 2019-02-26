@@ -40,6 +40,12 @@ class App extends \module\Share\Model\Common\AbsField {
 
     /**
      *
+     * @ODM\Field(type="hash") 
+     */
+    private $onboarding;
+
+    /**
+     *
      * @ODM\ReferenceMany(
      *  targetDocument=module\Share\Model\Collection\Member::class, 
      *  mappedBy="app",
@@ -69,7 +75,6 @@ class App extends \module\Share\Model\Common\AbsField {
         }
         return $members;
     }
-
 
     //name
     public function getName() {
@@ -108,6 +113,20 @@ class App extends \module\Share\Model\Common\AbsField {
 
     public function setDomain($domain) {
         $this->domain = $domain;
+        return $this;
+    }
+
+    //onboarding
+    public function getOnboarding() {
+        if ($this->onboarding) {
+            return $this->onboarding;
+        } else {
+            return [];
+        }
+    }
+
+    public function setOnboarding($onboarding) {
+        $this->onboarding = $onboarding;
         return $this;
     }
 

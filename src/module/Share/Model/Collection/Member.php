@@ -103,7 +103,42 @@ class Member extends \module\Share\Model\Common\AbsField {
         $session->set("auth", 1);
 
         $session->set("app", $this->getApp()->release());
+
+        //onboarding
+        $apponboarding = $this->getApp()->getOnboarding();
+        $arrold = \system\Helper\ArrayCallback::select($apponboarding, function($e) {
+                    return $e['metatype'];
+                });
+
+        $sysonboarding = $config['app_onboarding'];
+        $arrnew = \system\Helper\ArrayCallback::select($sysonboarding, function($e) {
+                    return $e['metatype'];
+                });
+                
+        $nonboard = [];
+        //onboarding addnew 
+        foreach ($sysonboarding as $val) {
+            if (!in_array($val['metatype'], $arrold)) {
+                $nonboard[] = [
+                    'metatype' => $val['metatype'],
+                    'status'   => 0
+                ];
+            }
+        }
+
+        //onboarding add old
+        foreach ($apponboarding as $val) {
+            if (in_array($val['metatype'], $arrnew)) {
+                $nonboard[] = $val;
+            }
+        }
+
+        $session->set("app_onboarding", $nonboard);
+
+        //user
         $session->set("user", $this->getUser()->release());
+        
+        //member
         $session->set("member", $this->release());
 
         //set permission
