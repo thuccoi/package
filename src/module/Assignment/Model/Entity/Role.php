@@ -166,22 +166,24 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                 $obj->setDescription($data->description);
             }
 
-            //edit parent
-            if (!\system\Helper\Validate::isEmpty($data->parent)) {
-                if (($obj->getParent() && $obj->getParent()->getId() != $data->parent) || !$obj->getParent()) {
-                    $parent = $this->find($data->parent);
-                    if (!$parent) {
-                        $this->code->notfound("parent is notfound in this application");
+            if ($obj->getMetatype() != 'owner') {
+                //edit parent
+                if (!\system\Helper\Validate::isEmpty($data->parent)) {
+                    if (($obj->getParent() && $obj->getParent()->getId() != $data->parent) || !$obj->getParent()) {
+                        $parent = $this->find($data->parent);
+                        if (!$parent) {
+                            $this->code->notfound("parent is notfound in this application");
+                        }
+
+                        //check spiderweb
+                        if ($this->isSpiderweb($obj, $parent)) {
+                            $this->code->forbidden("parent and this role is spiderweb");
+                        }
+
+                        $obj->setParent($parent);
+
+                        $editinfo [] = "<div class='timeline-content'>Cha của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$parent->getName() }</a></div>";
                     }
-
-                    //check spiderweb
-                    if ($this->isSpiderweb($obj, $parent)) {
-                        $this->code->forbidden("parent and this role is spiderweb");
-                    }
-
-                    $obj->setParent($parent);
-
-                    $editinfo [] = "<div class='timeline-content'>Cha của vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$obj->getName()}</a> đã được đổi thành <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$obj->getId()}'>{$parent->getName() }</a></div>";
                 }
             }
 

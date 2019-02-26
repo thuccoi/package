@@ -31,25 +31,32 @@
                     </div>
                     <!-- End .form-group  -->
 
-                    <div class="form-group">
-                        <label class="col-lg-2 col-md-3 control-label" for="">Vai trò cha <i class="fa fa-sitemap"></i></label>
-                        <div class="col-lg-10 col-md-9">
-                            <select name="parent" class="form-control select2">
-                                <?php
-                                echo \system\Helper\ArrayCallback::render($roles, function($e) use($role) {
-                                    if ($role->getParent()) {
-                                        if ($role->getParent()->getId() == $e->getId()) {
-                                            return '<option selected value="' . $e->getId() . '">' . $e->getName() . '</option>';
+                    <?php
+                    if ($role->getMetatype() != 'owner') {
+                        ?>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-3 control-label" for="">Vai trò cha <i class="fa fa-sitemap"></i></label>
+                            <div class="col-lg-10 col-md-9">
+                                <select name="parent" class="form-control select2">
+                                    <?php
+                                    echo \system\Helper\ArrayCallback::render($roles, function($e) use($role) {
+                                        if ($role->getParent()) {
+                                            if ($role->getParent()->getId() == $e->getId()) {
+                                                return '<option selected value="' . $e->getId() . '">' . $e->getName() . '</option>';
+                                            }
                                         }
-                                    }
-                                    return '<option value="' . $e->getId() . '">' . $e->getName() . '</option>';
-                                });
-                                ?>
+                                        return '<option value="' . $e->getId() . '">' . $e->getName() . '</option>';
+                                    });
+                                    ?>
 
-                            </select>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End .form-group  -->
+                        <!-- End .form-group  -->
+                        <?php
+                    }
+                    ?>
+
 
                     <div class="form-group">
                         <label class="col-lg-2 col-md-3 control-label" for="">Mô tả về vai trò này</label>
