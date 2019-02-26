@@ -7,8 +7,8 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
-    public function __construct($connect, \system\Helper\Code $code, $config) {
-        $this->init($connect, $code, $config);
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
+        $this->init($connect, $code, $config, $session);
     }
 
     public function add($data) {
@@ -66,7 +66,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
 
             //for test
             $this->inputTest($log, $data);
-            
+
             $this->dm->persist($log);
             $this->dm->flush();
 
@@ -83,7 +83,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
     }
 
     public function remove($id) {
-       
+        
     }
 
     public function restore($id) {

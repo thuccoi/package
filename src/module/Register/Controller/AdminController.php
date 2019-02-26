@@ -11,7 +11,7 @@ class AdminController extends \system\Template\AbstractController {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity
-        $this->entity = new \module\Share\Model\Link\Member($connect, $code, $config);
+        $this->entity = new \module\Share\Model\Link\Member($connect, $code, $config, $session);
     }
 
     //activate member

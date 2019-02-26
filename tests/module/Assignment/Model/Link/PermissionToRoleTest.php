@@ -19,7 +19,7 @@ class PermissionToRoleTest extends TestCase {
         $roleid = "123";
 
         $role = new \module\Assignment\Model\Collection\Role();
-        
+
         $creator_id = "123";
         $create_at = new \DateTime();
 
@@ -119,8 +119,8 @@ class PermissionToRoleTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new Entity($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
 
         //input
         $data = (object) [
@@ -186,8 +186,8 @@ class PermissionToRoleTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new Entity($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));
@@ -300,8 +300,9 @@ class PermissionToRoleTest extends TestCase {
                 ]
             ]
         ];
-
-        $entityMock = new Entity($connectMock, $codeMock, $configMock);
+        
+        $session = new \system\Session($configMock);
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
 
         //assert true
         $this->assertTrue($entityMock->remove($data));

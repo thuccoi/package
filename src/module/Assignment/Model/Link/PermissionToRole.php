@@ -9,10 +9,10 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
 
     private $role_entity;
 
-    public function __construct($connect, \system\Helper\Code $code, $config) {
-        $this->init($connect, $code, $config);
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
+        $this->init($connect, $code, $config, $session);
         //init entity app
-        $this->role_entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config);
+        $this->role_entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config, $session);
     }
 
     public function add($data) {
@@ -84,7 +84,7 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
 
 
             //add new member log
-            $log = new \module\Assignment\Model\Log\PermissionToRole($this->dm, $this->code, $this->config);
+            $log = new \module\Assignment\Model\Log\PermissionToRole($this->dm, $this->code, $this->config, $this->session);
 
             if (isset($pername[$data->permission])) {
                 $log->add((object) [
@@ -155,7 +155,7 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
 
 
         //add new log
-        $log = new \module\Assignment\Model\Log\PermissionToRole($this->dm, $this->code, $this->config);
+        $log = new \module\Assignment\Model\Log\PermissionToRole($this->dm, $this->code, $this->config, $this->session);
 
         if (isset($pername[$data->permission])) {
             $log->add((object) [
@@ -166,7 +166,7 @@ class PermissionToRole extends \module\Share\Model\Common\AbsLink {
                         'message'    => "Vai trò <a href='{$this->config['URL_ROOT']}/assignment/role/view/{$role->getId()}'>{$role->getName()}</a> đã bị lấy đi quyền <b>{$pername[$data->permission]}</b>"
             ]);
         }
-        
+
         return true;
     }
 

@@ -8,10 +8,10 @@ class App extends \module\Share\Model\Common\AbsEntity {
     use \module\Share\Model\Common\EntityDefault;
 
     //set properties code
-    public function __construct($connect, \system\Helper\Code $code, $config) {
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
 
         // $dm is a DocumentManager instance we should already have
-        $this->init($connect, $code, $config);
+        $this->init($connect, $code, $config, $session);
     }
 
     public function create($data) {
@@ -76,7 +76,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             $this->dm->flush();
 
             //log create app
-            $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
+            $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config, $this->session);
             $applog->add((object) [
                         "app_id"   => (string) $app->getId(),
                         "metatype" => "create",
@@ -183,7 +183,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
 
             //log create app
             foreach ($editinfo as $message) {
-                $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config);
+                $applog = new \module\Share\Model\Log\App($this->dm, $this->code, $this->config, $this->session);
                 $applog->add((object) [
                             "app_id"   => (string) $app->getId(),
                             "metatype" => "edit",

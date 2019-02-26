@@ -66,8 +66,8 @@ class RoleToMemberTest extends TestCase {
                         }));
 
         $configMock = [];
-
-        $entityMock = new Entity($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
 
         //check false
         $this->assertFalse($entityMock->isSpiderweb($node1, $root));

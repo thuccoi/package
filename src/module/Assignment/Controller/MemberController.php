@@ -11,9 +11,9 @@ class MemberController extends \system\Template\AbstractController {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity
-        $this->entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config);
-        $this->entity_member = new \module\Share\Model\Link\Member($connect, $code, $config);
-        $this->entity_roletomember = new \module\Assignment\Model\Link\RoleToMember($connect, $code, $config);
+        $this->entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config, $session);
+        $this->entity_member = new \module\Share\Model\Link\Member($connect, $code, $config, $session);
+        $this->entity_roletomember = new \module\Assignment\Model\Link\RoleToMember($connect, $code, $config, $session);
     }
 
     public function indexAction() {

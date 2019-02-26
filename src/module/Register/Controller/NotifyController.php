@@ -13,10 +13,10 @@ class NotifyController extends \system\Template\AbstractController {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity user
-        $this->entity_user = new \module\Share\Model\Entity\User($connect, $code, $config);
+        $this->entity_user = new \module\Share\Model\Entity\User($connect, $code, $config, $session);
 
         //init entity member
-        $this->entity_member = new \module\Share\Model\Link\Member($connect, $code, $config);
+        $this->entity_member = new \module\Share\Model\Link\Member($connect, $code, $config, $session);
     }
 
     //for user
@@ -27,7 +27,7 @@ class NotifyController extends \system\Template\AbstractController {
         $this->setViewDir(dirname(__DIR__) . '/../Share/View/');
 
         return[
-            "id" => $this->getCode()->get("id", FALSE),
+            "id"    => $this->getCode()->get("id", FALSE),
             "token" => $this->getCode()->get("token", FALSE)
         ];
     }
@@ -115,8 +115,8 @@ class NotifyController extends \system\Template\AbstractController {
 
         return[
             "member" => $member->release(),
-            "user" => $member->getUser()->release(),
-            "app" => $member->getApp()->release()
+            "user"   => $member->getUser()->release(),
+            "app"    => $member->getApp()->release()
         ];
     }
 
@@ -134,8 +134,8 @@ class NotifyController extends \system\Template\AbstractController {
 
         return[
             "member" => $member->release(),
-            "user" => $member->getUser()->release(),
-            "app" => $member->getApp()->release()
+            "user"   => $member->getUser()->release(),
+            "app"    => $member->getApp()->release()
         ];
     }
 
@@ -154,8 +154,8 @@ class NotifyController extends \system\Template\AbstractController {
 
         return[
             "member" => $member->release(),
-            "user" => $member->getUser()->release(),
-            "app" => $member->getApp()->release()
+            "user"   => $member->getUser()->release(),
+            "app"    => $member->getApp()->release()
         ];
     }
 

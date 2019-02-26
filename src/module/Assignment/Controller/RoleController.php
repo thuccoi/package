@@ -12,8 +12,8 @@ class RoleController extends \system\Template\AbstractController {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity
-        $this->entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config);
-        $this->entity_pertorole = new \module\Assignment\Model\Link\PermissionToRole($connect, $code, $config);
+        $this->entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config, $session);
+        $this->entity_pertorole = new \module\Assignment\Model\Link\PermissionToRole($connect, $code, $config, $session);
     }
 
     public function indexAction() {

@@ -71,8 +71,8 @@ class PermissionToRoleTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock, $session);
 
         //input
         $data = (object) [
@@ -140,8 +140,8 @@ class PermissionToRoleTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new PermissionToRole($connectMock, $codeMock, $configMock, $session);
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));

@@ -11,14 +11,14 @@ class MemberController extends \system\Template\AbstractController {
         parent::__construct($connect, $router, $code, $session, $config, $options);
 
         //init entity
-        $this->entity = new \module\Share\Model\Link\Member($connect, $code, $config);
+        $this->entity = new \module\Share\Model\Link\Member($connect, $code, $config, $session);
     }
 
     public function addAction() {
 
 
         $data = (object) [
-                    "app" => $this->getCode()->post("app"),
+                    "app"  => $this->getCode()->post("app"),
                     "user" => $this->getCode()->post("user")
         ];
 
@@ -27,7 +27,6 @@ class MemberController extends \system\Template\AbstractController {
 
         $this->getCode()->success("Create new a member is successfuly");
     }
-
 
     public function removeAction() {
 

@@ -73,8 +73,8 @@ class RoleToMemberTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new RoleToMember($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new RoleToMember($connectMock, $codeMock, $configMock, $session);
 
         //input
         $data = (object) [
@@ -143,8 +143,8 @@ class RoleToMemberTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new RoleToMember($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new RoleToMember($connectMock, $codeMock, $configMock, $session);
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));

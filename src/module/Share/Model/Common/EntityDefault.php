@@ -7,18 +7,20 @@ trait EntityDefault {
     private $code;
     private $dm;
     private $config;
+    private $session;
 
     //set properties code
-    public function __construct($connect, \system\Helper\Code $code, $config) {
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
 
         // $dm is a DocumentManager instance we should already have
-        $this->init($connect, $code, $config);
+        $this->init($connect, $code, $config, $session);
     }
 
-    public function init($connect, \system\Helper\Code $code, $config) {
+    public function init($connect, \system\Helper\Code $code, $config, \system\Session $session) {
         $this->code = $code;
         $this->dm = $connect;
         $this->config = $config;
+        $this->session = $session;
     }
 
     //config
@@ -49,6 +51,16 @@ trait EntityDefault {
 
     public function getConnect() {
         return $this->dm;
+    }
+
+    //session
+    public function setSession($session) {
+        $this->session = $session;
+        return $this;
+    }
+
+    public function getSession() {
+        return $this->session;
     }
 
     public function inputTest(&$obj, $data) {

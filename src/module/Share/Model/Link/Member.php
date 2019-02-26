@@ -10,12 +10,12 @@ class Member extends \module\Share\Model\Common\AbsLink {
     private $app_entity;
     private $user_entity;
 
-    public function __construct($connect, \system\Helper\Code $code, $config) {
-        $this->init($connect, $code, $config);
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
+        $this->init($connect, $code, $config, $session);
         //init entity app
-        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config);
+        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config, $session);
         //init entity user
-        $this->user_entity = new \module\Share\Model\Entity\User($connect, $code, $config);
+        $this->user_entity = new \module\Share\Model\Entity\User($connect, $code, $config, $session);
     }
 
     public function add($data) {
@@ -77,7 +77,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
             $this->dm->flush();
 
             //add new member log
-            $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
+            $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config, $this->session);
 
             $memberlog->add((object) [
                         'user_id'  => (string) $user->getId(),
@@ -175,7 +175,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
             }
 
             //entity link role to member
-            $roletomem_link = new \module\Assignment\Model\Link\RoleToMember($this->getConnect(), $this->getCode(), $this->getConfig());
+            $roletomem_link = new \module\Assignment\Model\Link\RoleToMember($this->getConnect(), $this->getCode(), $this->getConfig(), $this->session);
 
             //add new role to member
             foreach ($data->role as $val) {
@@ -240,7 +240,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
         $this->getConnect()->persist($obj);
         $this->getConnect()->flush();
 
-        $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
+        $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config, $this->session);
 
         $memberlog->add((object) [
                     'user_id'  => (string) $user->getId(),
@@ -268,7 +268,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
         $this->getConnect()->persist($obj);
         $this->getConnect()->flush();
 
-        $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
+        $memberlog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config, $this->session);
 
         $memberlog->add((object) [
                     'user_id'  => (string) $user->getId(),

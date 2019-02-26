@@ -104,7 +104,9 @@ class RoleTest extends TestCase {
                         }));
 
 
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+
+        $entityMock = new Role($connectMock, $codeMock, $configMock, $session);
 
         //input
         $data = (object) [
@@ -172,8 +174,8 @@ class RoleTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Role($connectMock, $codeMock, $configMock, $session);
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));
@@ -307,8 +309,8 @@ class RoleTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Role($connectMock, $codeMock, $configMock, $session);
 
         //input
         $data = (object) [
@@ -376,7 +378,8 @@ class RoleTest extends TestCase {
                 ->willReturn($roleRepository);
 
         $configMock = [];
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Role($connectMock, $codeMock, $configMock, $session);
 
         //assert true
         $this->assertTrue($entityMock->delete($id));
@@ -434,7 +437,8 @@ class RoleTest extends TestCase {
                 ->willReturn($roleRepository);
 
         $configMock = [];
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Role($connectMock, $codeMock, $configMock, $session);
 
         //assert
         $this->assertTrue($entityMock->restore($id));
@@ -494,8 +498,8 @@ class RoleTest extends TestCase {
                         }));
 
         $configMock = [];
-
-        $entityMock = new Role($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Role($connectMock, $codeMock, $configMock, $session);
 
         //check false
         $this->assertFalse($entityMock->isSpiderweb($node1, $root));

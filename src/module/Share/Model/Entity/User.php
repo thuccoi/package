@@ -8,10 +8,10 @@ class User extends \module\Share\Model\Common\AbsEntity {
     use \module\Share\Model\Common\EntityDefault;
 
     //set properties code
-    public function __construct($connect, \system\Helper\Code $code, $config) {
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
 
         // $dm is a DocumentManager instance we should already have
-        $this->init($connect, $code, $config);
+        $this->init($connect, $code, $config, $session);
     }
 
     public function create($data) {
@@ -106,11 +106,11 @@ class User extends \module\Share\Model\Common\AbsEntity {
             $this->dm->flush();
 
             //log create user
-            $userlog = new \module\Share\Model\Log\User($this->dm, $this->code, $this->config);
+            $userlog = new \module\Share\Model\Log\User($this->dm, $this->code, $this->config, $this->session);
             $userlog->add((object) [
-                        "user_id" => (string) $user->getId(),
+                        "user_id"  => (string) $user->getId(),
                         "metatype" => "create",
-                        "message" => "Người dùng <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được tạo mới"
+                        "message"  => "Người dùng <a href='{$this->config['URL_ROOT']}/application/user/view/{$user->getId()}'>{$user->getName()}</a> đã được tạo mới"
             ]);
 
             return $user;

@@ -81,15 +81,15 @@ class RoleToMemberTest extends TestCase {
         $roleRepository->expects($this->any())
                 ->method('find')
                 ->will($this->returnCallback(function($e) use($member_id, $member, $roleid, $role, $app_id, $app) {
-                    
+
                             if ($e == $member_id) {
                                 return $member;
                             }
-                            
+
                             if ($e == $roleid) {
                                 return $role;
                             }
-                            
+
                             if ($e == $app_id) {
                                 return $app;
                             }
@@ -142,8 +142,8 @@ class RoleToMemberTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new Entity($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
 
         //input
         $data = (object) [
@@ -209,8 +209,8 @@ class RoleToMemberTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-
-        $entityMock = new Entity($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
 
 
         $this->assertEquals($documentexperted, $entityMock->find($id));
@@ -341,7 +341,8 @@ class RoleToMemberTest extends TestCase {
             ]
         ];
 
-        $entityMock = new Entity($connectMock, $codeMock, $configMock);
+        $session = new \system\Session($configMock);
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
 
         //assert true
         $this->assertTrue($entityMock->remove($data));

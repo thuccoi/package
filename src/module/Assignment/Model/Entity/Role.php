@@ -10,13 +10,13 @@ class Role extends \module\Share\Model\Common\AbsEntity {
     private $app_entity;
 
     //set properties code
-    public function __construct($connect, \system\Helper\Code $code, $config) {
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
 
         // $dm is a DocumentManager instance we should already have
-        $this->init($connect, $code, $config);
+        $this->init($connect, $code, $config, $session);
 
         //init entity app
-        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config);
+        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config, $session);
     }
 
     public function create($data) {
@@ -96,7 +96,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             $this->dm->flush();
 
             //log create role
-            $log = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config);
+            $log = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config, $this->session);
             $log->add((object) [
                         "role_id"    => (string) $obj->getId(),
                         "metatype"   => "create",
@@ -106,7 +106,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
             ]);
 
             //permission to role entity
-            $perentity = new \module\Assignment\Model\Link\PermissionToRole($this->getConnect(), $this->getCode(), $this->getConfig());
+            $perentity = new \module\Assignment\Model\Link\PermissionToRole($this->getConnect(), $this->getCode(), $this->getConfig(), $this->session);
 
             //add permission
             if (\system\Helper\Validate::isArray($data->permission)) {
@@ -195,7 +195,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                 $oldper = $obj->getPermissions();
 
                 //permission to role entity
-                $perentity = new \module\Assignment\Model\Link\PermissionToRole($this->getConnect(), $this->getCode(), $this->getConfig());
+                $perentity = new \module\Assignment\Model\Link\PermissionToRole($this->getConnect(), $this->getCode(), $this->getConfig(), $this->session);
 
                 //add new
                 foreach ($data->permission as $val) {
@@ -230,7 +230,7 @@ class Role extends \module\Share\Model\Common\AbsEntity {
 
             //log create app
             foreach ($editinfo as $message) {
-                $applog = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config);
+                $applog = new \module\Assignment\Model\Log\Role($this->dm, $this->code, $this->config, $this->session);
                 $applog->add((object) [
                             "role_id"    => (string) $obj->getId(),
                             "metatype"   => "edit",

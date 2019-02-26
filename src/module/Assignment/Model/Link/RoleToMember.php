@@ -11,16 +11,16 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
     private $member_entity;
     private $app_entity;
 
-    public function __construct($connect, \system\Helper\Code $code, $config) {
-        $this->init($connect, $code, $config);
+    public function __construct($connect, \system\Helper\Code $code, $config, \system\Session $session) {
+        $this->init($connect, $code, $config, $session);
         //init entity app
-        $this->role_entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config);
+        $this->role_entity = new \module\Assignment\Model\Entity\Role($connect, $code, $config, $session);
         //init entity user
-        $this->member_entity = new \module\Share\Model\Link\Member($connect, $code, $config);
+        $this->member_entity = new \module\Share\Model\Link\Member($connect, $code, $config, $session);
 
 
         //init entity app
-        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config);
+        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config, $session);
     }
 
     public function add($data) {
@@ -97,7 +97,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
             $this->getConnect()->flush();
 
             //add new member log
-            $log = new \module\Assignment\Model\Log\RoleToMember($this->dm, $this->code, $this->config);
+            $log = new \module\Assignment\Model\Log\RoleToMember($this->dm, $this->code, $this->config, $this->session);
 
             $log->add((object) [
                         'role_id'    => (string) $role->getId(),
@@ -185,7 +185,7 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
                 ->execute();
 
         //add new log
-        $log = new \module\Assignment\Model\Log\RoleToMember($this->dm, $this->code, $this->config);
+        $log = new \module\Assignment\Model\Log\RoleToMember($this->dm, $this->code, $this->config, $this->session);
 
         $log->add((object) [
                     'role_id'    => $data->role_id,
