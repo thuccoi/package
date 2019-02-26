@@ -104,6 +104,15 @@ class Member extends \module\Share\Model\Common\AbsLink {
                     $app->onboarding('add_member', 1);
                     $this->dm->persist($app);
                     $this->dm->flush();
+
+
+                    //change session app onboarding
+                    $this->session->set("app_onboarding", \system\Helper\ArrayCallback::select($this->session->get('app_onboarding'), function($e) {
+                                if ($e['metatype'] == 'add_member') {
+                                    $e['status'] = 1;
+                                }
+                                return $e;
+                            }));
                 }
             }
 

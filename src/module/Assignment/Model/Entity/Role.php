@@ -138,6 +138,14 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                 $app->onboarding('create_role', 1);
                 $this->dm->persist($app);
                 $this->dm->flush();
+
+                //change session app onboarding
+                $this->session->set("app_onboarding", \system\Helper\ArrayCallback::select($this->session->get('app_onboarding'), function($e) {
+                            if ($e['metatype'] == 'create_role') {
+                                $e['status'] = 1;
+                            }
+                            return $e;
+                        }));
             }
 
 

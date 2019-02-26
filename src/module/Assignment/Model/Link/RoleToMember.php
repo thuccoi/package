@@ -124,6 +124,14 @@ class RoleToMember extends \module\Share\Model\Common\AbsLink {
                 $app->onboarding('assginment', 1);
                 $this->dm->persist($app);
                 $this->dm->flush();
+
+                //change session app onboarding
+                $this->session->set("app_onboarding", \system\Helper\ArrayCallback::select($this->session->get('app_onboarding'), function($e) {
+                            if ($e['metatype'] == 'assginment') {
+                                $e['status'] = 1;
+                            }
+                            return $e;
+                        }));
             }
 
 
