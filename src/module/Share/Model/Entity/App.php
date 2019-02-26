@@ -104,6 +104,32 @@ class App extends \module\Share\Model\Common\AbsEntity {
         $app = $this->find($id);
         if ($app) {
             $editinfo = [];
+            //edit onboarding
+            if (!\system\Helper\Validate::isEmpty($data->onboarding)) {
+
+                //flat onboarding
+                $flat = false;
+                foreach ($app->getOnboarding() as $val) {
+                    if ($val['metatype'] == $data->onboarding) {
+
+                        $flat = true;
+
+                        if ($val['status'] == 0) {
+                            $app->onboarding($data->onboarding, 1);
+                            $editinfo [] = "<div class='timeline-content'>Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>  đã được thiết lập thông tin</div>";
+                        }
+
+                        break;
+                    }
+                }
+
+                //if not searched
+                if ($flat === false) {
+                    $app->onboarding($data->onboarding, 1);
+                    $editinfo [] = "<div class='timeline-content'>Ứng dụng <a href='{$this->config['URL_ROOT']}/application/index/view/{$app->getId()}'>{$app->getName()}</a>  đã được thiết lập thông tin</div>";
+                }
+            }
+
             //edit name
             if (!\system\Helper\Validate::isEmpty($data->name) && $data->name != $app->getName()) {
                 $app->setName($data->name);
@@ -149,6 +175,7 @@ class App extends \module\Share\Model\Common\AbsEntity {
             if (\system\Helper\Validate::isEmpty($editinfo)) {
                 $this->code->error("Data not changed");
             }
+
 
             //save and send email
             $this->dm->persist($app);
