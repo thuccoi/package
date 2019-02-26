@@ -92,10 +92,11 @@ class AppController extends \system\Template\AbstractController {
         $id = $this->getRouter()->getId('id');
         //get data
         $data = (object) [
-                    "name"     => $this->getCode()->post("name"),
-                    "image"    => $this->getCode()->post("image"),
-                    "metatype" => $this->getCode()->post("metatype"),
-                    "domain"   => $this->getCode()->post("domain")
+                    "name"       => $this->getCode()->post("name"),
+                    "onboarding" => $this->getCode()->post("onboarding"),
+                    "image"      => $this->getCode()->post("image"),
+                    "metatype"   => $this->getCode()->post("metatype"),
+                    "domain"     => $this->getCode()->post("domain")
         ];
 
         //edit the app
