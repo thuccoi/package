@@ -218,7 +218,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
 
             //log create app
             foreach ($editinfo as $message) {
-                $applog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config);
+                $applog = new \module\Share\Model\Log\Member($this->dm, $this->code, $this->config, $this->session);
                 $applog->add((object) [
                             "app_id"   => (string) $obj->getApp()->getId(),
                             "user_id"  => (string) $obj->getUser()->getId(),
