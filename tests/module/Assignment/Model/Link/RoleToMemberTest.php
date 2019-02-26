@@ -14,7 +14,7 @@ class RoleToMemberTest extends TestCase {
         //input
         $id = new \MongoId();
         $token = "123";
-        $app_id = "123";
+        $app_id = "app_123";
         $member_id = "member123";
         $roleid = "role123";
 
@@ -80,12 +80,18 @@ class RoleToMemberTest extends TestCase {
 
         $roleRepository->expects($this->any())
                 ->method('find')
-                ->will($this->returnCallback(function($e) use($member_id, $member, $roleid, $role) {
+                ->will($this->returnCallback(function($e) use($member_id, $member, $roleid, $role, $app_id, $app) {
+                    
                             if ($e == $member_id) {
                                 return $member;
                             }
+                            
                             if ($e == $roleid) {
                                 return $role;
+                            }
+                            
+                            if ($e == $app_id) {
+                                return $app;
                             }
 
                             return null;
@@ -94,6 +100,7 @@ class RoleToMemberTest extends TestCase {
         $connectMock->expects($this->any())
                 ->method('getRepository')
                 ->willReturn($roleRepository);
+
 
         //query builder
         $mockCollection = $this->getMockBuilder(\Doctrine\MongoDB\Collection::class)
