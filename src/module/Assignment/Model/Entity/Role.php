@@ -7,11 +7,16 @@ class Role extends \module\Share\Model\Common\AbsEntity {
     //entity default
     use \module\Share\Model\Common\EntityDefault;
 
+    private $app_entity;
+
     //set properties code
     public function __construct($connect, \system\Helper\Code $code, $config) {
 
         // $dm is a DocumentManager instance we should already have
         $this->init($connect, $code, $config);
+
+        //init entity app
+        $this->app_entity = new \module\Share\Model\Entity\App($connect, $code, $config);
     }
 
     public function create($data) {
@@ -20,6 +25,11 @@ class Role extends \module\Share\Model\Common\AbsEntity {
         //app_id
         if (\system\Helper\Validate::isEmpty($data->app_id)) {
             $this->code->forbidden("app_id is require");
+        }
+
+        $app = $this->app_entity->find($data->app_id);
+        if (!$app) {
+            $this->code->notfound("app notfound in system");
         }
 
         //creator_id
@@ -108,6 +118,25 @@ class Role extends \module\Share\Model\Common\AbsEntity {
                     ]);
                 }
             }
+
+
+            //onboarding
+            $flat = FALSE;
+            $onboarding = $app->getOnboarding('create_role');
+            if ($onboarding && isset($onboarding['status'])) {
+                if ($onboarding['status'] == 0) {
+                    $flat = TRUE;
+                }
+            } else {
+                $flat = TRUE;
+            }
+
+            if ($flat === TRUE) {
+                $app->onboarding('create_role', 1);
+                $this->dm->persist($app);
+                $this->dm->flush();
+            }
+
 
 
             return $obj;
