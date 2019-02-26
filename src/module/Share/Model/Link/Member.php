@@ -102,6 +102,8 @@ class Member extends \module\Share\Model\Common\AbsLink {
 
                 if ($flat === TRUE) {
                     $app->onboarding('add_member', 1);
+                    $this->dm->persist($app);
+                    $this->dm->flush();
                 }
             }
 
