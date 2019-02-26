@@ -14,7 +14,7 @@ class RoleTest extends TestCase {
         //input
         $id = new \MongoId();
         $token = "123";
-        $app_id = "123";
+        $app_id = "app_123";
         $parentid = new \MongoId();
         $name = "123";
         $creator_id = "123";
@@ -22,6 +22,8 @@ class RoleTest extends TestCase {
         $create_at = new \DateTime();
 
         //expeted
+        $app = new \module\Share\Model\Collection\App();
+
         $parentexpected = new \module\Assignment\Model\Collection\Role();
         $parentexpected->setId($parentid);
 
@@ -59,9 +61,18 @@ class RoleTest extends TestCase {
                 ->method('findOneBy')
                 ->willReturn(null);
 
-        $roleRepository->expects($this->once())
+        $roleRepository->expects($this->any())
                 ->method('find')
-                ->willReturn($parentexpected);
+                ->will($this->returnCallback(function($e) use($parentid, $parentexpected, $app_id, $app) {
+                            if ($e == (string) $parentid) {
+                                return $parentexpected;
+                            }
+                            if ($e == $app_id) {
+                                return $app;
+                            }
+
+                            return null;
+                        }));
 
         $connectMock->expects($this->any())
                 ->method('getRepository')
@@ -497,7 +508,7 @@ class RoleTest extends TestCase {
         $this->assertTrue($entityMock->isSpiderweb($node2, $node2));
         $this->assertTrue($entityMock->isSpiderweb($root, $root));
         $this->assertTrue($entityMock->isSpiderweb($root, $node1));
-        $this->assertTrue($entityMock->isSpiderweb($root, $node2)); 
+        $this->assertTrue($entityMock->isSpiderweb($root, $node2));
         $this->assertTrue($entityMock->isSpiderweb($node1, $node2));
     }
 
