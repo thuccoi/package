@@ -120,14 +120,24 @@ class App extends \module\Share\Model\Common\AbsField {
     public function onboarding($metatype, $status) {
         if ($this->onboarding) {
             $onboarding = [];
+            $flat = false;
             foreach ($this->onboarding as $val) {
                 if ($val['metatype'] == $metatype) {
                     $val['status'] = $status;
+                    $flat = true;
                 }
                 $onboarding [] = $val;
             }
-
+            
             $this->onboarding = $onboarding;
+            
+            if ($flat == false) {
+                $this->onboarding[] = [
+                    'metatype' => $metatype,
+                    'status'   => $status
+                ];
+            }
+            
         } else {
             $this->onboarding[] = [
                 'metatype' => $metatype,
