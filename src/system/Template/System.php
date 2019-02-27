@@ -119,12 +119,13 @@ class System {
                 $obj = $objfactory($connect, $config['controller'], $router, $code, $session, $sysconfig, []);
 
                 //checkpermisison
-                if (!self::checkOutsideRouter($module, $controller, $action, $sysconfig)) {
-                    if (!self::checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
-                        $code->forbidden("You don't have permission to access");
+                if ($sysconfig['eviroment']['development'] == 0) {//check eviroment
+                    if (!self::checkOutsideRouter($module, $controller, $action, $sysconfig)) {
+                        if (!self::checkPermission($obj->getViewer()->allowed_actions, $module, $controller, $action, $sysconfig)) {
+                            $code->forbidden("You don't have permission to access");
+                        }
                     }
                 }
-
 
                 $naction = "";
                 for ($i = 0; $i < strlen($action); $i++) {
