@@ -85,4 +85,24 @@ trait EntityDefault {
         }
     }
 
+    public function inputLocal(&$obj) {
+        //app
+        $app = $this->session->get('app');
+        if (!$app || \system\Helper\Validate::isEmpty($app->id)) {
+            return false;
+        }
+
+        $obj->setAppId($app->id);
+
+        //member
+        $member = $this->session->get('member');
+        if (!$member || \system\Helper\Validate::isEmpty($member->id)) {
+            return false;
+        }
+
+        $obj->setCreatorId($member->id);
+
+        return true;
+    }
+
 }
