@@ -166,7 +166,7 @@ class Member extends \module\Share\Model\Common\AbsLink {
         }
 
         //edit manager
-        if (!\system\Helper\Validate::isEmpty($data->manager) && $data->manager && (!$obj->getManager() || $data->manager != $obj->getManager()->getId() )) {
+        if (!\system\Helper\Validate::isEmpty($data->manager) && (!$obj->getManager() || $data->manager != $obj->getManager()->getId() )) {
             $manager = $this->find($data->manager);
             if (!$manager) {
                 $this->code->notfound("not found manager");

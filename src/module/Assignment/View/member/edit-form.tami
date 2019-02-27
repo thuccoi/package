@@ -52,7 +52,7 @@
                         <label class="col-lg-2 col-md-3 control-label" for="">Quản lý trực tiếp <i class="fa fa-sitemap"></i></label>
                         <div class="col-lg-10 col-md-9">
                             <select name="manager" class="form-control select2">
-                                <option>-- Chọn quản lý trực tiếp --</option>
+                                <option value="">-- Chọn quản lý trực tiếp --</option>
                                 <?php
                                 echo \system\Helper\ArrayCallback::render($members, function($e) use ($member) {
                                     $selected = '';
