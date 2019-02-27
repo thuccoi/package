@@ -114,6 +114,20 @@ class Member extends \module\Share\Model\Common\AbsLink {
                                 return $e;
                             }));
                 }
+            } else {//add role owner to this member
+                $erlm = new \module\Assignment\Model\Link\RoleToMember($this->dm, $this->code, $this->config, $this->session);
+
+                $role = $this->dm->getRepository(\module\Assignment\Model\Collection\Role::class)
+                        ->findOneBy(['metatype' => 'owner', 'app_id' => $app->getId()]);
+
+                if ($role) {
+                    $erlm->add((object) [
+                                'app_id'     => (string) $app->getId(),
+                                "creator_id" => (string) $member->getId(),
+                                "role_id"    => $role->getId(),
+                                "member_id"  => (string) $member->getId()
+                    ]);
+                }
             }
 
 

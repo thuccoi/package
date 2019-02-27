@@ -25,6 +25,8 @@ class MemberController extends \system\Template\AbstractController {
         //add new a member
         $member = $this->entity->add($data);
 
+        
+        
         $this->getCode()->success("Create new a member is successfuly");
     }
 
