@@ -105,4 +105,19 @@ trait EntityDefault {
         return true;
     }
 
+    public function isLocal($obj) {
+        if ($obj) {
+            $app = $this->session->get('app');
+            if (!$app || \system\Helper\Validate::isEmpty($app->id)) {
+                return false;
+            }
+
+            if ($obj->getAppId() == $app->id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
