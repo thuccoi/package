@@ -42,6 +42,7 @@ class RoleToMemberTest extends TestCase {
         //mockup
         $configMock = [
             'URL_ROOT'       => 'test',
+            'DIR_ROOT'       => 'test',
             'account_member' => [
                 'permissions' => [
                     [

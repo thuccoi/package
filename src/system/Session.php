@@ -34,7 +34,7 @@ class Session {
 
         if (isset($config['session'])) {
             if (!isset($config['session']['save_path'])) {
-                $config['session']['save_path'] = DIR_ROOT . 'data/Sessions';
+                $config['session']['save_path'] = $this->config['DIR_ROOT'] . 'data/Sessions';
             }
 
             //Expire the session if user is inactive for 30

@@ -42,7 +42,8 @@ class RoleTest extends TestCase {
 
         //mockup
         $configMock = [
-            'URL_ROOT' => 'test'
+            'URL_ROOT' => 'test',
+            'DIR_ROOT' => 'test'
         ];
 
         $connectMock = $this->getMockBuilder('DocumentManager')
