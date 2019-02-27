@@ -100,8 +100,6 @@ $rand_style = ['default', 'danger', 'primary', 'warning', 'info', 'success'];
 <!-- End .row -->
 
 
-<button id="error-notice" type="button" class="btn btn-danger mr15 mb15">Error notice</button>
-
 <?php
 $this->js("/static/js/pages/blank.js");
 ?>
