@@ -1,0 +1,107 @@
+<?php
+$onboarding = $this->getConfig()['app_onboarding'];
+$nonboarding = 0;
+$onboarding = \system\Helper\ArrayCallback::select($this->getViewer()->app_onboarding, function($e) use($onboarding, &$nonboarding) {
+            if ($e['status'] == 0) {
+                $nonboarding++;
+            }
+
+            foreach ($onboarding as $val) {
+                if ($val['metatype'] == $e['metatype']) {
+                    $val['status'] = $e['status'];
+                    return $val;
+                }
+            }
+
+            return $e;
+        });
+
+$endkey = count($onboarding) - 1;
+
+$rand_style = ['default', 'danger', 'primary', 'warning', 'info', 'success'];
+?>
+
+<div id="page-header" class="clearfix">
+    <div class="page-header">
+        <h2>Khởi tạo ứng dụng ban đầu</h2>
+        <span class="txt">Trang khởi tạo ban đầu của một ứng dụng, dành cho quản trị.</span>
+    </div>
+    <div class="header-stats">
+        <div class="spark clearfix">
+            <div class="spark-info"><span class="number"><?= $nonboarding ?></span>Chưa được thiết lập</div>
+            <div id="spark-visitors" class="sparkline"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <!-- Start .row -->
+    <div class="col-lg-12">
+        <!-- col-lg-12 start here -->
+        <div class="page-header">
+            <h4>Danh sách thiết lập</h4>
+        </div>
+    </div>
+
+    <?php
+    foreach ($onboarding as $key => $val) {
+        if ($key % 2 == 0) {
+            if ($key != 0) {
+                echo ' </div>';
+            }
+
+            echo ' <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 sortable-layout">';
+        }
+        ?>
+        <div class="panel panel-<?= $rand_style[$key % 6] ?> plain panelMove panelClose">
+            <!-- Start .panel -->
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a href="<?= $val['link'] ?>">
+                        <?= $val['name'] ?>
+                    </a>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <?php
+                if ($val['status'] == 0) {
+                    ?>
+                    <a href="<?= $val['link'] ?>">
+                        <div class="alert alert-warning fade in">
+                            <i class="glyphicon glyphicon-warning-sign alert-icon "></i>
+                            <strong> Chưa được thiết lập!</strong> Hãy nhấn vào đây để thực hiện thiết lập.
+                        </div>
+                    </a>
+                    <?php
+                } else {
+                    ?>
+                    <a href="<?= $val['link'] ?>">
+                        <div class="alert alert-success fade in">
+                            <i class="fa fa-check alert-icon "></i>
+                            <strong> Đã được thiết lập!</strong> Hãy nhấn vào đây để xem chi tiết.
+                        </div>
+                    </a>
+                    <?php
+                }
+                ?>
+
+
+            </div>
+        </div>
+        <?php
+        if ($key == $endkey) {
+            echo ' </div>';
+        }
+    }
+    ?>
+
+</div>
+<!-- End .row -->
+
+
+<button id="error-notice" type="button" class="btn btn-danger mr15 mb15">Error notice</button>
+
+<?php
+$this->js("/static/js/pages/blank.js");
+?>
