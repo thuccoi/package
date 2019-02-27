@@ -119,4 +119,112 @@ class AppController extends \system\Template\AbstractController {
         
     }
 
+    
+    
+    
+    public function memberLogAction() {
+
+        $id = $this->getRouter()->getId();
+
+        $app = $this->getConnect()->getRepository(\module\Share\Model\Collection\App::class)->find($id);
+        if (!$app) {
+            $this->getCode()->error("Not found app");
+        }
+
+        //get length load more in config
+        $lenghtloadmore = (int) $this->getConfig()['render']['lenghtloadmore'];
+
+
+        $start = (int) $this->getCode()->post('start');
+
+        //list member logs
+        $qb = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\MemberLog::class)
+                ->hydrate(false)
+                ->field("app_id")->equals($app->getId())
+                ->sort('create_at', 'desc')
+                ->skip($start * $lenghtloadmore)
+                ->limit($lenghtloadmore)
+                ->getQuery()
+                ->execute();
+
+        $memberlogs = [];
+
+        if ($qb) {
+            foreach ($qb as $val) {
+                $valrl = $val;
+                $valrl['create_at'] = \system\Helper\Str::toTimeString($val["create_at"]->toDateTime());
+                $memberlogs[] = $valrl;
+            }
+        }
+
+        //numlogs
+        $numlogs = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\MemberLog::class)
+                ->hydrate(false)
+                ->field("app_id")->equals($app->getId())
+                ->count()
+                ->getQuery()
+                ->execute();
+
+        //hide button load more
+        $hideloadmore = 0;
+        if (count($memberlogs) < $lenghtloadmore) {//less $lenghtloadmore documents
+            $hideloadmore = 1;
+        } else if ($numlogs == $start * $lenghtloadmore + $lenghtloadmore) {//or end of logs
+            $hideloadmore = 1;
+        }
+
+        $this->getCode()->success("Lịch sử các thành viên trong ứng dụng {$app->getName()}", ['logs' => $memberlogs, 'hideloadmore' => $hideloadmore]);
+    }
+
+    public function appLogAction() {
+        $id = $this->getRouter()->getId();
+
+        $app = $this->getConnect()->getRepository(\module\Share\Model\Collection\App::class)->find($id);
+        if (!$app) {
+            $this->getCode()->error("Not found app");
+        }
+
+        $start = (int) $this->getCode()->post('start');
+
+        //get length load more in config
+        $lenghtloadmore = (int) $this->getConfig()['render']['lenghtloadmore'];
+
+        //list add logs 
+        $qb = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\AppLog::class)
+                ->hydrate(false)
+                ->field("app_id")->equals($app->getId())
+                ->sort('create_at', 'desc')
+                ->skip($start * $lenghtloadmore)
+                ->limit($lenghtloadmore)
+                ->getQuery()
+                ->execute();
+
+        $applogs = [];
+
+        if ($qb) {
+            foreach ($qb as $val) {
+                $valrl = $val;
+                $valrl['create_at'] = \system\Helper\Str::toTimeString($val["create_at"]->toDateTime());
+                $applogs[] = $valrl;
+            }
+        }
+
+        //numlogs
+        $numlogs = $this->getConnect()->createQueryBuilder(\module\Share\Model\Collection\AppLog::class)
+                ->hydrate(false)
+                ->field("app_id")->equals($app->getId())
+                ->count()
+                ->getQuery()
+                ->execute();
+
+        //hide button load more
+        $hideloadmore = 0;
+        if (count($applogs) < $lenghtloadmore) {//less $lenghtloadmore documents
+            $hideloadmore = 1;
+        } else if ($numlogs == $start * $lenghtloadmore + $lenghtloadmore) {//or end of logs
+            $hideloadmore = 1;
+        }
+
+        $this->getCode()->success("Lịch sử của ứng dụng {$app->getName()}", ['logs' => $applogs, 'hideloadmore' => $hideloadmore]);
+    }
 }
