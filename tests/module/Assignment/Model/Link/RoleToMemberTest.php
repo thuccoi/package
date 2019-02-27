@@ -143,8 +143,11 @@ class RoleToMemberTest extends TestCase {
                             throw new \Exception($e);
                         }));
 
-        $session = new \system\Session($configMock);
-        $entityMock = new Entity($connectMock, $codeMock, $configMock, $session);
+        $sessionMock = $this->getMockBuilder(\system\Session::class)
+                ->setMethods(array('set', 'get'))
+                ->disableOriginalConstructor()
+                ->getMock();
+        $entityMock = new Entity($connectMock, $codeMock, $configMock, $sessionMock);
 
         //input
         $data = (object) [

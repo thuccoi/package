@@ -105,9 +105,12 @@ class RoleTest extends TestCase {
                         }));
 
 
-        $session = new \system\Session($configMock);
+        $sessionMock = $this->getMockBuilder(\system\Session::class)
+                ->setMethods(array('set', 'get'))
+                ->disableOriginalConstructor()
+                ->getMock();
 
-        $entityMock = new Role($connectMock, $codeMock, $configMock, $session);
+        $entityMock = new Role($connectMock, $codeMock, $configMock, $sessionMock);
 
         //input
         $data = (object) [
