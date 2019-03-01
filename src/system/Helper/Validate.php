@@ -79,6 +79,12 @@ class Validate {
     }
 
     public static function isEmpty(&$obj) {
+        
+        //0 not empty
+        if ($obj === 0) {
+            return false;
+        }
+        
         //check isset
         if (!isset($obj)) {
             return true;
