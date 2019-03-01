@@ -85,6 +85,18 @@ trait EntityDefault {
         }
     }
 
+    public function getViewerDB() {
+        //session member
+        $sm = $this->session->get('member');
+        if (!$sm || \system\Helper\Validate::isEmpty($sm->id)) {
+            return false;
+        }
+
+        //link member
+        $link = new \module\Share\Model\Link\Member($this->dm, $this->code, $this->config, $this->session);
+        return $link->find($sm->id);
+    }
+
     public function inputLocal(&$obj) {
         //app
         $app = $this->session->get('app');
