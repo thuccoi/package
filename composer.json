@@ -27,7 +27,8 @@
     },
     "config": {
         "platform": {
-            "ext-mongo": "1.6.16"
+            "ext-mongo": "1.6.16",
+            "ext-mongodb": "1.5"
         }
     },
     "require-dev": {
