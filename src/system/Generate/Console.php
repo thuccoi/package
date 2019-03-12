@@ -19,7 +19,7 @@ class Console extends Text {
 
         $command = sprintf("%-40s%s", $this->info($key), $value);
 
-        $this->whiteSpace(2)
+        $this->whiteSpace(1)
                 ->addMessage($command)
                 ->breakLine()
                 ->whiteSpace()
