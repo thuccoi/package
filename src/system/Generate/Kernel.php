@@ -160,8 +160,7 @@ class Kernel {
             exit;
         }
 
-        $txt = "
-<?php
+        $txt = "<?php
 
 namespace $module_name;
 
@@ -250,8 +249,7 @@ return [";
             exit;
         }
 
-        $txt = "
-<?php
+        $txt = "<?php
 
 namespace $module_name\Controller;
 
@@ -440,8 +438,7 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
 
         $strlow = strtolower($module_name);
 
-        $txt = "
-<?php
+        $txt = "<?php
 
 namespace {$module_name};
 
