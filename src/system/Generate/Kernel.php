@@ -152,6 +152,32 @@ class Kernel {
             exit;
         }
 
+
+        //src/Module.php
+        $myfile = fopen($dir_module . "/src/Module.php", "w");
+        if (!$myfile) {
+            $console->releaseError("Unable to open file! " . $dir_module . "/src/Module.php");
+            exit;
+        }
+
+        $txt = "
+<?php
+
+namespace $module_name;
+
+class Module {
+
+    public function getConfig() {
+        return include __DIR__ . '/../config/module.config.php';
+    }
+
+}
+
+";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+
+
         //create controller
         $this->createController($module_name, "Index", $console);
 
@@ -434,30 +460,6 @@ return [
         'layout' => dirname(__DIR__) . '/view/layout/layout.tami'
     ]
 ];
-
-";
-        fwrite($myfile, $txt);
-        fclose($myfile);
-
-
-        $myfile = fopen($dir_module . "/src/Module.php", "w");
-        if (!$myfile) {
-            $console->releaseError("Unable to open file! " . $dir_module . "/src/Module.php");
-            exit;
-        }
-
-        $txt = "
-<?php
-
-namespace $module_name;
-
-class Module {
-
-    public function getConfig() {
-        return include __DIR__ . '/../config/module.config.php';
-    }
-
-}
 
 ";
         fwrite($myfile, $txt);
