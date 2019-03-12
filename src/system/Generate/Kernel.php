@@ -405,6 +405,7 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
     public function createFileConfig($module_name, $console) {
 
         $dir_module = $this->config['DIR_ROOT'] . "/module/" . $module_name;
+
         $myfile = fopen($dir_module . "/config/module.config.php", "w");
         if (!$myfile) {
             $console->releaseError("Unable to open file! " . $dir_module . "/config/module.config.php");
@@ -412,7 +413,7 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
         }
 
         $strlow = strtolower($module_name);
-        
+
         $txt = "
 <?php
 
@@ -433,6 +434,30 @@ return [
         'layout' => dirname(__DIR__) . '/view/layout/layout.tami'
     ]
 ];
+
+";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+
+
+        $myfile = fopen($dir_module . "/src/Module.php", "w");
+        if (!$myfile) {
+            $console->releaseError("Unable to open file! " . $dir_module . "/src/Module.php");
+            exit;
+        }
+
+        $txt = "
+<?php
+
+namespace $module_name;
+
+class Module {
+
+    public function getConfig() {
+        return include __DIR__ . '/../config/module.config.php';
+    }
+
+}
 
 ";
         fwrite($myfile, $txt);
