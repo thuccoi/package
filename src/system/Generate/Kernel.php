@@ -389,7 +389,7 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
             exit;
         }
 
-        $txt = "<?php";
+        $txt = "";
 
         fwrite($myfile, $txt);
         fclose($myfile);
@@ -402,7 +402,7 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
             exit;
         }
 
-        $txt = "<?php";
+        $txt = "";
 
         fwrite($myfile, $txt);
         fclose($myfile);
@@ -415,7 +415,7 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
             exit;
         }
 
-        $txt = "<?php";
+        $txt = "";
 
         fwrite($myfile, $txt);
         fclose($myfile);
