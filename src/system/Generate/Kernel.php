@@ -411,6 +411,8 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
             exit;
         }
 
+        $strlow = strtolower($module_name);
+        
         $txt = "
 <?php
 
@@ -418,7 +420,7 @@ namespace {$module_name};
 
 return [
     'router' => [
-        '{$module_name}' => [
+        '{$strlow}' => [
             'index' => Controller\IndexController::class
         ]
     ],
