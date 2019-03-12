@@ -328,7 +328,7 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
         ?>
         <footer>
             <?php
-            $this->partial(\'layout/foot.tami\');
+            $this->partialLayout(\'layout/foot.tami\');
             ?>
         </footer>
     </body>
