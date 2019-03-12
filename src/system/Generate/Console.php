@@ -156,4 +156,30 @@ class Console extends Text {
         return $this->show();
     }
 
+    /**
+     * 
+     * @param type $message
+     * @return $this
+     */
+    public function releaseMessage($message) {
+        echo $message;
+        return $this;
+    }
+
+    public function releaseSuccess($message) {
+        echo $this->parsing($this->info($message));
+        return $this;
+    }
+
+    public function releaseWarning($message) {
+        echo $this->parsing($this->comment($message));
+        return $this;
+    }
+
+    public function releaseError($message) {
+        echo $this->parsing($this->error($message));
+        echo "\n";
+        return $this;
+    }
+
 }
