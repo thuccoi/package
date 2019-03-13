@@ -57,9 +57,11 @@ class App extends \module\Share\Model\Common\AbsField {
     //members
     public function getMembers() {
         $members = [];
-        foreach ($this->members as $val) {
-            if (!$val->getDeletedAt()) {
-                $members [] = $val;
+        if ($this->members) {
+            foreach ($this->members as $val) {
+                if (!$val->getDeletedAt()) {
+                    $members [] = $val;
+                }
             }
         }
         return $members;
@@ -68,9 +70,11 @@ class App extends \module\Share\Model\Common\AbsField {
     //members was deleted
     public function getMembersWD() {
         $members = [];
-        foreach ($this->members as $val) {
-            if ($val->getDeletedAt()) {
-                $members [] = $val;
+        if ($this->members) {
+            foreach ($this->members as $val) {
+                if ($val->getDeletedAt()) {
+                    $members [] = $val;
+                }
             }
         }
         return $members;
@@ -128,16 +132,15 @@ class App extends \module\Share\Model\Common\AbsField {
                 }
                 $onboarding [] = $val;
             }
-            
+
             $this->onboarding = $onboarding;
-            
+
             if ($flat == false) {
                 $this->onboarding[] = [
                     'metatype' => $metatype,
                     'status'   => $status
                 ];
             }
-            
         } else {
             $this->onboarding[] = [
                 'metatype' => $metatype,
