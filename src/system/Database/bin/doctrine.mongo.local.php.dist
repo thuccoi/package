@@ -5,9 +5,9 @@ return [
         'connect' => [
             'host' => 'localhost',
             'port' => '27017',
-            'username' => null,
-            'password' => null,
-            'db_oauth'=>null,
+        //    'username' => null,
+        //    'password' => null,
+        //    'db_oauth'=>null,
             'db_default' => 'mydb'
         ],
         'data' => [
