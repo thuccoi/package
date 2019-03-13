@@ -35,7 +35,45 @@ class RegisterController extends \system\Template\AbstractController {
         ];
 
         //register new an user
-        $this->entity->create($data);
+        $user = $this->entity->create($data);
+
+
+
+        //check app
+        $entity_app = new \module\Share\Model\Entity\App($this->getConnect(), $this->getCode(), $this->getConfig(), $this->getSession());
+        //check domain exists in application
+        $domain = $this->getConfig()['DOMAIN'];
+        $app = $entity_app->find($domain, 'domain');
+
+        //check new app
+        $newapp = false;
+        if (!$app) {
+            $data = (object) [
+                        "name"     => $this->getConfig()['app']['name'],
+                        "image"    => $this->getConfig()['URL_ROOT'] . $this->getConfig()['app']['image'],
+                        "metatype" => $this->getConfig()['app']['metatype'],
+                        "domain"   => $domain
+            ];
+
+            //create new an application
+            $app = $entity_app->create($data);
+            $newapp = true;
+
+            //create new member
+            $entity_member = new \module\Share\Model\Link\Member($this->getConnect(), $this->getCode(), $this->getConfig(), $this->getSession());
+            $data = (object) [
+                        "app"  => $app->getDomain(),
+                        "user" => $user->getUsername()
+            ];
+
+            $member = $entity_member->add($data);
+
+            //save record
+            $this->getConnect()->persist($user);
+            $this->getConnect()->flush();
+        }
+
+
 
         $this->getCode()->success("Đăng ký tài khoản thành công, mời bạn hãy vào địa chỉ email của mình để xác nhận thông tin tài khoản của mình vừa cung cấp cho chúng tôi là chính xác.");
     }
@@ -59,7 +97,7 @@ class RegisterController extends \system\Template\AbstractController {
             }
 
             //check app
-            $entity_app = new \module\Share\Model\Entity\App($this->getConnect(), $this->getCode(), $this->getConfig());
+            $entity_app = new \module\Share\Model\Entity\App($this->getConnect(), $this->getCode(), $this->getConfig(), $this->getSession());
             //check domain exists in application
             $domain = $this->getConfig()['DOMAIN'];
             $app = $entity_app->find($domain, 'domain');
@@ -81,7 +119,7 @@ class RegisterController extends \system\Template\AbstractController {
 
 
             //create new member
-            $entity_member = new \module\Share\Model\Link\Member($this->getConnect(), $this->getCode(), $this->getConfig());
+            $entity_member = new \module\Share\Model\Link\Member($this->getConnect(), $this->getCode(), $this->getConfig(), $this->getSession());
             $data = (object) [
                         "app"  => $app->getDomain(),
                         "user" => $user->getUsername()
