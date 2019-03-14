@@ -1,0 +1,76 @@
+<?php
+
+//require config global
+require_once __DIR__ . '/config/php/global.php';
+include_once(__DIR__ . '/lib/simple_html_dom.php');
+
+if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+    shell_exec("composer update");
+}
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+
+$config = \system\Template\Container::getSysConfig();
+
+/**
+ * get input from command line
+ * 
+ * rtrim(fgets(STDIN));
+ */
+$argv = $_SERVER['argv'];
+
+/**
+ * Initial class console and kernel
+ */
+$kernel = new \system\Generate\Kernel($config);
+$console = new \system\Generate\Console();
+if (count($argv) <= 1) {
+
+
+    $console->addMessage("TAMI Framework ")
+            ->addInfo("1.0.0")
+            ->breakLine(2)
+            ->addComment("Usage:")
+            ->addMessage("command [options] [arguments]")
+            ->breakLine(2)
+            ->addComment("Options:")
+            ->addCommand("-h, --help", "Display this help message")
+            ->addCommand("-V, --version", "Display this application version")
+            ->breakLine()
+            ->addComment("Available commands:")
+            ->addCommand("env", "Display the current framework enviroment")
+            ->addCommand("help", "Display help for a command")
+            ->addCommand("inspire", "Display an inspiring quote")
+            ->addCommand("list", "Lists commands");
+    //kernel list commands
+    foreach ($kernel->getCommands() as $comment => $arr) {
+        $console->addComment($comment);
+        foreach ($arr as $key => $val) {
+            $console->addCommand($key, $val['description']);
+        }
+    }
+
+    $console->output();
+    exit;
+}
+
+//get command method
+$method = $kernel->getMethod($argv[1]);
+if (!$method) {
+    $console->breakLine()
+            ->addError("Command \"{$argv[1]}\" is not defined.")
+            ->breakLine()
+            ->addComment("Did you mean one of these?")
+            ->breakLine();
+    foreach ($kernel->getCommandMethods() as $key => $val) {
+        $console->whiteSpace(2)
+                ->addSuccess($key)
+                ->breakLine();
+    }
+    $console->output();
+    exit;
+}
+
+//execute command
+$kernel->{$method}($argv);
