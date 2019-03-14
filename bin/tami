@@ -75,3 +75,8 @@ if (!$method) {
 
 //execute command
 $kernel->{$method}($argv);
+
+
+
+echo "Done.
+";
