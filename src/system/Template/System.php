@@ -188,7 +188,7 @@ class System {
 
     public static function getModuleConfig($module, $controller, $session, $sysconfig, $code) {
         //load config of module
-        foreach (TAMI_MODULE as $val) {
+        foreach ($sysconfig['TAMI_MODULE'] as $val) {
             $classname = $val . '\\Module';
 
             $obj = new $classname();
