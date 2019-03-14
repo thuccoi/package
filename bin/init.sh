@@ -68,7 +68,6 @@ sudo chown -R "$USER" "/home/$USER/.composer"
 composer update
 
 
-
 read -p "setup host server nginx domain (yes/no)?[${green}yes${reset}|${red}no${reset}]: " CONT
 if [ "$CONT" = "yes" ]; then
     read -p "Enter server name (e.g mydomain.com): " DOMAIN
