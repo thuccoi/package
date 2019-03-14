@@ -157,6 +157,16 @@ class Console extends Text {
     }
 
     /**
+     * Parsing text, html to console string
+     */
+    public function release() {
+        $this->text = $this->parsing($this->text);
+        echo $this->text;
+        $this->text = "";
+        return $this;
+    }
+
+    /**
      * 
      * @param type $message
      * @return $this

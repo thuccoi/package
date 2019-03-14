@@ -95,11 +95,75 @@ class Kernel {
      * List methods
      */
 
+    public function makeController($argv) {
+
+        $console = new \system\Generate\Console();
+        if (count($argv) <= 2) {
+            $console->releaseError("Not enough arguments (missing: name of controller).");
+            exit;
+        }
+
+        //select module
+        $console->breakLine()
+                ->whiteSpace()
+                ->addComment("Please choose Module to install this Controller");
+        $i = 0;
+        $options = [];
+        $listmodule = [];
+        foreach ($this->config["TAMI_MODULE"] as $val) {
+            $i++;
+            $console->addCommand("$i: ", $val);
+            $options[] = $i;
+            $listmodule[$i] = $val;
+        }
+
+        do {
+
+            $console->addMessage("Select the appropriate number [")
+                    ->addInfo(implode("-", $options))
+                    ->addMessage("] then [enter] (press 'c' to cancel): ");
+
+            $console->release();
+
+            $option = rtrim(fgets(STDIN));
+
+            if ($option == "c") {
+                $console->releaseError("Process create new controller was cancelled!!!.");
+                exit;
+            }
+
+            $loop = true;
+            if (in_array($option, $options)) {
+                $console->addMessage(" You already choose ")
+                        ->addInfo($listmodule[$option])
+                        ->addMessage(" Module to install for this controller (yes/no)? [")
+                        ->addInfo("yes|no")
+                        ->addMessage("]: ");
+                $console->release();
+                $cf = rtrim(fgets(STDIN));
+                if ($cf == "yes") {
+                    $loop = false;
+                }
+            }
+        } while ($loop);
+
+        $module_name = $listmodule[$option];
+
+        //make controller
+        $controller_name = $argv[2];
+
+
+        $this->addControllerToConfig($module_name, $controller_name, $console);
+
+        $this->createController($module_name, $controller_name, $console);
+    }
+
     /**
      * create a new module
      */
-    public function makeModule($argv, \system\Generate\Console $console) {
+    public function makeModule($argv) {
 
+        $console = new \system\Generate\Console();
 
         if (count($argv) <= 2) {
             $console->releaseError("Not enough arguments (missing: name of module).");
@@ -177,6 +241,12 @@ class Module {
         fclose($myfile);
 
 
+        //view
+        if (!mkdir($dir_module . "/view")) {
+            $console->releaseError("Error, create folder view!!!");
+            exit;
+        }
+
         //create controller
         $this->createController($module_name, "Index", $console);
 
@@ -188,14 +258,15 @@ class Module {
 
         $data['autoload']['psr-4'][$module_name . "\\"] = "module/$module_name/src/";
 
-        $newJsonString = json_encode($data);
+        $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
         file_put_contents('composer.json', str_replace("\/", "/", $newJsonString));
 
         //dumpautoload
         shell_exec("composer dump-autoload");
 
         //get config
-        $module_config = require_once $this->config['DIR_ROOT'] . "/config/php/module.config.php";
+        $module_config = include $this->config['DIR_ROOT'] . "/config/php/module.config.php";
+
 
         $module_config[] = $module_name;
 
@@ -208,88 +279,21 @@ class Module {
 
         $txt = "<?php
 
-return [";
+return [
+";
         foreach ($module_config as $val) {
-            $txt = $txt . "'$val',
-                    ";
+            $txt = $txt . "    '$val',
+";
         }
 
-        $txt = $txt . "];
+        $txt = $txt . "
+];
 ";
 
         fwrite($myfile, $txt);
         fclose($myfile);
 
 
-        return $this;
-    }
-
-    /**
-     * 
-     * @param type $module_name
-     * @param type $controller_name
-     * @param type $console
-     */
-    public function createController($module_name, $controller_name, $console) {
-
-        $dir_module = $this->config['DIR_ROOT'] . "/module/" . $module_name;
-
-        //check folder controller
-        if (!file_exists($dir_module . "/src/Controller")) {
-            if (!mkdir($dir_module . "/src/Controller")) {
-                $console->releaseError("Error, create folder src/Controller!!!");
-                exit;
-            }
-        }
-
-        //create file controller
-        $myfile = fopen($dir_module . "/src/Controller/{$controller_name}Controller.php", "w");
-        if (!$myfile) {
-            $console->releaseError("Unable to open file! " . $dir_module . "/src/Controller/{$controller_name}Controller.php");
-            exit;
-        }
-
-        $txt = "<?php
-
-namespace $module_name\Controller;
-
-class {$controller_name}Controller extends \system\Template\AbstractController {
-
-    public function indexAction() {
-
-        return [];
-    }
-    
-}
-
-";
-        fwrite($myfile, $txt);
-        fclose($myfile);
-
-        //create view for controller
-        //view
-        if (!mkdir($dir_module . "/view")) {
-            $console->releaseError("Error, create folder view!!!");
-            exit;
-        }
-
-        if (!mkdir($dir_module . "/view/" . strtolower($controller_name))) {
-            $console->releaseError("Error, create folder: " . $dir_module . "/view/" . strtolower($controller_name));
-            exit;
-        }
-
-
-        //create file view
-        $myfile = fopen($dir_module . "/view/" . strtolower($controller_name) . "/index.tami", "w");
-        if (!$myfile) {
-            $console->releaseError("Unable to open file! " . $dir_module . "/view/" . strtolower($controller_name) . "/index.tami");
-            exit;
-        }
-
-        $txt = "view of $controller_name controller";
-
-        fwrite($myfile, $txt);
-        fclose($myfile);
 
 
         //layout
@@ -419,6 +423,73 @@ class {$controller_name}Controller extends \system\Template\AbstractController {
 
         fwrite($myfile, $txt);
         fclose($myfile);
+
+
+        return $this;
+    }
+
+    /**
+     * 
+     * @param type $module_name
+     * @param type $controller_name
+     * @param type $console
+     */
+    public function createController($module_name, $controller_name, $console) {
+
+        $dir_module = $this->config['DIR_ROOT'] . "/module/" . $module_name;
+
+        //check folder controller
+        if (!file_exists($dir_module . "/src/Controller")) {
+            if (!mkdir($dir_module . "/src/Controller")) {
+                $console->releaseError("Error, create folder src/Controller!!!");
+                exit;
+            }
+        }
+
+        //create file controller
+        $myfile = fopen($dir_module . "/src/Controller/{$controller_name}Controller.php", "w");
+        if (!$myfile) {
+            $console->releaseError("Unable to open file! " . $dir_module . "/src/Controller/{$controller_name}Controller.php");
+            exit;
+        }
+
+        $txt = "<?php
+
+namespace $module_name\Controller;
+
+class {$controller_name}Controller extends \system\Template\AbstractController {
+
+    public function indexAction() {
+
+        return [];
+    }
+    
+}
+
+";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+
+        //create view for controller
+
+
+        if (!mkdir($dir_module . "/view/" . strtolower($controller_name))) {
+            $console->releaseError("Error, create folder: " . $dir_module . "/view/" . strtolower($controller_name));
+            exit;
+        }
+
+
+        //create file view
+        $myfile = fopen($dir_module . "/view/" . strtolower($controller_name) . "/index.tami", "w");
+        if (!$myfile) {
+            $console->releaseError("Unable to open file! " . $dir_module . "/view/" . strtolower($controller_name) . "/index.tami");
+            exit;
+        }
+
+        $txt = "view of $controller_name controller";
+
+        fwrite($myfile, $txt);
+        fclose($myfile);
     }
 
     /**
@@ -461,6 +532,71 @@ return [
 ";
         fwrite($myfile, $txt);
         fclose($myfile);
+    }
+
+    public function addControllerToConfig($module_name, $controller_name, $console) {
+        $dir_module = $this->config['DIR_ROOT'] . "/module/" . $module_name;
+
+        $mconfig = file_get_contents($dir_module . "/config/module.config.php");
+
+        if (!$mconfig) {
+            $console->addError("not found module config.");
+            exit;
+        }
+
+
+
+        $this->setConfigFilePhp($mconfig, 'application');
+
+
+        exit;
+    }
+
+    public function writeConfig($dir_module, $module_name, $mconfig) {
+        $dir_module = $this->config['DIR_ROOT'] . "/module/" . $module_name;
+
+        $myfile = fopen($dir_module . "/config/module.config.php", "w");
+        if (!$myfile) {
+            $console->releaseError("Unable to open file! " . $dir_module . "/config/module.config.php");
+            exit;
+        }
+
+        $strlow = strtolower($module_name);
+
+        $txt = "<?php
+
+namespace {$module_name};
+
+return [
+    'router' => [
+        '{$strlow}' => [
+            'index' => Controller\IndexController::class
+        ]
+    ],
+    'controller' => [
+        'factories' => [
+            Controller\IndexController::class => \system\Template\Factory::class
+        ]
+    ],
+    'view_manager' => [
+        'layout' => dirname(__DIR__) . '/view/layout/layout.tami'
+    ]
+];
+
+";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+    }
+
+    public function setConfigFilePhp($file_content, $string) {
+
+
+        $content_before_string = strstr($file_content, $string, true);
+
+        if (false !== $content_before_string) {
+            $line = count(explode(PHP_EOL, $content_before_string));
+            die("String $string found at line number: $line");
+        }
     }
 
 }
