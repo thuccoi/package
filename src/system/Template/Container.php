@@ -15,7 +15,7 @@ class Container {
         $conphp = self::getSysPhp();
 
         //merge all config
-        $result = [];
+        $result = ["TAMI_MODULE" => include DIR_ROOT . '/config/php/module.config.php'];
         $result = array_merge($conini, $result);
         $result = array_merge($conjon, $result);
         $result = array_merge($conphp, $result);
