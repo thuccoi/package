@@ -537,19 +537,8 @@ return [
     public function addControllerToConfig($module_name, $controller_name, $console) {
         $dir_module = $this->config['DIR_ROOT'] . "/module/" . $module_name;
 
-        $mconfig = file_get_contents($dir_module . "/config/module.config.php");
+        $this->setConfigFilePhp($dir_module, $module_name, $controller_name);
 
-        if (!$mconfig) {
-            $console->addError("not found module config.");
-            exit;
-        }
-
-
-
-        $this->setConfigFilePhp($mconfig, 'application');
-
-
-        exit;
     }
 
     public function writeConfig($dir_module, $module_name, $mconfig) {
@@ -588,15 +577,113 @@ return [
         fclose($myfile);
     }
 
-    public function setConfigFilePhp($file_content, $string) {
+    public function setConfigFilePhp($dir_module, $module_name, $controller_name) {
 
+        
+        $this->insertFile($dir_module . "/config/module.config.php", 'router', strtolower($module_name), "\n            '" . strtolower($controller_name) . "' => Controller\\{$controller_name}Controller::class,", ", '" . strtolower($module_name) . "' => [
+            '" . strtolower($controller_name) . "' => Controller\\{$controller_name}Controller::class
+        ],
+"
+        );
 
-        $content_before_string = strstr($file_content, $string, true);
+        $this->insertFile($dir_module . "/config/module.config.php", 'controller', 'factories', "\n            Controller\\{$controller_name}Controller::class => \system\Template\Factory::class,", ""
+        );
 
-        if (false !== $content_before_string) {
-            $line = count(explode(PHP_EOL, $content_before_string));
-            die("String $string found at line number: $line");
+    }
+
+    public function insertFile($filedir, $key, $find, $text, $textnotfound) {
+        $wordBoundries = array("\n", " ");
+        $wordBuffer = "";
+
+        $openBoundries = ['[', '('];
+        $endBoundries = [']', ')'];
+
+        $file = fopen($filedir, "r");
+
+        $filetmp = fopen($filedir . "_tmp", "w");
+
+        while (!feof($file)) {
+            $c = fgetc($file);
+            //is key
+            if (in_array($c, $wordBoundries)) {
+                // do something then clear the buffer
+                if ($wordBuffer == "'$key'" || $wordBuffer == "\"$key\"") {
+                    break;
+                }
+                $wordBuffer = "";
+            } else {
+                // add the letter to the buffer
+                $wordBuffer .= $c;
+            }
+
+            //new file
+            fwrite($filetmp, $c);
         }
+
+        //flat
+        $fkey = 0;
+        $fwn = TRUE;
+        $founed = FALSE;
+        $fww = FALSE;
+        while (!feof($file)) {
+            $c = fgetc($file);
+
+
+            //end
+            if (in_array($c, $endBoundries)) {
+                $fkey --;
+                //exit []
+                if ($fkey === 0) {
+                    $fwn = FALSE;
+                    if ($fww === FALSE) {
+                        //new file
+                        fwrite($filetmp, $textnotfound);
+                        $fww = TRUE;
+                    }
+                }
+            }
+
+            //new file
+            fwrite($filetmp, $c);
+
+            //open
+            if (in_array($c, $openBoundries)) {
+                $fkey ++;
+
+                if ($founed === TRUE) {
+                    //new file
+                    fwrite($filetmp, $text);
+                    $founed = FALSE;
+                    $fww = TRUE;
+                }
+            }
+
+
+            //is key
+            if ($fkey === 1 && $fwn === TRUE) {
+                if (in_array($c, $wordBoundries)) {
+                    // do something then clear the buffer
+                    //insert data
+                    if ($wordBuffer == "'$find'" || $wordBuffer == "\"$find\"") {
+                        $founed = TRUE;
+                        $fwn = FALSE;
+                    }
+
+
+                    $wordBuffer = "";
+                } else {
+                    // add the letter to the buffer
+                    $wordBuffer .= $c;
+                }
+            }
+        }
+
+        fclose($filetmp);
+        fclose($file);
+
+        //move
+        copy($filedir . "_tmp", $filedir);
+        unlink($filedir . "_tmp");
     }
 
 }
