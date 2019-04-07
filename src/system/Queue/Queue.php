@@ -27,6 +27,8 @@ class Queue {
 
     public function __destruct() {
         
+        Resque::setBackend('localhost:6379');
+        
         //push to job
         Scheduler::enqueueIn($this->seconds_delay, $this->queue, $this->classJob, $this->args);
     }
