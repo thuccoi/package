@@ -16,8 +16,17 @@ class Layout {
     //viewer
     private $viewer;
 
+    //log
+    private $log;
+
     public function __construct($config) {
         $this->config = $config;
+        $this->log = new \system\Helper\Log($config);
+    }
+    
+    //get log
+    public function getLog(){
+        return $this->log;
     }
 
     //function set and get
