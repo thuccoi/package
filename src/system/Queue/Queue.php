@@ -8,8 +8,6 @@ class Queue {
     protected $args;
     protected $queue;
 
-    protected $seconds_delay;
-
     public function __construct($classJob, $args) {
         $this->classJob = $classJob;
         $this->args = $args;
@@ -20,17 +18,16 @@ class Queue {
         return $this;
     }
 
-    public function delay($seconds = 0) {
-        $this->seconds_delay = $seconds;
+    public function connection() {
+       \Resque::setBackend('localhost:6379');
         return $this;
     }
 
     public function __destruct() {
-        
-        Resque::setBackend('localhost:6379');
+        $this->connection();
         
         //push to job
-        Scheduler::enqueueIn($this->seconds_delay, $this->queue, $this->classJob, $this->args);
+        \Resque::enqueue($this->queue, $this->classJob, $this->args, true);
     }
 
 }
