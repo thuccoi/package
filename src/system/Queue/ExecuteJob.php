@@ -2,17 +2,21 @@
 
 namespace system\Queue;
 
-abstract class AbsJob {
+class ExecuteJob {
 
     use TraitDispatch;
-    
+
     public function setUp() {
         // ... Set up environment for this job
     }
 
-    abstract public function perform();// ..Run job
+    public function perform() {
+        $job = unserialize($this->args['job']);
+        $job->handle();
+    }
 
     public function tearDown() {
         // ... Remove environment for this job
     }
+
 }
