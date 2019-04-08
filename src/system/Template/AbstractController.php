@@ -17,9 +17,6 @@ abstract class AbstractController {
     private $view_dir;
     //parameter js
     private $paramjs;
-
-    //log
-    private $log;
     
     //init from factory
     public function __construct($connect, \system\Router $router, \system\Helper\Code $code, \system\Session $session, array $config = null, array $options = null) {
@@ -76,9 +73,6 @@ abstract class AbstractController {
 
         //login
         $this->toLogin();
-        
-        
-        $this->log = new \system\Helper\Log($config);
     }
 
     //check auth
@@ -128,11 +122,6 @@ abstract class AbstractController {
                 }
             }
         }
-    }
-
-    //get log
-    public function getLog(){
-        return $this->log;
     }
 
     //function get

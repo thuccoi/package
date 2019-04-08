@@ -4,28 +4,24 @@ namespace system\Helper;
 
 class Log {
 
-    private $config;
-    
-    public function __construct($config) {
-        $this->config = $config;
+
+    public static function info($message) {
+        self::writeLog("info", $message);
     }
 
-    public function info($message) {
-        $filename = $this->config['DIR_ROOT']. "/logs/info";
-        $this->writeLog($filename, $message);
+    public static function error($message) {
+        self::writeLog("error", $message);
     }
 
-    public function error($message) {
-        $filename = $this->config['DIR_ROOT']."/logs/error";
-        $this->writeLog($filename, $message);
+    public static function warning($message) {
+        self::writeLog("warning", $message);
     }
 
-    public function warning($message) {
-        $filename = $this->config['DIR_ROOT']."/logs/warning";
-        $this->writeLog($filename, $message);
-    }
-
-    private function writeLog($filename, $message) {
+    private static function writeLog($filename, $message) {
+        
+        $config = \system\Template\Container::getSysConfig();
+        $filename = $config['DIR_ROOT']."/logs/{$filename}";
+        
         //follow date
         $date = date("d-m-Y");
         $handle = fopen($filename . "_" . $date . ".log", "a+");
