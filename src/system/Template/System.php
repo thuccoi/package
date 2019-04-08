@@ -170,13 +170,13 @@ class System {
 
                 return [
                     "parameters" => $parameters,
-                    "paramjs"    => $paramjs,
-                    "view_file"  => $view_dir . $controller . '/' . $action . '.tami',
-                    "layout"     => $layout,
-                    "view_dir"   => $view_dir,
-                    "sysconfig"  => $sysconfig,
-                    "viewer"     => $obj->getViewer(),
-                    "code"       => $obj->getCode()
+                    "paramjs" => $paramjs,
+                    "view_file" => $view_dir . $controller . '/' . $action . '.tami',
+                    "layout" => $layout,
+                    "view_dir" => $view_dir,
+                    "sysconfig" => $sysconfig,
+                    "viewer" => $obj->getViewer(),
+                    "code" => $obj->getCode()
                 ];
             } else {
                 $code->notfound("Not found controller config");
@@ -187,6 +187,9 @@ class System {
     }
 
     public static function getModuleConfig($module, $controller, $session, $sysconfig, $code) {
+
+        \system\Template\Container::defineDirRoot();
+        
         //load config of module
         foreach ($sysconfig['TAMI_MODULE'] as $val) {
             $classname = $val . '\\Module';
@@ -239,9 +242,9 @@ class System {
 
                         return [
                             "controller" => $config['router'][$module][$controller],
-                            "factory"    => $factory,
-                            "view_dir"   => DIR_ROOT . 'module/' . $val . '/view/',
-                            "layout"     => $config['view_manager']['layout'],
+                            "factory" => $factory,
+                            "view_dir" => DIR_ROOT . 'module/' . $val . '/view/',
+                            "layout" => $config['view_manager']['layout'],
                         ];
                     } else {
                         $code->notfound('Controller Not found');

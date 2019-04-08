@@ -17,7 +17,15 @@ class Queue {
     }
 
     public function connection() {
-        \Resque::setBackend('localhost:6379');
+        //set connection
+        $config = \system\Template\Container::getSysConfig();
+        $uri = 'localhost:6379';
+        
+        if (isset($config['REDIS_URI'])) {
+            $uri = $config['REDIS_URI'];
+        }
+        
+        \Resque::setBackend($uri);
         return $this;
     }
 

@@ -6,18 +6,18 @@ class Kernel {
 
     private $config;
     private $commands = [
-        "app"  => [
+        "app" => [
             "app:name" => [
                 "description" => "Set the applications namespace",
                 "method_name" => "appName"
             ]
         ],
         "make" => [
-            "make:auth"       => [
+            "make:auth" => [
                 "description" => "Scaffold basic login and reqistration views and routes",
                 "method_name" => "makeAuth"
             ],
-            "make:module"     => [
+            "make:module" => [
                 "description" => "Create a new module",
                 "method_name" => "makeModule"
             ],
@@ -25,7 +25,7 @@ class Kernel {
                 "description" => "Create a new controller class",
                 "method_name" => "makeController"
             ],
-            "make:model"      => [
+            "make:model" => [
                 "description" => "Create a new model class",
                 "method_name" => "makeModel"
             ],
@@ -538,7 +538,6 @@ return [
         $dir_module = $this->config['DIR_ROOT'] . "/module/" . $module_name;
 
         $this->setConfigFilePhp($dir_module, $module_name, $controller_name);
-
     }
 
     public function writeConfig($dir_module, $module_name, $mconfig) {
@@ -579,7 +578,7 @@ return [
 
     public function setConfigFilePhp($dir_module, $module_name, $controller_name) {
 
-        
+
         $this->insertFile($dir_module . "/config/module.config.php", 'router', strtolower($module_name), "\n            '" . strtolower($controller_name) . "' => Controller\\{$controller_name}Controller::class,", ", '" . strtolower($module_name) . "' => [
             '" . strtolower($controller_name) . "' => Controller\\{$controller_name}Controller::class
         ],
@@ -588,7 +587,6 @@ return [
 
         $this->insertFile($dir_module . "/config/module.config.php", 'controller', 'factories', "\n            Controller\\{$controller_name}Controller::class => \system\Template\Factory::class,", ""
         );
-
     }
 
     public function insertFile($filedir, $key, $find, $text, $textnotfound) {

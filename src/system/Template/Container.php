@@ -4,11 +4,21 @@ namespace system\Template;
 
 class Container {
 
+    public static function defineDirRoot(){
+        
+        if(!defined('DIR_ROOT')){
+            $array = explode('/vendor/tami/', __DIR__) ;
+            define('DIR_ROOT', $array[0]."/");
+        }
+    }
+
     /**
      * get config include php, ini and json
      * @return config of system
      */
     public static function getSysConfig() {
+        self::defineDirRoot();
+        
         //get config
         $conini = self::getSysIni();
         $conjon = self::getSysJson();
@@ -28,6 +38,7 @@ class Container {
      * @return config ini
      */
     public static function getSysIni() {
+        self::defineDirRoot();
         //get all file in folder config ini
         $dirini = DIR_ROOT . '/config/ini/autoload/';
         $files = scandir($dirini);
@@ -51,6 +62,7 @@ class Container {
      * @return config json
      */
     public static function getSysJson() {
+        self::defineDirRoot();
         //get all file in folder config json
         $dirjson = DIR_ROOT . '/config/json/autoload/';
         $files = scandir($dirjson);
@@ -74,6 +86,7 @@ class Container {
      * @return config php
      */
     public static function getSysPhp() {
+        self::defineDirRoot();
         //get all file in folder config php
         $dirphp = DIR_ROOT . '/config/php/autoload/';
         $files = scandir($dirphp);

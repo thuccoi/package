@@ -139,6 +139,9 @@ class HTML {
 
     //generate file static default
     public static function mergeUIStaticDefault($domain) {
+        
+        \system\Template\Container::defineDirRoot();
+        
         //merge css and js
         static::mergeUICSS($domain, DIR_ROOT . '/public/tami/css/', 'tami.css');
         static::mergeUIJS($domain, DIR_ROOT . '/public/tami/js/', 'tami.js');

@@ -7,6 +7,9 @@ $files = [
     $domain . "/static/css/main.css",
     $domain . "/static/css/custom.css",
 ];
+
+\system\Template\Container::defineDirRoot();
+
 \system\Helper\HTML::combine($files, DIR_ROOT . '/public/tami/css/', 'tami.css');
 ?>
 

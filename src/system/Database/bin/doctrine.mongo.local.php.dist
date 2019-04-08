@@ -1,5 +1,7 @@
 <?php
 
+\system\Template\Container::defineDirRoot();
+
 return [
     'doctrine_mongo' => [
         'connect' => [
