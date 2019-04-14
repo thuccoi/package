@@ -29,6 +29,12 @@ class Kernel {
                 "description" => "Create a new model class",
                 "method_name" => "makeModel"
             ],
+        ],
+        "queue" => [
+            "queue:work" => [
+                "description" => "Start processing jobs on the queue as a daemon",
+                "method_name" => "queueWork"
+            ],
         ]
     ];
 
@@ -95,6 +101,12 @@ class Kernel {
      * List methods
      */
 
+    //Queue
+    public function queueWork($argv) {
+        Queue::work($argv);
+    }
+
+    //Make
     public function makeController($argv) {
 
         $console = new \system\Generate\Console();
@@ -682,6 +694,23 @@ return [
         //move
         copy($filedir . "_tmp", $filedir);
         unlink($filedir . "_tmp");
+    }
+
+    //read command line real time
+    public static function execute($cmd) {
+        $descriptorspec = array(
+            0 => array("pipe", "r"), // stdin is a pipe that the child will read from
+            1 => array("pipe", "w"), // stdout is a pipe that the child will write to
+            2 => array("pipe", "w")    // stderr is a pipe that the child will write to
+        );
+        flush();
+        $process = proc_open($cmd, $descriptorspec, $pipes, realpath('./'), array());
+        if (is_resource($process)) {
+            while ($s = fgets($pipes[1])) {
+                print $s;
+                flush();
+            }
+        }
     }
 
 }
