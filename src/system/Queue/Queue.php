@@ -33,7 +33,7 @@ class Queue {
         $this->connection();
 
         //push to job
-        \Resque::enqueue($this->queue, \system\Queue\ExecuteJob::class, ['job' => serialize($this->job)], true);
+        \Resque::enqueue($this->queue, \system\Queue\ExecuteJob::class, ['name'=> get_class($this->job), 'job' => serialize($this->job)], true);
     }
 
 }
