@@ -12,7 +12,6 @@ class ExecuteJob {
 
     public function perform() {
         $job = unserialize($this->args['job']);
-        echo date('H:i d/m/Y') . ': ' . $this->args['name'] . PHP_EOL;
         $job->handle();
     }
 
